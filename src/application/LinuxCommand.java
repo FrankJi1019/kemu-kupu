@@ -69,5 +69,13 @@ public class LinuxCommand {
 	}
 	
 
+	public static List<String> getTopic(){
+		
+		List<String> temp = new ArrayList<>();
+		
+		temp = executeCommand("ls ./words | cut  -d \".\" -f -1");
+		
+		return temp;
+	}
 	
 }
