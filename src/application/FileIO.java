@@ -1,5 +1,8 @@
 package application;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class FileIO {
 
 	public static String openWavFile() {
@@ -56,7 +59,20 @@ public class FileIO {
 		
 	}
 	
-	
+	public static List<String> getContentFromFile (String fileName){
+		List<String> temp = new ArrayList<>();
+		
+		
+		if ((LinuxCommand.getErrorCode("test -f ./words/"+fileName+".txt")) == 0) {
+			temp = LinuxCommand.executeCommand("cat ./words/"+fileName+".txt");
+			return temp;
+			
+		} else {
+			//can rework this bit to display on GUI.
+			System.out.println("No such file exists!");
+			return temp;
+		}
+	}
 	
 	
 }
