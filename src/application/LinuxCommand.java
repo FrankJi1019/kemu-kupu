@@ -95,4 +95,29 @@ public class LinuxCommand {
 		}
 	}
 	
+public static List<String> getFileNameFromDirectory(String dir){
+		
+		List<String> temp = new ArrayList<>();
+		
+		if ((LinuxCommand.getErrorCode("test -d"+dir)) == 1) {
+			// can rework error message to display on GUI.
+			System.out.println("Directory doesn't exist");
+			//
+			return temp;
+		} else {
+			
+			temp = executeCommand("ls "+dir+" | cut  -d \".\" -f -1");
+			
+			//check if there are any file in directory.
+			if (temp.isEmpty()) {
+				//can rework error message to display on GUI.
+				System.out.println("There are no files in the directory.");
+				return temp;
+			} else {
+				return temp;
+			}
+			
+		}
+	}
+	
 }

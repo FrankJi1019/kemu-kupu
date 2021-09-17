@@ -59,8 +59,14 @@ public class TopicsController implements Initializable{
 			topic = new Topic(formattedfileName);
 			// we should first check if fileName.png exists
 			// if filename exists, then :
-			topic.setIconSrc(fileName+".png");
-			// otherwise dont change the unage
+			System.out.println(LinuxCommand.getFileNameFromDirectory("./data/images").toString());
+			if (list.contains(fileName)){
+				topic.setIconSrc(fileName+".png");
+				System.out.println(fileName+".png");
+			} else {
+				topic.setIconSrc("default.png");
+			}
+			
 			
 			
 			//		if yes, 
