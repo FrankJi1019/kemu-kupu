@@ -69,7 +69,7 @@
             <Font name="Noto Sans Regular" size="14.0" />
          </font>
       </Button>
-      <Slider fx:id="speedSlider" layoutX="387.0" layoutY="155.0" onDragDetected="#ajustSpeed" />
+      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="387.0" layoutY="155.0" max="2.3" min="0.7" onDragDetected="#ajustSpeed" value="1.0" />
       <Label layoutX="387.0" layoutY="125.0" text="Speed: ">
          <font>
             <Font name="Noto Sans Regular" size="18.0" />

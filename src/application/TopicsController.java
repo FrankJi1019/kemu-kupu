@@ -62,10 +62,7 @@ public class TopicsController implements Initializable{
 			// if filename exists, then :
 			if (imageList.contains(fileName)){
 				topic.setIconSrc(fileName+".png");
-			} else {
-				topic.setIconSrc("default.png");
-			}
-			
+			} 
 			//		if yes, 
 			//         topic.setIconSrc(fileName+".png");
 			//      otherwise we leave it as the default image
