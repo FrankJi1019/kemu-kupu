@@ -11,7 +11,7 @@
          <graphic>
             <ImageView fx:id="img" fitHeight="42.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@default.png" />
+                  <Image url="@../../data/images/default.png"  />
                </image>
             </ImageView>
          </graphic>

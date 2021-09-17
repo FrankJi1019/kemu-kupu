@@ -29,7 +29,7 @@ public class TopicController {
 	public void setData(Topic topic) {
 		this.topic = topic;
 		btn.setText(topic.getName());
-		Image image  = new Image(getClass().getResourceAsStream(topic.getIconSrc()));
+		Image image  = new Image("file:"+topic.getIconSrc());
 		img.setImage(image);
 	}
 	
