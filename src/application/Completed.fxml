@@ -7,8 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
    <children>
       <Label layoutX="193.0" layoutY="40.0" text="Quiz Completed">
          <font>
@@ -21,12 +20,12 @@
           <TableColumn prefWidth="74.0" text="Score" />
         </columns>
       </TableView>
-      <Button fx:id="playAgainButton" layoutX="382.0" layoutY="158.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="130.0" text="Play again">
+      <Button fx:id="playAgainButton" layoutX="382.0" layoutY="158.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="50.0" prefWidth="130.0" text="Play again">
          <font>
             <Font name="Noto Sans CJK JP" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="returnButton" layoutX="382.0" layoutY="255.0" mnemonicParsing="false" prefHeight="50.0" prefWidth="130.0" text="Return home">
+      <Button fx:id="returnButton" layoutX="382.0" layoutY="255.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="50.0" prefWidth="130.0" text="Return home">
          <font>
             <Font name="Noto Sans CJK JP" size="17.0" />
          </font>
