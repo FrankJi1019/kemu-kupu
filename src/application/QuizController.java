@@ -91,7 +91,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 		
 		// speak the word
-		FileIO.speakMaori(this.words.get(0), 1);
+		new Thread(new MyRunnable(this.words.get(0), 1)).start();
 		
 	}
 	
@@ -100,7 +100,8 @@ public class QuizController implements Initializable {
 	}
 	
 	public void hearAgain() {
-		FileIO.openWavFile();
+		// FileIO.openWavFile();
+		new Thread(new MyRunnable(this.words.get(0), 1)).start();
 	}
 	
 	public void submit(ActionEvent e) throws IOException {
@@ -115,7 +116,8 @@ public class QuizController implements Initializable {
 			this.words.remove(0);
 			if (this.words.size() == 0) this.switchToComplete(e);
 			resultLabel.setText("Correct");
-			FileIO.speakMaori(this.words.get(0), 1);
+			// FileIO.speakMaori(this.words.get(0), 1);
+			new Thread(new MyRunnable(this.words.get(0), 1)).start();
 			
 			scoreLabel.setText(Double.toString(score));
 			
@@ -149,7 +151,7 @@ public class QuizController implements Initializable {
 				return;
 			}
 			resultLabel.setText("Incorrect");
-			FileIO.speakMaori(this.words.get(0), 1);
+			new Thread(new MyRunnable(this.words.get(0), 1)).start();
 			
 			// init the letter count
 			wordLetterCount = this.words.get(0).length();
@@ -184,11 +186,10 @@ public class QuizController implements Initializable {
 			chars[index] = c;
  			letterCountLabel.setText(new String(chars));
 			
-
-			
 			this.attemptTimes++;
 			resultLabel.setText("Incorrect");
-			FileIO.openWavFile();
+			// FileIO.openWavFile();
+			new Thread(new MyRunnable(this.words.get(0), 1)).start();
 		}
 	}
 	
@@ -201,7 +202,9 @@ public class QuizController implements Initializable {
 			return;
 		}
 		
-		FileIO.speakMaori(this.words.get(0), 1);
+		// FileIO.speakMaori(this.words.get(0), 1);
+		new Thread(new MyRunnable(this.words.get(0), 1)).start();
+		
 		
 		// init the letter count
 		wordLetterCount = this.words.get(0).length();
