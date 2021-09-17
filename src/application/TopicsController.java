@@ -7,17 +7,28 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class TopicsController implements Initializable{
 
 	@FXML GridPane grid;
+	@FXML Button returnButton;
+
 	
+	private Stage stage;
+	private Scene scene;
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		List<Topic> topicList = generateListOfTopics();
@@ -57,23 +68,25 @@ public class TopicsController implements Initializable{
 		Topic topic;
 		for(String fileName : list) {
 			String formattedfileName = fileName.replace("-", " ");
+			// create Topic object with default icon
 			topic = new Topic(formattedfileName);
-			// we should first check if fileName.png exists
-			// if filename exists, then :
+			// if we have an icon for it, then update the icon
 			if (imageList.contains(fileName)){
 				topic.setIconSrc(fileName+".png");
 			} 
-			//		if yes, 
-			//         topic.setIconSrc(fileName+".png");
-			//      otherwise we leave it as the default image
-			//
-			
 			listOfTopics.add(topic);
 		}
 		return listOfTopics;
 		
 	}
-
+	
+	public void returnHome(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
 	
 	
 }
