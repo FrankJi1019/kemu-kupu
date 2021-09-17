@@ -51,7 +51,7 @@ public class TopicsController implements Initializable{
 	}
 
 	private List<Topic> generateListOfTopics() {
-		List<String> list = currentFiles();
+		List<String> list = LinuxCommand.getTopic();
 		List<Topic> listOfTopics = new ArrayList<>();
 		Topic topic;
 		for(String fileName : list) {
@@ -70,10 +70,6 @@ public class TopicsController implements Initializable{
 		
 	}
 
-	private List<String> currentFiles() {
-		List<String> list = new ArrayList<>();
-		list.add("No");
-		return list;
-	}
+	
 	
 }

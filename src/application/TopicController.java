@@ -15,7 +15,7 @@ public class TopicController {
 	
 	private Topic topic;
 	
-
+	// when we switch scene, this will be the action event that does so
 	public void topicSelected(ActionEvent event) throws IOException {
 		String topicSelected = this.btn.getText();
 		

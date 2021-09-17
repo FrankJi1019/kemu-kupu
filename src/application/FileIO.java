@@ -21,6 +21,10 @@ public class FileIO {
 	
 	public static void speakMaori(String word, double speed) {
 		
+		//default speed is 1.0 
+		//slow: 2.2
+		//fast: 0.7
+		
 		// magic number issue with directory (can be refactored later if needed)
 		LinuxCommand.executeCommand("touch ./data/Maori.scm");
 		// magic number issue with directory (can be refactored later if needed)
