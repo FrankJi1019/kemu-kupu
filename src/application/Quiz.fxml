@@ -6,8 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.QuizController">
    <children>
       <Label layoutX="216.0" layoutY="27.0" text="New Game">
          <font>
@@ -49,12 +48,12 @@
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="349.0" layoutY="227.0" mnemonicParsing="false" prefHeight="19.0" prefWidth="76.0" text="Submit">
+      <Button fx:id="submitButton" layoutX="349.0" layoutY="227.0" mnemonicParsing="false" onAction="#submit" prefHeight="19.0" prefWidth="76.0" text="Submit">
          <font>
             <Font name="Noto Sans Regular" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="idkButton" layoutX="436.0" layoutY="227.0" mnemonicParsing="false" prefHeight="18.0" prefWidth="130.0" text="I don't know">
+      <Button fx:id="idkButton" layoutX="436.0" layoutY="227.0" mnemonicParsing="false" onAction="#dontKnow" prefHeight="18.0" prefWidth="130.0" text="I don't know">
          <font>
             <Font name="Noto Sans Regular" size="15.0" />
          </font>
@@ -64,7 +63,7 @@
             <Font name="Noto Sans Regular" size="27.0" />
          </font>
       </Label>
-      <Button fx:id="hearAgainButton" layoutX="216.0" layoutY="148.0" mnemonicParsing="false" prefHeight="6.0" prefWidth="102.0" text="Hear again">
+      <Button fx:id="hearAgainButton" layoutX="216.0" layoutY="148.0" mnemonicParsing="false" onAction="#hearAgain" prefHeight="6.0" prefWidth="102.0" text="Hear again">
          <font>
             <Font name="Noto Sans Regular" size="14.0" />
          </font>
