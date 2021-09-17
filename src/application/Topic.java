@@ -4,7 +4,7 @@ public class Topic {
 	
 	private String name = "Default Topic Name";
 	private String description = "This is the default for a new topic created";
-	private String iconSrc = "data/images/default.png"; // presumably this will be updated to something like ./images/default.png
+	private String iconSrc = "default.png"; // presumably this will be updated to something like ./images/default.png
 	
 	// Constructors
 	public Topic(String name, String description, String iconSrc) {

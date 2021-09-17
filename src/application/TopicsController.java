@@ -55,10 +55,14 @@ public class TopicsController implements Initializable{
 		List<Topic> listOfTopics = new ArrayList<>();
 		Topic topic;
 		for(String fileName : list) {
-			topic = new Topic(fileName);
+			String formattedfileName = fileName.replace("-", " ");
+			topic = new Topic(formattedfileName);
+			// we should first check if fileName.png exists
+			// if filename exists, then :
+			topic.setIconSrc(fileName+".png");
+			// otherwise dont change the unage
 			
-			//here we can add an image as well
-			// i.e. we could first check if fileName.png exists, 
+			
 			//		if yes, 
 			//         topic.setIconSrc(fileName+".png");
 			//      otherwise we leave it as the default image

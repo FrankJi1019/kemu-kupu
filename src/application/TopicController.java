@@ -18,7 +18,7 @@ public class TopicController {
 	// when we switch scene, this will be the action event that does so
 	public void topicSelected(ActionEvent event) throws IOException {
 		String topicSelected = this.btn.getText();
-		
+		topicSelected = topicSelected.replace(" ", "-");
 		// this is where we set the word list
 		
 		System.out.println("You clicked: "+  topicSelected);
@@ -29,7 +29,7 @@ public class TopicController {
 	public void setData(Topic topic) {
 		this.topic = topic;
 		btn.setText(topic.getName());
-		Image image  = new Image("file:"+topic.getIconSrc());
+		Image image  = new Image("file:data/images/"+topic.getIconSrc());
 		img.setImage(image);
 	}
 	
