@@ -90,7 +90,7 @@ public class QuizController implements Initializable {
 	}
 	
 	public void hearAgain() {
-		System.out.println("hear again");
+		FileIO.openWavFile();
 	}
 	
 	public void submit() {
@@ -179,7 +179,33 @@ public class QuizController implements Initializable {
 	}
 	
 	public void dontKnow() {
-		System.out.println("Don't know");
+		this.wordStats.add(new Word(this.words.get(0), score = 0));
+		this.attemptTimes = 1;
+		this.words.remove(0);
+		
+		
+		FileIO.speakMaori(this.words.get(0), 1);
+		
+		// init the letter count
+		wordLetterCount = this.words.get(0).length();
+		int temp = wordLetterCount;
+		
+		
+		// set word letter count
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < temp; i++) {
+			if (this.words.get(0).charAt(i) == ' ') {
+				sb.append("  ");
+				wordLetterCount--;
+			} else {
+				sb.append("_ ");
+			}
+		}
+		letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
+		
+		// set which number is being tested
+		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
+		
 	}
 	
 	public void keyPressed(KeyEvent e) {
