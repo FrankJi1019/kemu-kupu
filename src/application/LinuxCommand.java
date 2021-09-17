@@ -95,8 +95,8 @@ public class LinuxCommand {
 		}
 	}
 	
-public static List<String> getFileNameFromDirectory(String dir){
-		
+	public static List<String> getFileNameFromDirectory(String dir){
+			
 		List<String> temp = new ArrayList<>();
 		
 		if ((LinuxCommand.getErrorCode("test -d"+dir)) == 1) {

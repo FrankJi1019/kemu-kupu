@@ -1,12 +1,17 @@
 package application;
 
+import java.net.URL;
+import java.util.List;
+import java.util.ResourceBundle;
+
 import javafx.fxml.FXML;
+import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
-public class QuizController {
+public class QuizController implements Initializable {
 	
 	@FXML
 	private Label scoreLabel;
@@ -20,6 +25,20 @@ public class QuizController {
 	private Label speedLabel;
 	@FXML
 	private Slider speedSlider;
+	
+	private static List<String> words;
+	
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		System.out.println(words);
+	}
+	
+	public static void setWords(List<String> words) {
+		QuizController.words = words;
+	}
+	
+	
 	
 	public void hearAgain() {
 		System.out.println("hear again");
@@ -42,6 +61,7 @@ public class QuizController {
 	public void ajustSpeed() {
 		System.out.println("Speed is " + speedSlider.getValue());
 	}
+
 	
 
 }
