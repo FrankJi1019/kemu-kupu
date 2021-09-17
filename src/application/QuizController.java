@@ -2,6 +2,7 @@ package application;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 
@@ -15,6 +16,10 @@ public class QuizController {
 	private Label letterCountLabel;
 	@FXML
 	private Label resultLabel;
+	@FXML
+	private Label speedLabel;
+	@FXML
+	private Slider speedSlider;
 	
 	public void hearAgain() {
 		System.out.println("hear again");
@@ -32,6 +37,10 @@ public class QuizController {
 		if (e.getCode() == KeyCode.ENTER) {
 			this.submit();
 		}
+	}
+	
+	public void ajustSpeed() {
+		System.out.println("Speed is " + speedSlider.getValue());
 	}
 	
 
