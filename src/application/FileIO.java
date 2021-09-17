@@ -42,6 +42,8 @@ public class FileIO {
 		LinuxCommand.executeCommand("rm -f ./data/Maori.scm");
 		
 		//Wav file for Maori word are kept because it might needed to be replayed.
+		
+		System.out.println(word);
 	}
 	
 	public static void speakEnglish(String word) {

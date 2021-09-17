@@ -59,7 +59,7 @@
             <Font name="Noto Sans Regular" size="15.0" />
          </font>
       </Button>
-      <Label fx:id="resultLabel" layoutX="253.0" layoutY="303.0" text="Correct">
+      <Label fx:id="resultLabel" layoutX="253.0" layoutY="303.0">
          <font>
             <Font name="Noto Sans Regular" size="27.0" />
          </font>
