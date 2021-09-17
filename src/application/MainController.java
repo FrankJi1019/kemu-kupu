@@ -20,7 +20,7 @@ public class MainController {
 	}
 	
 	public void newGame(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/application/Topics.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
