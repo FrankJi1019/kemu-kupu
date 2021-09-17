@@ -144,7 +144,10 @@ public class QuizController implements Initializable {
 			this.wordStats.add(new Word(this.words.get(0), score = 0));
 			this.attemptTimes = 1;
 			this.words.remove(0);
-			if (this.words.size() == 0) this.switchToComplete(e);
+			if (this.words.size() == 0) {
+				this.switchToComplete(e);
+				return;
+			}
 			resultLabel.setText("Incorrect");
 			FileIO.speakMaori(this.words.get(0), 1);
 			
@@ -193,7 +196,10 @@ public class QuizController implements Initializable {
 		this.wordStats.add(new Word(this.words.get(0), score = 0));
 		this.attemptTimes = 1;
 		this.words.remove(0);
-		if (this.words.size() == 0) this.switchToComplete(e);
+		if (this.words.size() == 0) {
+			this.switchToComplete(e);
+			return;
+		}
 		
 		FileIO.speakMaori(this.words.get(0), 1);
 		
@@ -234,7 +240,12 @@ public class QuizController implements Initializable {
 	}
 	
 	public void switchToComplete(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Completed.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Completed.fxml"));
+		Parent root = loader.load();
+		
+		CompletedController controller = loader.getController();
+		controller.setDataToTable(this.wordStats);
+		
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -243,14 +254,5 @@ public class QuizController implements Initializable {
 	
 }
 
-class Word {
-	String word;
-	double score;
 
-	public Word(String word, double score) {
-		this.word = word;
-		this.score = score;
-	}
-
-}
 
