@@ -53,21 +53,18 @@ public class TopicsController implements Initializable{
 	private List<Topic> generateListOfTopics() {
 		List<String> list = LinuxCommand.getTopic();
 		List<Topic> listOfTopics = new ArrayList<>();
+		List<String> imageList = LinuxCommand.getFileNameFromDirectory("./data/images");
 		Topic topic;
 		for(String fileName : list) {
 			String formattedfileName = fileName.replace("-", " ");
 			topic = new Topic(formattedfileName);
 			// we should first check if fileName.png exists
 			// if filename exists, then :
-			System.out.println(LinuxCommand.getFileNameFromDirectory("./data/images").toString());
-			if (list.contains(fileName)){
+			if (imageList.contains(fileName)){
 				topic.setIconSrc(fileName+".png");
-				System.out.println(fileName+".png");
 			} else {
 				topic.setIconSrc("default.png");
 			}
-			
-			
 			
 			//		if yes, 
 			//         topic.setIconSrc(fileName+".png");
