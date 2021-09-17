@@ -52,6 +52,8 @@ public class QuizController implements Initializable {
 	
 	private int attemptTimes = 1;
 	
+	private double speedOfSpeech = 1;
+	
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -91,7 +93,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 		
 		// speak the word
-		new Thread(new MyRunnable(this.words.get(0), 1)).start();
+		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 		
 	}
 	
@@ -101,7 +103,7 @@ public class QuizController implements Initializable {
 	
 	public void hearAgain() {
 		// FileIO.openWavFile();
-		new Thread(new MyRunnable(this.words.get(0), 1)).start();
+		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 	}
 	
 	public void submit(ActionEvent e) throws IOException {
@@ -117,7 +119,7 @@ public class QuizController implements Initializable {
 			if (this.words.size() == 0) this.switchToComplete(e);
 			resultLabel.setText("Correct");
 			// FileIO.speakMaori(this.words.get(0), 1);
-			new Thread(new MyRunnable(this.words.get(0), 1)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 			
 			scoreLabel.setText(Double.toString(score));
 			
@@ -151,7 +153,7 @@ public class QuizController implements Initializable {
 				return;
 			}
 			resultLabel.setText("Incorrect");
-			new Thread(new MyRunnable(this.words.get(0), 1)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 			
 			// init the letter count
 			wordLetterCount = this.words.get(0).length();
@@ -189,7 +191,7 @@ public class QuizController implements Initializable {
 			this.attemptTimes++;
 			resultLabel.setText("Incorrect");
 			// FileIO.openWavFile();
-			new Thread(new MyRunnable(this.words.get(0), 1)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 		}
 	}
 	
@@ -235,7 +237,7 @@ public class QuizController implements Initializable {
 	}
 	
 	public void ajustSpeed() {
-		System.out.println("Speed is " + speedSlider.getValue());
+		this.speedOfSpeech = speedSlider.getValue();
 	}
 
 	public boolean checkWordMatch(String userAnswer) {
