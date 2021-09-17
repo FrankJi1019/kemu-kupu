@@ -73,9 +73,26 @@ public class LinuxCommand {
 		
 		List<String> temp = new ArrayList<>();
 		
-		temp = executeCommand("ls ./words | cut  -d \".\" -f -1");
-		
-		return temp;
+		if ((LinuxCommand.getErrorCode("test -d words")) == 1) {
+			LinuxCommand.executeCommand("mkdir ./words");
+			// can rework error message to display on GUI.
+			System.out.println("Directory doesn't exist, created new directory");
+			//
+			return temp;
+		} else {
+			
+			temp = executeCommand("ls ./words | cut  -d \".\" -f -1");
+			
+			//check if there are any file in directory.
+			if (temp.isEmpty()) {
+				//can rework error message to display on GUI.
+				System.out.println("There are no wordlists in the directory.");
+				return temp;
+			} else {
+				return temp;
+			}
+			
+		}
 	}
 	
 }
