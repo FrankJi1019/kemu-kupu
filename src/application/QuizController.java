@@ -1,21 +1,31 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 import java.util.Random;
 
 public class QuizController implements Initializable {
+	
+	private Stage stage;
+	private Scene scene;
 	
 	@FXML
 	private Label scoreLabel;
@@ -93,7 +103,7 @@ public class QuizController implements Initializable {
 		FileIO.openWavFile();
 	}
 	
-	public void submit() {
+	public void submit(ActionEvent e) throws IOException {
 		
 		String userAnswer = userAnswerTextField.getText();
 		
@@ -103,6 +113,7 @@ public class QuizController implements Initializable {
 			score = score + (double)1 / this.attemptTimes;
 			this.attemptTimes = 1;
 			this.words.remove(0);
+			if (this.words.size() == 0) this.switchToComplete(e);
 			resultLabel.setText("Correct");
 			FileIO.speakMaori(this.words.get(0), 1);
 			
@@ -133,13 +144,13 @@ public class QuizController implements Initializable {
 			this.wordStats.add(new Word(this.words.get(0), score = 0));
 			this.attemptTimes = 1;
 			this.words.remove(0);
+			if (this.words.size() == 0) this.switchToComplete(e);
 			resultLabel.setText("Incorrect");
 			FileIO.speakMaori(this.words.get(0), 1);
 			
 			// init the letter count
 			wordLetterCount = this.words.get(0).length();
 			int temp = wordLetterCount;
-			
 			
 			// set word letter count
 			StringBuilder sb = new StringBuilder();
@@ -178,11 +189,11 @@ public class QuizController implements Initializable {
 		}
 	}
 	
-	public void dontKnow() {
+	public void dontKnow(ActionEvent e) throws IOException {
 		this.wordStats.add(new Word(this.words.get(0), score = 0));
 		this.attemptTimes = 1;
 		this.words.remove(0);
-		
+		if (this.words.size() == 0) this.switchToComplete(e);
 		
 		FileIO.speakMaori(this.words.get(0), 1);
 		
@@ -210,7 +221,7 @@ public class QuizController implements Initializable {
 	
 	public void keyPressed(KeyEvent e) {
 		if (e.getCode() == KeyCode.ENTER) {
-			this.submit();
+			// this.submit();
 		}
 	}
 	
@@ -220,6 +231,14 @@ public class QuizController implements Initializable {
 
 	public boolean checkWordMatch(String userAnswer) {
 		return userAnswer.equalsIgnoreCase(this.words.get(0));
+	}
+	
+	public void switchToComplete(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("/application/Completed.fxml"));
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 	
 }
