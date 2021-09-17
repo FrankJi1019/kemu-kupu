@@ -38,8 +38,11 @@ public class QuizController implements Initializable {
 		Random random = new Random();
 		if (allWords.size() <= 5) {
 			words = allWords;
+			System.out.println(this.words);
+			FileIO.speakMaori(this.words.get(1), 1);
 			return;
 		}
+		
 		while (this.words.size() < 5) {
 			String word = QuizController.allWords.get(random.nextInt(QuizController.allWords.size()));
 			if (!this.words.contains(word)) {
@@ -52,8 +55,6 @@ public class QuizController implements Initializable {
 	public static void setWords(List<String> words) {
 		QuizController.allWords = words;
 	}
-	
-	
 	
 	public void hearAgain() {
 		System.out.println("hear again");
@@ -77,6 +78,9 @@ public class QuizController implements Initializable {
 		System.out.println("Speed is " + speedSlider.getValue());
 	}
 
+	public boolean checkWordMatch(String userAnswer) {
+		return userAnswer.equalsIgnoreCase(this.words.get(0));
+	}
 	
-
 }
+
