@@ -230,9 +230,10 @@ public class QuizController implements Initializable {
 		
 	}
 	
-	public void keyPressed(KeyEvent e) {
+	public void keyPressed(KeyEvent e) throws IOException {
 		if (e.getCode() == KeyCode.ENTER) {
-			// this.submit();
+			ActionEvent event = new ActionEvent();
+			this.submit(event);
 		}
 	}
 	
@@ -241,7 +242,7 @@ public class QuizController implements Initializable {
 	}
 
 	public boolean checkWordMatch(String userAnswer) {
-		return userAnswer.equalsIgnoreCase(this.words.get(0));
+		return userAnswer.trim().equalsIgnoreCase(this.words.get(0)); // trim removes whitespace on ends
 	}
 	
 	public void switchToComplete(ActionEvent e) throws IOException {
