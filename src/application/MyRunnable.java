@@ -5,6 +5,8 @@ public class MyRunnable implements Runnable {
 	private String word;
 	private double speed;
 	
+	private static Object lock = new Object();
+	
 	public MyRunnable(String word, double speed) {
 		this.word = word;
 		this.speed = speed;
@@ -12,8 +14,10 @@ public class MyRunnable implements Runnable {
 
 	@Override
 	public void run() {
-		// TODO Auto-generated method stub
-		FileIO.speakMaori(this.word, this.speed);
+		synchronized (lock) {
+			FileIO.speakMaori(this.word, this.speed);
+		}
+		
 	}
 
 }
