@@ -13,6 +13,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
@@ -41,6 +42,8 @@ public class QuizController implements Initializable {
 	private Slider speedSlider;
 	@FXML
 	private TextField userAnswerTextField;
+	@FXML
+	private Button submitButton;
 	
 	// all words from file
 	private static List<String> allWords;
@@ -254,7 +257,7 @@ public class QuizController implements Initializable {
 	
 	public void keyPressed(KeyEvent e) throws IOException {
 		if (e.getCode() == KeyCode.ENTER) {
-			ActionEvent event = new ActionEvent();
+			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
 		}
 	}
