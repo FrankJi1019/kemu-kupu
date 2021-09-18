@@ -245,6 +245,8 @@ public class QuizController implements Initializable {
 		// set which number is being tested
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 		
+		this.userAnswerTextField.setText("");
+		
 	}
 	
 	public void keyPressed(KeyEvent e) throws IOException {
