@@ -58,6 +58,20 @@ public class QuizController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		// initialize a changeListener for the slider
+		this.speedSlider.valueProperty().addListener(c ->{
+			this.speedOfSpeech = this.speedSlider.getValue();
+			String roundedSpeed= String.format("%.2f", speedOfSpeech);
+			if(roundedSpeed.equals("1.00")) {
+				this.speedLabel.setText(roundedSpeed+ " (default)");
+			} else {
+				this.speedLabel.setText(roundedSpeed);
+			}
+
+		});
+		
+		
+		
 		// get the five words
 		Random random = new Random();
 		if (allWords.size() <= 5) {
@@ -235,10 +249,6 @@ public class QuizController implements Initializable {
 			ActionEvent event = new ActionEvent();
 			this.submit(event);
 		}
-	}
-	
-	public void ajustSpeed() {
-		this.speedOfSpeech = speedSlider.getValue();
 	}
 
 	public boolean checkWordMatch(String userAnswer) {
