@@ -130,7 +130,10 @@ public class QuizController implements Initializable {
 			score = score + (double)1 / this.attemptTimes;
 			this.attemptTimes = 1;
 			this.words.remove(0);
-			if (this.words.size() == 0) this.switchToComplete(e);
+			if (this.words.size() == 0) {
+				this.switchToComplete(e);
+				return;
+			}
 			resultLabel.setText("Correct");
 			// FileIO.speakMaori(this.words.get(0), 1);
 			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
