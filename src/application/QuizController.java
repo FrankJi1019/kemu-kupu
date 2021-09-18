@@ -207,6 +207,8 @@ public class QuizController implements Initializable {
 			// FileIO.openWavFile();
 			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 		}
+		
+		this.userAnswerTextField.clear();
 	}
 	
 	public void dontKnow(ActionEvent e) throws IOException {
