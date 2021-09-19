@@ -39,11 +39,11 @@ public class CompletedController {
 		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Double>("score"));
 		this.summaryTable.setItems(list);
 		
-		int totalScore = 0;
+		double totalScore = 0;
 		for (Word word: wordStats) {
 			totalScore += word.getScore();
 		}
-		this.totalScoreLabel.setText(Integer.toString(totalScore));
+		this.totalScoreLabel.setText(Double.toString(totalScore));
 		
 	}
 	

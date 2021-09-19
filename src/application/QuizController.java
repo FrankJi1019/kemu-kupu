@@ -6,7 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
+import java.util.concurrent.Callable;
+import java.util.concurrent.FutureTask;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -99,7 +102,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 		
 		// speak the word
-		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
+		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech, true)).start();
 		
 	}
 	
@@ -110,7 +113,7 @@ public class QuizController implements Initializable {
 	public void hearAgain() {
 		// FileIO.openWavFile();
 		// if (!MyRunnable.reading)
-		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
+		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech, false)).start();
 	}
 	
 	public void submit(ActionEvent e) throws IOException {
@@ -135,7 +138,7 @@ public class QuizController implements Initializable {
 			}
 			resultLabel.setText("Correct");
 			// FileIO.speakMaori(this.words.get(0), 1);
-			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech, true)).start();
 			
 			scoreLabel.setText(Double.toString(score));
 			
@@ -151,7 +154,7 @@ public class QuizController implements Initializable {
 				return;
 			}
 			resultLabel.setText("Incorrect");
-			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech, true)).start();
 			
 			this.setWordAndLetterCount();
 			
@@ -162,10 +165,13 @@ public class QuizController implements Initializable {
 			this.attemptTimes++;
 			resultLabel.setText("Incorrect");
 			// FileIO.openWavFile();
-			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
+			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech, true)).start();
 		}
 		
 		this.userAnswerTextField.clear();
+		
+		this.clearResultLabel();
+		
 	}
 	
 	public void dontKnow(ActionEvent e) throws IOException {
@@ -178,14 +184,19 @@ public class QuizController implements Initializable {
 		}
 		
 		// FileIO.speakMaori(this.words.get(0), 1);
-		new Thread(new MyRunnable(this.words.get(0), 1)).start();
+		new Thread(new MyRunnable(this.words.get(0), 1, true)).start();
 		
 		
 		this.setWordAndLetterCount();
 		
-		// clear , because we skipped
-		resultLabel.setText("");
+		// set result label
+		resultLabel.setText("Skipped");
 		
+		// will be executed after some time
+		this.clearResultLabel();
+		
+		this.userAnswerTextField.clear();
+
 	}
 	
 	public void keyPressed(KeyEvent e) throws IOException {
@@ -278,6 +289,17 @@ public class QuizController implements Initializable {
 		}
 		
 		return false;
+	}
+	
+	private void clearResultLabel() {
+		FutureTask<String> query = new FutureTask<String>(new Callable<String>() {
+            @Override
+            public String call() throws Exception {
+            	resultLabel.setText("");
+            	return null;
+            }
+        });
+		new Thread(new ResultLabelCleaner(query)).start();
 	}
 	
 }
