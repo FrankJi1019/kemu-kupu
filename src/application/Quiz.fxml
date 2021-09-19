@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.QuizController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.QuizController">
    <children>
       <Label layoutX="216.0" layoutY="27.0" text="New Game">
          <font>
@@ -34,27 +34,27 @@
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="letterCountLabel" layoutX="64.0" layoutY="160.0" text="_ _ _ _ _ (5 letters)">
+      <Label fx:id="letterCountLabel" alignment="TOP_LEFT" layoutX="60.0" layoutY="147.0" prefHeight="70.0" prefWidth="480.0" text="_ _ _ _ _ (5 letters)">
          <font>
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
       </Label>
-      <Label layoutX="40.0" layoutY="230.0" text="Enter guess: ">
+      <Label layoutX="40.0" layoutY="231.0" text="Enter guess: ">
          <font>
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="userAnswerTextField" layoutX="150.0" layoutY="231.0">
+      <TextField fx:id="userAnswerTextField" layoutX="150.0" layoutY="232.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="349.0" layoutY="227.0" mnemonicParsing="false" onAction="#submit" prefHeight="19.0" prefWidth="76.0" text="Submit">
+      <Button fx:id="submitButton" layoutX="349.0" layoutY="228.0" mnemonicParsing="false" onAction="#submit" prefHeight="19.0" prefWidth="76.0" text="Submit">
          <font>
             <Font name="Noto Sans Regular" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="idkButton" layoutX="436.0" layoutY="227.0" mnemonicParsing="false" onAction="#dontKnow" prefHeight="18.0" prefWidth="130.0" text="I don't know">
+      <Button fx:id="idkButton" layoutX="436.0" layoutY="228.0" mnemonicParsing="false" onAction="#dontKnow" prefHeight="18.0" prefWidth="130.0" text="I don't know">
          <font>
             <Font name="Noto Sans Regular" size="15.0" />
          </font>
