@@ -9,3 +9,19 @@
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
 }
+
+/* Topics*/
+.topic-button {
+	-fx-background-color: #b7d7c0;
+}
+.topic-button:hover{
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+}
+#back-button {
+	-fx-background-color: transparent;
+}
+#back-button:hover {
+	-fx-scale-x: 1.2;
+	-fx-scale-y: 1.2;
+}

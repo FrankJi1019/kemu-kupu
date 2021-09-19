@@ -3,19 +3,25 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TopicsController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TopicsController">
    <children>
-      <Label layoutX="247.0" layoutY="29.0" prefHeight="46.0" prefWidth="107.0" text="Topics" AnchorPane.topAnchor="29.0">
+      <Label layoutX="235.0" layoutY="27.0" prefHeight="64.0" prefWidth="131.0" text="Topics" AnchorPane.topAnchor="27.0">
          <font>
-            <Font size="36.0" />
+            <Font name="OpenDyslexicAlta" size="36.0" />
          </font></Label>
-      <Label layoutX="61.0" layoutY="91.0" text="Please choose a topic:" AnchorPane.topAnchor="91.0" />
-      <ScrollPane hbarPolicy="NEVER" layoutX="61.0" layoutY="106.0" prefHeight="258.0" prefWidth="478.0">
+      <Label layoutX="61.0" layoutY="91.0" text="Please choose a topic:" AnchorPane.topAnchor="91.0">
+         <font>
+            <Font name="OpenDyslexicAlta Bold" size="15.0" />
+         </font></Label>
+      <ScrollPane hbarPolicy="NEVER" layoutX="61.0" layoutY="118.0" prefHeight="246.0" prefWidth="478.0">
          <content>
             <GridPane fx:id="grid" prefHeight="100.0" prefWidth="110.0">
                <columnConstraints>
@@ -23,10 +29,20 @@
                </columnConstraints>
             </GridPane>
          </content></ScrollPane>
-      <Button fx:id="returnButton" layoutX="61.0" layoutY="35.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="34.0" prefWidth="107.0" text="Return home">
+      <Button id="back-button" fx:id="returnButton" layoutX="51.0" layoutY="40.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="38.0" prefWidth="43.0">
          <font>
             <Font name="Noto Sans CJK JP" size="14.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../data/images/back-btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Return to main menu" />
+         </tooltip>
       </Button>
    </children>
 </AnchorPane>
