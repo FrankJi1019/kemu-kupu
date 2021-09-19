@@ -11,6 +11,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -27,6 +28,8 @@ public class CompletedController {
 	private TableColumn<Word, String> wordColumn;
 	@FXML
 	private TableColumn<Word, Double> scoreColumn;
+	@FXML
+	private Label totalScoreLabel;
 	
 	public void setDataToTable(List<Word> wordStats) {
 		
@@ -35,6 +38,13 @@ public class CompletedController {
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
 		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Double>("score"));
 		this.summaryTable.setItems(list);
+		
+		int totalScore = 0;
+		for (Word word: wordStats) {
+			totalScore += word.getScore();
+		}
+		this.totalScoreLabel.setText(Integer.toString(totalScore));
+		
 	}
 	
 	public void returnHome(ActionEvent e) throws IOException {
