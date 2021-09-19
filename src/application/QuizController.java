@@ -93,22 +93,7 @@ public class QuizController implements Initializable {
 			}
 		}
 		
-		// init the letter count
-		wordLetterCount = this.words.get(0).length();
-		int temp = wordLetterCount;
-		
-		
-		// set word letter count
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < temp; i++) {
-			if (this.words.get(0).charAt(i) == ' ') {
-				sb.append("  ");
-				wordLetterCount--;
-			} else {
-				sb.append("_ ");
-			}
-		}
-		letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
+		this.setWordAndLetterCount();
 		
 		// set which number is being tested
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
@@ -196,25 +181,7 @@ public class QuizController implements Initializable {
 		new Thread(new MyRunnable(this.words.get(0), 1)).start();
 		
 		
-		// init the letter count
-		wordLetterCount = this.words.get(0).length();
-		int temp = wordLetterCount;
-		
-		
-		// set word letter count
-		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < temp; i++) {
-			if (this.words.get(0).charAt(i) == ' ') {
-				sb.append("  ");
-				wordLetterCount--;
-			} else {
-				sb.append("_ ");
-			}
-		}
-		letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
-		
-		// set which number is being tested
-		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
+		this.setWordAndLetterCount();
 		
 		// clear , because we skipped
 		resultLabel.setText("");
@@ -245,11 +212,11 @@ public class QuizController implements Initializable {
 		stage.show();
 	}
 	
-	public void setWordAndLetterCount() {
+	private void setWordAndLetterCount() {
 		// init the letter count
 		wordLetterCount = this.words.get(0).length();
 		int temp = wordLetterCount;
-		
+		int maxStringSize = 70;
 		
 		// set word letter count
 		StringBuilder sb = new StringBuilder();
@@ -261,13 +228,28 @@ public class QuizController implements Initializable {
 				sb.append("_ ");
 			}
 		}
-		letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
+		
+		String message = String.format("%s(%d letters)", sb.toString(), wordLetterCount);
+		if (message.length() > maxStringSize) {
+			char[] chars = message.toCharArray();
+			for (int i = maxStringSize; i < chars.length - 1; i++) {
+				if (chars[i] == ' ' && chars[i-1] == ' ' && chars[i+1] != ' ') {
+					chars[i] = '\n';
+					break;
+				}
+			}
+			message = new String(chars);
+		}
+		
+		letterCountLabel.setText(message);
+		
+		
 		
 		// set which number is being tested
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 	}
 	
-	public void showHint() {
+	private void showHint() {
 		char c = this.words.get(0).charAt(1);
 		int index = 2;
 		if (c == ' ') {
@@ -281,7 +263,7 @@ public class QuizController implements Initializable {
 			letterCountLabel.setText(new String(chars));
 	}
 	
-	public boolean showMessageWhenNoAnswer() {
+	private boolean showMessageWhenNoAnswer() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("No answer provided");
 		alert.setHeaderText("YOu have not entered your answer, are you sure you want to submit?");
