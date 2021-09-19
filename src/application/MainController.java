@@ -2,22 +2,34 @@ package application;
 
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.Optional;
+import java.util.ResourceBundle;
 
+import javafx.animation.Interpolator;
+import javafx.animation.KeyFrame;
+import javafx.animation.KeyValue;
+import javafx.animation.Timeline;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonType;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
-public class MainController {
+public class MainController implements Initializable{
 	
 	private Stage stage;
 	private Scene scene;
+	
+	@FXML SVGPath koruSvg;
 	
 	public void quit() {
 		// added confirmation alert window
@@ -41,6 +53,25 @@ public class MainController {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+
+	@Override
+	public void initialize(URL arg0, ResourceBundle arg1) {
+		double strokeArraySize = 1000.0;
+		// use a koru svg defined in the FXML to create an animation
+		koruSvg.getStrokeDashArray().add(strokeArraySize);
+		koruSvg.setStrokeDashOffset(strokeArraySize);
+
+		koruSvg.setStrokeWidth(5);
+
+		Timeline timeline = new Timeline(
+				new KeyFrame(Duration.seconds(10),new KeyValue(koruSvg.strokeDashOffsetProperty(), 0, Interpolator.LINEAR)),
+				new KeyFrame(Duration.ZERO,new KeyValue(koruSvg.strokeDashOffsetProperty(),strokeArraySize,Interpolator.LINEAR))
+				);
+		timeline.setCycleCount(Timeline.INDEFINITE);
+		timeline.setAutoReverse(true);
+        timeline.play();
+		
 	}
 
 }
