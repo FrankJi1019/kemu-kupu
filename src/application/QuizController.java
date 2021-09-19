@@ -120,6 +120,7 @@ public class QuizController implements Initializable {
 	
 	public void hearAgain() {
 		// FileIO.openWavFile();
+		// if (!MyRunnable.reading)
 		new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 	}
 	
