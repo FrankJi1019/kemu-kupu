@@ -42,6 +42,8 @@ public class QuizController implements Initializable {
 	@FXML
 	private Label letterCountLabel;
 	@FXML
+	private Label letterNumberLabel;
+	@FXML
 	private Label resultLabel;
 	@FXML
 	private Label speedLabel;
@@ -240,7 +242,7 @@ public class QuizController implements Initializable {
 			}
 		}
 		
-		String message = String.format("%s(%d letters)", sb.toString(), wordLetterCount);
+		String message = sb.toString();
 		if (message.length() > maxStringSize) {
 			char[] chars = message.toCharArray();
 			for (int i = maxStringSize; i < chars.length - 1; i++) {
@@ -253,6 +255,7 @@ public class QuizController implements Initializable {
 		}
 		
 		letterCountLabel.setText(message);
+		letterNumberLabel.setText(String.format("(%d letters)", wordLetterCount));
 		
 		
 		

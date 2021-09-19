@@ -34,7 +34,7 @@
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="letterCountLabel" alignment="TOP_LEFT" layoutX="60.0" layoutY="147.0" prefHeight="70.0" prefWidth="480.0" text="_ _ _ _ _ (5 letters)">
+      <Label fx:id="letterCountLabel" alignment="TOP_LEFT" layoutX="60.0" layoutY="147.0" prefHeight="70.0" prefWidth="480.0" text="_ _ _ _ _">
          <font>
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
@@ -76,6 +76,11 @@
          </font>
       </Label>
       <Label fx:id="speedLabel" layoutX="448.0" layoutY="85.0" text="1.00 (default)">
+         <font>
+            <Font name="Noto Sans Regular" size="18.0" />
+         </font>
+      </Label>
+      <Label fx:id="letterNumberLabel" layoutX="315.0" layoutY="266.0" text="5 letters">
          <font>
             <Font name="Noto Sans Regular" size="18.0" />
          </font>
