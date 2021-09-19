@@ -158,7 +158,7 @@ public class QuizController implements Initializable {
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
-			this.wordStats.add(new Word(this.words.get(0), score = 0));
+			this.wordStats.add(new Word(this.words.get(0), 0));
 			this.attemptTimes = 1;
 			this.words.remove(0);
 			if (this.words.size() == 0) {
