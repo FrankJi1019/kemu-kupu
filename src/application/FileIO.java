@@ -17,6 +17,19 @@ public class FileIO {
 		}
 	}
 	
+	public static String openGeneralWavFile(String filename) {
+		String temp;
+		// magic number issue with directory (can be refactored later if needed)
+		if ((LinuxCommand.getErrorCode("test -f ./data/sounds/"+filename+".wav")) == 0) {
+			LinuxCommand.executeCommand("aplay ./data/sounds/"+filename+".wav");
+			return null;
+		} else {
+			temp = "no such file exists";
+			return temp;
+		}
+	}
+	
+	
 	public static void deleteWavFile() {
 		LinuxCommand.executeCommand("rm -f ./data/*.wav");
 	}
