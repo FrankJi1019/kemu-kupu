@@ -162,17 +162,7 @@ public class QuizController implements Initializable {
 			
 		// user gets wrong in the 1st time
 		} else {
-			char c = this.words.get(0).charAt(1);
-			int index = 2;
-			if (c == ' ') {
-				c = this.words.get(0).charAt(2);
-				index = 4;
-			}
-			
-			String s = letterCountLabel.getText();
-			char[] chars = s.toCharArray();
-			chars[index] = c;
- 			letterCountLabel.setText(new String(chars));
+			this.showHint();
 			
 			this.attemptTimes++;
 			resultLabel.setText("Incorrect");
@@ -265,6 +255,20 @@ public class QuizController implements Initializable {
 		
 		// set which number is being tested
 		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
+	}
+	
+	public void showHint() {
+		char c = this.words.get(0).charAt(1);
+		int index = 2;
+		if (c == ' ') {
+			c = this.words.get(0).charAt(2);
+			index = 4;
+		}
+		
+		String s = letterCountLabel.getText();
+		char[] chars = s.toCharArray();
+		chars[index] = c;
+			letterCountLabel.setText(new String(chars));
 	}
 	
 }
