@@ -7,42 +7,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
    <children>
-      <Label layoutX="193.0" layoutY="40.0" text="Quiz Completed">
+      <Label layoutX="206.0" layoutY="40.0" text="Quiz Completed">
          <font>
-            <Font name="HVD Bodedo Medium" size="22.0" />
+            <Font name="OpenDyslexicAlta Bold" size="22.0" />
          </font>
       </Label>
       <TableView fx:id="summaryTable" layoutX="93.0" layoutY="124.0" prefHeight="163.0" prefWidth="200.0">
         <columns>
           <TableColumn fx:id="wordColumn" prefWidth="100.0" text="Word" />
-          <TableColumn fx:id="scoreColumn" prefWidth="74.0" text="Score" />
+          <TableColumn fx:id="scoreColumn" prefWidth="99.0" text="Score" />
         </columns>
       </TableView>
-      <Button fx:id="playAgainButton" layoutX="382.0" layoutY="158.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="50.0" prefWidth="130.0" text="Play again">
+      <Button fx:id="playAgainButton" layoutX="376.0" layoutY="140.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="50.0" prefWidth="146.0" styleClass="large-button" text="Play again">
          <font>
-            <Font name="Noto Sans CJK JP" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="17.0" />
          </font>
       </Button>
-      <Button fx:id="returnButton" layoutX="382.0" layoutY="255.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="50.0" prefWidth="130.0" text="Return home">
+      <Button fx:id="returnButton" layoutX="376.0" layoutY="221.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="50.0" prefWidth="146.0" styleClass="large-button" text="Return home">
          <font>
-            <Font name="Noto Sans CJK JP" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="17.0" />
          </font>
       </Button>
       <Label layoutX="61.0" layoutY="89.0" text="Game summary: ">
          <font>
-            <Font name="Noto Sans Carian Regular" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="17.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="305.0" text="Total Score: ">
+      <Label layoutX="61.0" layoutY="297.0" text="Total Score: ">
          <font>
-            <Font name="Noto Sans Carian Regular" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="17.0" />
          </font>
       </Label>
-      <Label fx:id="totalScoreLabel" layoutX="155.0" layoutY="305.0" text="0">
+      <Label fx:id="totalScoreLabel" layoutX="173.0" layoutY="297.0" text="0">
          <font>
-            <Font name="Noto Sans Carian Regular" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="17.0" />
          </font>
       </Label>
    </children>
