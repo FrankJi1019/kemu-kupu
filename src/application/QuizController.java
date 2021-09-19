@@ -144,25 +144,7 @@ public class QuizController implements Initializable {
 			
 			scoreLabel.setText(Double.toString(score));
 			
-			// init the letter count
-			wordLetterCount = this.words.get(0).length();
-			int temp = wordLetterCount;
-			
-			
-			// set word letter count
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < temp; i++) {
-				if (this.words.get(0).charAt(i) == ' ') {
-					sb.append("  ");
-					wordLetterCount--;
-				} else {
-					sb.append("_ ");
-				}
-			}
-			letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
-			
-			// set which number is being tested
-			wordCountLabel.setText(Integer.toString(6 - this.words.size()));
+			this.setWordAndLetterCount();
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
@@ -176,24 +158,7 @@ public class QuizController implements Initializable {
 			resultLabel.setText("Incorrect");
 			new Thread(new MyRunnable(this.words.get(0), speedOfSpeech)).start();
 			
-			// init the letter count
-			wordLetterCount = this.words.get(0).length();
-			int temp = wordLetterCount;
-			
-			// set word letter count
-			StringBuilder sb = new StringBuilder();
-			for (int i = 0; i < temp; i++) {
-				if (this.words.get(0).charAt(i) == ' ') {
-					sb.append("  ");
-					wordLetterCount--;
-				} else {
-					sb.append("_ ");
-				}
-			}
-			letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
-			
-			// set which number is being tested
-			wordCountLabel.setText(Integer.toString(6 - this.words.size()));
+			this.setWordAndLetterCount();
 			
 		// user gets wrong in the 1st time
 		} else {
@@ -278,6 +243,28 @@ public class QuizController implements Initializable {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	public void setWordAndLetterCount() {
+		// init the letter count
+		wordLetterCount = this.words.get(0).length();
+		int temp = wordLetterCount;
+		
+		
+		// set word letter count
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < temp; i++) {
+			if (this.words.get(0).charAt(i) == ' ') {
+				sb.append("  ");
+				wordLetterCount--;
+			} else {
+				sb.append("_ ");
+			}
+		}
+		letterCountLabel.setText(String.format("%s(%d letters)", sb.toString(), wordLetterCount));
+		
+		// set which number is being tested
+		wordCountLabel.setText(Integer.toString(6 - this.words.size()));
 	}
 	
 }
