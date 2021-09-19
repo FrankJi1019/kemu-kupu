@@ -72,8 +72,8 @@ public class QuizController implements Initializable {
 		
 		// initialize a changeListener for the slider
 		this.speedSlider.valueProperty().addListener(c ->{
-			this.speedOfSpeech = this.speedSlider.getValue();
-			String roundedSpeed= String.format("%.2f", speedOfSpeech);
+			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
+			String roundedSpeed= String.format("%.2f", 1/speedOfSpeech);
 			if(roundedSpeed.equals("1.00")) {
 				this.speedLabel.setText(roundedSpeed+ " (default)");
 			} else {
