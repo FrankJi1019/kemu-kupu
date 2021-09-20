@@ -115,7 +115,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(6 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		new Thread(new MyRunnable(this.testWords.get(0), speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 		
 	}
 	
@@ -134,7 +134,7 @@ public class QuizController implements Initializable {
 	 * this is executed in another thread so that the main thread will not freeze
 	 */
 	public void hearAgain() {
-		new Thread(new MyRunnable(this.testWords.get(0), speedOfSpeech, false)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false)).start();
 	}
 	
 	/*
@@ -176,7 +176,7 @@ public class QuizController implements Initializable {
 			FileIO.openGeneralWavFile("correct");
 			
 			// play the next word
-			new Thread(new MyRunnable(this.testWords.get(0), speedOfSpeech, true)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 			
 			// update the score and letter cound
 			scoreLabel.setText(Double.toString(score));
@@ -203,7 +203,7 @@ public class QuizController implements Initializable {
 			// let the user know the result of their submit and play the next word
 			resultLabel.setText("Incorrect");
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new MyRunnable(this.testWords.get(0), speedOfSpeech, true)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 			
 			// update letter count to the new word
 			this.setWordAndLetterCount();
@@ -219,7 +219,7 @@ public class QuizController implements Initializable {
 			// inform the user the result of there submit and play the word again
 			resultLabel.setText("Incorrect");
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new MyRunnable(this.testWords.get(0), speedOfSpeech, true)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -246,7 +246,7 @@ public class QuizController implements Initializable {
 		}
 		
 		// reaching this point means the next exists, so play the next word
-		new Thread(new MyRunnable(this.testWords.get(0), 1, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), 1, true)).start();
 		
 		// update the letter count to the next word
 		this.setWordAndLetterCount();
