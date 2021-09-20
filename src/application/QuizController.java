@@ -220,7 +220,7 @@ public class QuizController implements Initializable {
 		Parent root = loader.load();
 		
 		CompletedController controller = loader.getController();
-		controller.setDataToTable(this.wordStats);
+		controller.setData(this.wordStats);
 		
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);

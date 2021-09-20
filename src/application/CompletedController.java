@@ -19,6 +19,7 @@ import javafx.stage.Stage;
 
 public class CompletedController {
 	
+	// these two variables are used to change scene
 	private Stage stage;
 	private Scene scene;
 	
@@ -31,14 +32,22 @@ public class CompletedController {
 	@FXML
 	private Label totalScoreLabel;
 	
-	public void setDataToTable(List<Word> wordStats) {
+	/*
+	 * This method will be invoked when other scene is switching to complete scene, this is to pass
+	 * useful data to this controller, for example, the statistics for user answers
+	 * The total score will also be calculated in this method and display on the screen as a label
+	 * The parameter wordStats is the statistics of the user answers.
+	 */
+	public void setData(List<Word> wordStats) {
 		
+		// write the data to the table
 		ObservableList<Word> list = FXCollections.observableArrayList(wordStats);
 		
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
 		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Double>("score"));
 		this.summaryTable.setItems(list);
 		
+		// iterates the list to calculate the total score and set it to the text of label
 		double totalScore = 0;
 		for (Word word: wordStats) {
 			totalScore += word.getScore();
@@ -47,20 +56,38 @@ public class CompletedController {
 		
 	}
 	
-	public void returnHome(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+	public void returnHome(ActionEvent e) {
+		this.switchScene(e, "Main");
 	}
 	
-	public void playAgain(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Quiz.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+	public void playAgain(ActionEvent e) {
+		this.switchScene(e, "Quiz");
+	}
+	
+	
+	/*
+	 * This method is to switch scenes 
+	 * The first parameter e is the ActionEvent that is received when user clicked a button
+	 * The second parameter sceneName is the name of the fxml file, this string should not include 
+	 * file extension and should be case-sensitive
+	 */
+	private void switchScene(ActionEvent e, String sceneName) {
+		
+		try {
+			// establish the full relative path using the name of the scene
+			// this is relative easy to do because all fxml files are stored in the same package
+			String path = String.format("/application/%s.fxml", sceneName);
+			
+			Parent root = FXMLLoader.load(getClass().getResource(path));
+			stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+			
+		} catch (IOException exception) {
+			exception.printStackTrace();
+		}
+
 	}
 
 }
