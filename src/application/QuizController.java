@@ -232,7 +232,7 @@ public class QuizController implements Initializable {
 		// init the letter count
 		wordLetterCount = this.words.get(0).length();
 		int temp = wordLetterCount;
-		int maxStringSize = 70;
+		int maxStringSize = 47;
 		
 		// set word letter count
 		StringBuilder sb = new StringBuilder();
@@ -248,7 +248,7 @@ public class QuizController implements Initializable {
 		String message = sb.toString();
 		if (message.length() > maxStringSize) {
 			char[] chars = message.toCharArray();
-			for (int i = maxStringSize; i < chars.length - 1; i++) {
+			for (int i = maxStringSize; i > 0; i--) {
 				if (chars[i] == ' ' && chars[i-1] == ' ' && chars[i+1] != ' ') {
 					chars[i] = '\n';
 					break;
@@ -259,7 +259,6 @@ public class QuizController implements Initializable {
 		
 		letterCountLabel.setText(message);
 		letterNumberLabel.setText(String.format("(%d letters)", wordLetterCount));
-		
 		
 		
 		// set which number is being tested
