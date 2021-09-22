@@ -56,7 +56,8 @@ public class FileIO {
 		LinuxCommand.executeCommand("rm -f ./data/Maori.scm");
 		
 		
-		System.out.println(word);
+		// Dev feature only
+		//System.out.println(word);
 	}
 	
 	
