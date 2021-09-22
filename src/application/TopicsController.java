@@ -29,11 +29,16 @@ public class TopicsController implements Initializable{
 	private Stage stage;
 	private Scene scene;
 
+	
+	// This is method is call when a controller instance has been created.
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		List<Topic> topicList = generateListOfTopics();
 		int col = 1;
 		int row = 0;
+		
+		// adding topics names into the GridPane.
 		for(Topic item : topicList) {
 
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("Topic.fxml"));
@@ -61,8 +66,10 @@ public class TopicsController implements Initializable{
 		
 	}
 
+	// this methods gets the filename as a list and icon names as list and match
+	// filename with icon names.
 	private List<Topic> generateListOfTopics() {
-		List<String> list = LinuxCommand.getTopic();
+		List<String> list = LinuxCommand.getFileNameFromDirectory("./words");
 		List<Topic> listOfTopics = new ArrayList<>();
 		List<String> imageList = LinuxCommand.getFileNameFromDirectory("./data/images");
 		Topic topic;
@@ -80,6 +87,7 @@ public class TopicsController implements Initializable{
 		
 	}
 	
+	// this method will return to Main game page when called.
 	public void returnHome(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Main.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();

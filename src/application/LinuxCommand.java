@@ -6,15 +6,19 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// this is the class for passing in different linux commands;
+// this is the class for running commands in different linux commands;
 public class LinuxCommand {
 
+	
+	// this method can call a certain bash cammands by passing in String as 
+	// commands and return outputs as a list.
 	public static List<String> executeCommand(String command){
 		
 		List<String> list = new ArrayList<>();
 		
 		try {
 			
+			// standard process for calling bash command
 			ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 
 			Process process = pb.start();
@@ -24,6 +28,7 @@ public class LinuxCommand {
 			
 			int exitStatus = process.waitFor();
 			
+			// add outputs from Bash each line into an entry in the List if no error opening the file.
 			if (exitStatus == 0) {
 				String line;
 				while ((line = stdout.readLine()) != null) {
@@ -43,8 +48,10 @@ public class LinuxCommand {
 	}
 	
 	
-	
+	// method to check by running certain command if error is returned, return error code as
+	// an int, 0 for correct, 1 for error. -1 for invalid.
 	public static int getErrorCode(String command) {
+		//initialise errorCode to -1 for invalid.
 		int errorCode = -1;
 		
 	try {
@@ -55,6 +62,7 @@ public class LinuxCommand {
 
 		int exitStatus = process.waitFor();
 		
+		// checking error code from process.
 		if (exitStatus == 0) {
 			errorCode = 0;
 		} else {
@@ -67,45 +75,26 @@ public class LinuxCommand {
 	
 	return errorCode;
 	}
-	
 
-	public static List<String> getTopic(){
-		
-		List<String> temp = new ArrayList<>();
-		
-		if ((LinuxCommand.getErrorCode("test -d words")) == 1) {
-			LinuxCommand.executeCommand("mkdir ./words");
-			// can rework error message to display on GUI.
-			System.out.println("Directory doesn't exist, created new directory");
-			//
-			return temp;
-		} else {
-			
-			temp = executeCommand("ls ./words | cut  -d \".\" -f -1");
-			
-			//check if there are any file in directory.
-			if (temp.isEmpty()) {
-				//can rework error message to display on GUI.
-				System.out.println("There are no wordlists in the directory.");
-				return temp;
-			} else {
-				return temp;
-			}
-			
-		}
-	}
+	// getTopic method deleted due to redundent.
 	
+	
+	// this method gets file names from <directory specified> folder and trim .txt part.
+	// file names will be saved and returned as a List.
 	public static List<String> getFileNameFromDirectory(String dir){
 
 		List<String> temp = new ArrayList<>();
 		
+		// checking if directory exists.
 		if ((LinuxCommand.getErrorCode("test -d"+dir)) == 1) {
 			// can rework error message to display on GUI.
 			System.out.println("Directory doesn't exist");
-			//
+			
 			return temp;
 		} else {
 			
+			
+			// return filename and trimming the part after '.'
 			temp = executeCommand("ls "+dir+" | cut  -d \".\" -f -1");
 			
 			//check if there are any file in directory.
