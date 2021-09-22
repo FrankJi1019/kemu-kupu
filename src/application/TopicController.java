@@ -1,7 +1,6 @@
 package application;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javafx.event.ActionEvent;
@@ -19,41 +18,47 @@ public class TopicController {
 
 	@FXML Button btn;
 	@FXML ImageView img;
-	
-	private Topic topic;
-	
+
+
 	private Stage stage;
 	private Scene scene;
-	private Parent root;
-	
-	// when we switch scene, this will be the action event that does so
-	public void topicSelected(ActionEvent event) throws IOException {
+
+	// Image dir exists outside src to give future ability to add topics (and images)
+	private static String IMAGE_DIRECTORY = "./data/images/";
+
+	/**
+	 * This method switches scene to the quiz and uses the chosen topic to set the word-list
+	 * to the correct file.
+	 * 
+	 * @param event created by Topic Button press
+	 * @throws IOException 
+	 */
+	public void switchToQuiz(ActionEvent event) throws IOException {
+		// Set the quiz word-list to the topic selected through the button title
 		String topicSelected = this.btn.getText();
-		topicSelected = topicSelected.replace(" ", "-");
-		// this is where we set the word list
-		
-		// System.out.println("You clicked: "+  topicSelected);
-		
-		// get the word list
-		List<String> words = FileIO.getContentFromFile(topicSelected);
-		
-		// pass the word to the quiz controller + switch the scene
+		String fileName = topicSelected.replace(" ", "-");
+		List<String> words = FileIO.getContentFromFile(fileName);
 		QuizController.setWords(words);
-		
-		// switch the scene
+
+		// Switch the scene
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Quiz.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
-		
+
 	}
-	
+
+	/**
+	 * This method uses a Topic object to set the required button and image element
+	 * for display
+	 * 
+	 * @param topic to use text and image values of 
+	 */
 	public void setData(Topic topic) {
-		this.topic = topic;
 		btn.setText(topic.getName());
-		Image image  = new Image("file:data/images/"+topic.getIconSrc());
+		Image image  = new Image("file:" + IMAGE_DIRECTORY + topic.getIconSrc());
 		img.setImage(image);
 	}
-	
+
 }

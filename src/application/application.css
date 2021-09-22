@@ -1,4 +1,4 @@
-/* Global */
+/* ----- Global  ----- */
 .background {
 	-fx-background-color: #F5F5F5;
 }
@@ -10,8 +10,9 @@
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
 }
+/* ------------------- */
 
-/* Topics*/
+/* ----- Topics  ----- */
 .topic-button {
 	-fx-background-color: #b7d7c0;
 }
@@ -26,3 +27,8 @@
 	-fx-scale-x: 1.2;
 	-fx-scale-y: 1.2;
 }
+.empty-msg {
+	-fx-text-fill: red; 
+	-fx-font-family: OpenDyslexicAlta;
+}
+/* ------------------- */
