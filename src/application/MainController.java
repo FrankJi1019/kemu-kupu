@@ -31,6 +31,7 @@ public class MainController implements Initializable{
 	
 	@FXML SVGPath koruSvg;
 	
+	// quit method to quit the game when called.
 	public void quit() {
 		// added confirmation alert window
 		Alert alert = new Alert(AlertType.CONFIRMATION);
@@ -47,6 +48,7 @@ public class MainController implements Initializable{
 		}
 	}
 	
+	// this method switches to Topics scene when called.
 	public void newGame(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Topics.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
