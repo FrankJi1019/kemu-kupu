@@ -140,7 +140,7 @@ public class QuizController implements Initializable {
 	/*
 	 * This is the action for submit button
 	 */
-	public void submit(ActionEvent e) throws IOException {
+	public void submit(ActionEvent e) throws IOException, InterruptedException {
 		
 		// get the user answer from the text field
 		String userAnswer = userAnswerTextField.getText();
@@ -165,15 +165,15 @@ public class QuizController implements Initializable {
 			// remove the word that has finished, this means the first word in the list is the next word
 			this.testWords.remove(0);
 			
+			// tell the user the result of their submit in the label, also play a sound to let them know
+			resultLabel.setText("Correct");
+			FileIO.openGeneralWavFile("correct");
+			
 			// if there is no next word, the program should switch complete screen
 			if (this.testWords.size() == 0) {
 				this.switchToComplete(e);
 				return;
 			}
-			
-			// tell the user the result of their submit in the label, also play a sound to let them know
-			resultLabel.setText("Correct");
-			FileIO.openGeneralWavFile("correct");
 			
 			// play the next word
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
@@ -194,6 +194,9 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
+			resultLabel.setText("Incorrect");
+			FileIO.openGeneralWavFile("wrong");
+			
 			// if there is no next word, then switch to the complete scene
 			if (this.testWords.size() == 0) {
 				this.switchToComplete(e);
@@ -201,8 +204,6 @@ public class QuizController implements Initializable {
 			}
 			
 			// let the user know the result of their submit and play the next word
-			resultLabel.setText("Incorrect");
-			FileIO.openGeneralWavFile("wrong");
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 			
 			// update letter count to the new word
@@ -233,7 +234,7 @@ public class QuizController implements Initializable {
 	/*
 	 * action event for the don't know button
 	 */
-	public void dontKnow(ActionEvent e) throws IOException {
+	public void dontKnow(ActionEvent e) throws IOException, InterruptedException {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
 		this.wordStats.add(new Word(this.testWords.get(0), 0));
 		this.attemptTimes = 1;
@@ -266,7 +267,7 @@ public class QuizController implements Initializable {
 	 * This is the key board event that allows user to hit enter to submit answer
 	 * simply invokes the submit method
 	 */
-	public void keyPressed(KeyEvent e) throws IOException {
+	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
 		if (e.getCode() == KeyCode.ENTER) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
@@ -284,7 +285,10 @@ public class QuizController implements Initializable {
 	/*
 	 * This method will first pass user statistics to the complete screen and then switch to it
 	 */
-	public void switchToComplete(ActionEvent e) throws IOException {
+	public void switchToComplete(ActionEvent e) throws IOException, InterruptedException {
+		
+		Thread.sleep(1000);
+		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Completed.fxml"));
 		Parent root = loader.load();
 		
