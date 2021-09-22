@@ -10,7 +10,7 @@ Be sure to update this README file to provide an easy-to-follow set of instructi
 #Note:
 
 To run this program, type the following from the command line:
-the wordquiz.sh specifies the class path for the java program to run:
+the StartGame.sh specifies the class path for the java program to run:
 
 
 First, change the file permission to excutable:
