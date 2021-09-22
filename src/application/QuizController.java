@@ -287,8 +287,6 @@ public class QuizController implements Initializable {
 	 */
 	public void switchToComplete(ActionEvent e) throws IOException, InterruptedException {
 		
-		Thread.sleep(1000);
-		
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Completed.fxml"));
 		Parent root = loader.load();
 		
