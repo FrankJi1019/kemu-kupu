@@ -6,12 +6,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-// this is the class for running commands in different linux commands;
+/** this is the class for running commands in different linux commands;
+ *
+ */
 public class LinuxCommand {
 
 	
-	// this method can call a certain bash cammands by passing in String as 
-	// commands and return outputs as a list.
+	/** this method can call a certain bash cammands by passing in String as 
+	 *  commands and return outputs as a list.
+	 */
+	
 	public static List<String> executeCommand(String command){
 		
 		List<String> list = new ArrayList<>();
@@ -48,8 +52,11 @@ public class LinuxCommand {
 	}
 	
 	
-	// method to check by running certain command if error is returned, return error code as
-	// an int, 0 for correct, 1 for error. -1 for invalid.
+	/**  method to check by running certain command if error is returned, return error code as
+	 *   an int, 0 for correct, 1 for error. -1 for invalid.
+	 * @return int
+	 */
+	
 	public static int getErrorCode(String command) {
 		//initialise errorCode to -1 for invalid.
 		int errorCode = -1;
@@ -79,8 +86,10 @@ public class LinuxCommand {
 	// getTopic method deleted due to redundent.
 	
 	
-	// this method gets file names from <directory specified> folder and trim .txt part.
-	// file names will be saved and returned as a List.
+	/** this method gets file names from <directory specified> folder and trim .txt part.
+	 * file names will be saved and returned as a List.
+	 */
+	 
 	public static List<String> getFileNameFromDirectory(String dir){
 
 		List<String> temp = new ArrayList<>();

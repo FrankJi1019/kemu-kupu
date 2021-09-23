@@ -3,15 +3,23 @@ package application;
 import java.util.ArrayList;
 import java.util.List;
 
-// this class features any commands that are required file Input/Output.
+/** 
+ *  this class features any commands that are required file Input/Output.
+ */
 public class FileIO {
 
+	// directory constants
 	private static String WAVE_DIRECTORY = "./data/sounds/";
 	
 	// Method openWavFile deleted because it is not used.
 	
 	
-	// open and play filename.wav file from ./data/sounds folder.
+	/** this method open and play filename.wav file from ./data/sounds folder.
+	 * 	when String filename are passed in.
+	 * 
+	 * @param filename
+	 */
+	
 	public static String openGeneralWavFile(String filename) {
 		String temp;
 		
@@ -29,8 +37,10 @@ public class FileIO {
 	//  Method deleteWavFile deleted because it is not used.
 	
 	
+	/**
+	 * Method for speakingMaori word giving string as word to speak and int as speed for the speech.
+	 */
 	
-	// Method for speakingMaori word giving string as word to speak and int as speed for the speech.
 	public static void speakMaori(String word, double speed) {
 		
 		//default speed is 1.0 
@@ -61,7 +71,10 @@ public class FileIO {
 	}
 	
 	
-	// method to speak English given a string as a word.
+	/**method to speak English given a string as a word.
+	 * 
+	 * @param word
+	 */
 	public static void speakEnglish(String word) {
 		
 		
@@ -78,7 +91,10 @@ public class FileIO {
 	}
 	
 	
-	// Method to cat each line from file and output into a list.
+	/** Method to cat each line from file and output into a list.
+	 * 
+	 * @return List
+	 */
 	public static List<String> getContentFromFile (String fileName){
 		List<String> temp = new ArrayList<>();
 		
