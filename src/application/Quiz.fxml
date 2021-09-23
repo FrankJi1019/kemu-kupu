@@ -34,32 +34,32 @@
             <Font name="OpenDyslexicAlta" size="18.0" />
          </font>
       </Label>
-      <Label fx:id="letterCountLabel" alignment="TOP_CENTER" layoutX="60.0" layoutY="139.0" prefHeight="70.0" prefWidth="480.0" text="_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="letterCountLabel" alignment="TOP_CENTER" layoutX="60.0" layoutY="163.0" prefHeight="70.0" prefWidth="480.0" text="_ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="OpenDyslexicAlta" size="18.0" />
          </font>
       </Label>
-      <TextField fx:id="userAnswerTextField" layoutX="144.0" layoutY="209.0" prefHeight="37.0" prefWidth="324.0" promptText="Enter guess here">
+      <TextField fx:id="userAnswerTextField" layoutX="144.0" layoutY="233.0" prefHeight="37.0" prefWidth="324.0" promptText="Enter guess here">
          <font>
             <Font name="OpenDyslexicAlta" size="15.0" />
          </font>
       </TextField>
-      <Button fx:id="submitButton" layoutX="144.0" layoutY="251.0" mnemonicParsing="false" onAction="#submit" prefHeight="19.0" prefWidth="76.0" styleClass="large-button" text="Submit">
+      <Button fx:id="submitButton" layoutX="144.0" layoutY="275.0" mnemonicParsing="false" onAction="#submit" prefHeight="19.0" prefWidth="76.0" styleClass="large-button" text="Submit">
          <font>
             <Font name="OpenDyslexicAlta" size="15.0" />
          </font>
       </Button>
-      <Button fx:id="idkButton" layoutX="230.0" layoutY="251.0" mnemonicParsing="false" onAction="#dontKnow" prefHeight="31.0" prefWidth="112.0" styleClass="large-button" text="Don't know">
+      <Button fx:id="idkButton" layoutX="230.0" layoutY="275.0" mnemonicParsing="false" onAction="#dontKnow" prefHeight="31.0" prefWidth="112.0" styleClass="large-button" text="Don't know">
          <font>
             <Font name="OpenDyslexicAlta" size="15.0" />
          </font>
       </Button>
-      <Label fx:id="resultLabel" alignment="CENTER" layoutX="192.0" layoutY="323.0" prefHeight="48.0" prefWidth="216.0" textAlignment="CENTER" textFill="#800202">
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="192.0" layoutY="331.0" prefHeight="48.0" prefWidth="216.0" textAlignment="CENTER" textFill="#800202">
          <font>
             <Font name="OpenDyslexicAlta" size="27.0" />
          </font>
       </Label>
-      <Button fx:id="hearAgainButton" layoutX="354.0" layoutY="251.0" mnemonicParsing="false" onAction="#hearAgain" prefHeight="37.0" prefWidth="112.0" styleClass="large-button" text="Hear again">
+      <Button fx:id="hearAgainButton" layoutX="354.0" layoutY="275.0" mnemonicParsing="false" onAction="#hearAgain" prefHeight="37.0" prefWidth="112.0" styleClass="large-button" text="Hear again">
          <font>
             <Font name="OpenDyslexicAlta" size="15.0" />
          </font>
@@ -80,5 +80,35 @@
             <Font name="Noto Sans Regular" size="12.0" />
          </font>
       </Label>
+      <Label layoutX="18.0" layoutY="87.0" text="Macronised Vowels:">
+         <font>
+            <Font name="OpenDyslexicAlta" size="13.0" />
+         </font>
+      </Label>
+      <Button layoutX="15.0" layoutY="110.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ā">
+         <font>
+            <Font name="OpenDyslexicMono" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="50.0" layoutY="110.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ē">
+         <font>
+            <Font name="OpenDyslexicMono" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="85.0" layoutY="110.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ī">
+         <font>
+            <Font name="OpenDyslexicMono" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="120.0" layoutY="110.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ō">
+         <font>
+            <Font name="OpenDyslexicMono" size="13.0" />
+         </font>
+      </Button>
+      <Button layoutX="155.0" layoutY="110.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ū">
+         <font>
+            <Font name="OpenDyslexicMono" size="13.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

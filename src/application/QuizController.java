@@ -409,6 +409,15 @@ public class QuizController implements Initializable {
 		new Thread(new ResultLabelCleaner(query)).start();
 	}
 	
+	/**
+	 * This method uses a button to add the macronised vowel due to the textField being
+	 * unable to read 'Alt + -'
+	 */
+	public void addMacronisedVowel(ActionEvent event) {
+		userAnswerTextField.setText(userAnswerTextField.getText() + ((Button)event.getSource()).getText());
+		
+	}
+	
 }
 
 
