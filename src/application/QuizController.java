@@ -194,7 +194,7 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
-			resultLabel.setText("Incorrect");
+			resultLabel.setText("Incorrect, Good luck next time!");
 			FileIO.openGeneralWavFile("wrong");
 			
 			// if there is no next word, then switch to the complete scene
@@ -253,7 +253,7 @@ public class QuizController implements Initializable {
 		this.setWordAndLetterCount();
 		
 		// set result label
-		resultLabel.setText("Skipped");
+		resultLabel.setText("Skipped, Good luck next time!");
 		
 		// will be executed after some time
 		this.clearResultLabel();
@@ -378,7 +378,7 @@ public class QuizController implements Initializable {
 	private boolean showMessageWhenNoAnswer() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("No answer provided");
-		alert.setHeaderText("YOu have not entered your answer, are you sure you want to submit?");
+		alert.setHeaderText("You have not entered your answer, are you sure you want to submit?");
 		
 		Optional<ButtonType> result = alert.showAndWait();
 		if (result.get() == ButtonType.OK) {

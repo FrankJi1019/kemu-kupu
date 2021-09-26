@@ -54,7 +54,7 @@
             <Font name="OpenDyslexicAlta" size="15.0" />
          </font>
       </Button>
-      <Label fx:id="resultLabel" alignment="CENTER" layoutX="192.0" layoutY="331.0" prefHeight="48.0" prefWidth="216.0" textAlignment="CENTER" textFill="#800202">
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="53.0" layoutY="331.0" prefHeight="48.0" prefWidth="498.0" textAlignment="CENTER" textFill="#800202">
          <font>
             <Font name="OpenDyslexicAlta" size="27.0" />
          </font>
