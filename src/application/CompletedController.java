@@ -1,8 +1,14 @@
 package application;
 
 import java.io.IOException;
+import java.net.URL;
 import java.util.List;
+import java.util.ResourceBundle;
 
+import javafx.animation.FillTransition;
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
@@ -15,7 +21,11 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.SVGPath;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class CompletedController {
 	
@@ -31,7 +41,8 @@ public class CompletedController {
 	private TableColumn<Word, Double> scoreColumn;
 	@FXML
 	private Label totalScoreLabel;
-	
+	@FXML private AnchorPane stars;
+
 	/*
 	 * This method will be invoked when other scene is switching to complete scene, this is to pass
 	 * useful data to this controller, for example, the statistics for user answers
@@ -53,6 +64,23 @@ public class CompletedController {
 			totalScore += word.getScore();
 		}
 		this.totalScoreLabel.setText(Double.toString(totalScore));
+		
+		double scoreBoundaryOne = 1.7;
+		double scoreBoundaryTwo = 2.5;
+		
+		if(totalScore == 0) {
+			playStarsAnimation(0);
+		}
+		else if(totalScore <= scoreBoundaryOne) {
+			playStarsAnimation(1);
+		}
+		else if(totalScore > scoreBoundaryOne && totalScore <= scoreBoundaryTwo ) {
+			playStarsAnimation(2);	
+		}
+		else if(totalScore > scoreBoundaryTwo) {
+			playStarsAnimation(3);
+		}
+
 		
 	}
 	
@@ -88,6 +116,48 @@ public class CompletedController {
 			exception.printStackTrace();
 		}
 
+	}
+	
+	public void playStarsAnimation(int numOfStars) {
+		ObservableList<Node> starsObjects = stars.getChildren();
+		
+		// Change this value if we want a different color
+		String starColorHex = "#000000";
+        
+		SequentialTransition sequentialTransition = new SequentialTransition();
+        
+        // Error handling - max num of stars is 3
+        if(numOfStars > 3) {
+        	numOfStars = 3;
+        }
+		
+        if(numOfStars == 0) {
+            ScaleTransition animation = createScaleAnimation(stars, 400, 0.1);
+			sequentialTransition.getChildren().add(animation);
+		}
+        
+		for (int i = 0; i < numOfStars; i++) {
+        	SVGPath shape = (SVGPath)starsObjects.get(i);
+            ScaleTransition animation = createScaleAnimation(shape, 400, 0.7);
+            FillTransition colorChange = new FillTransition(Duration.millis(200), shape, Color.web("#dddddd"),  Color.web(starColorHex));
+            sequentialTransition.getChildren().addAll(colorChange, animation);
+        }
+        
+        // Also add a pause first so that it doesnt play after initialise
+        int transitionDelay = 1000;
+        sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
+        
+        // Play it
+        sequentialTransition.play();
+	}
+
+	private ScaleTransition createScaleAnimation(Node shape, int durationInMillis, double scale) {
+		ScaleTransition animation = new ScaleTransition(Duration.millis(durationInMillis), shape);
+		animation.setByX(scale);
+		animation.setByY(scale);	
+		animation.setCycleCount(2);
+		animation.setAutoReverse(true);
+		return animation;
 	}
 
 }
