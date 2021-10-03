@@ -6,30 +6,30 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.MainController">
    <children>
-      <SVGPath fx:id="koruSvg" content="M 150 0 C 138 31 122 123 168 123 Q 226 130 226 71 Q 214 54 196 64 Q 186 40 218 32 Q 256 20 273 55 C 336 159 194 176 236 322 C 268 454 356 307 322 272 Q 318 246 297 263 Q 300 216 349 244 Q 384 280 376 331 C 365 436 276 427 264 498 C 248 566 194 534 129 594 C 209 515 88 406 30 312 C 18 279 10 228 64 224 Q 92 220 114 258 Q 125 303 90 288 Q 69 354 146 408 C 221 474 197 319 166 190 Q 108 156 140 226 C 56 138 124 137 84 18 Q 80 -1 32 0 " fill="#ffffff00" layoutX="-92.0" layoutY="-118.0" scaleX="0.6" scaleY="0.6" stroke="BLACK" />
-      <Label layoutX="249.0" layoutY="29.0" text="Welcome to">
+      <SVGPath fx:id="koruSvg" content="M 150 0 C 138 31 122 123 168 123 Q 226 130 226 71 Q 214 54 196 64 Q 186 40 218 32 Q 256 20 273 55 C 336 159 194 176 236 322 C 268 454 356 307 322 272 Q 318 246 297 263 Q 300 216 349 244 Q 384 280 376 331 C 365 436 276 427 264 498 C 248 566 194 534 129 594 C 209 515 88 406 30 312 C 18 279 10 228 64 224 Q 92 220 114 258 Q 125 303 90 288 Q 69 354 146 408 C 221 474 197 319 166 190 Q 108 156 140 226 C 56 138 124 137 84 18 Q 80 -1 32 0 " fill="#ffffff00" layoutX="-54.0" layoutY="-26.0" stroke="BLACK" />
+      <Label layoutX="371.0" layoutY="84.0" text="Welcome to">
          <font>
             <Font name="OpenDyslexicAlta" size="16.0" />
          </font>
       </Label>
-      <Label layoutX="139.0" layoutY="43.0" prefHeight="95.0" prefWidth="322.0" text="Kēmu Kupu" textFill="#5fad65">
+      <Label layoutX="247.0" layoutY="112.0" prefHeight="105.0" prefWidth="366.0" text="Kēmu Kupu" textFill="#5fad65">
          <font>
-            <Font name="OpenDyslexicAlta Bold" size="53.0" />
+            <Font name="OpenDyslexicAlta Bold" size="59.0" />
          </font>
       </Label>
-      <Label layoutX="233.0" layoutY="190.0" text="Please select:">
+      <Label layoutX="339.0" layoutY="370.0" text="Please select:">
          <font>
-            <Font name="OpenDyslexicAlta" size="18.0" />
+            <Font name="OpenDyslexicAlta" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="newGameButton" layoutX="120.0" layoutY="246.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
+      <Button fx:id="newGameButton" layoutX="240.0" layoutY="420.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
          <font>
             <Font name="OpenDyslexicAlta" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="quitButton" layoutX="330.0" layoutY="246.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
+      <Button fx:id="quitButton" layoutX="452.0" layoutY="420.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
          <font>
             <Font name="OpenDyslexicAlta" size="20.0" />
          </font>

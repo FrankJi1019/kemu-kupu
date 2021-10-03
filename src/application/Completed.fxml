@@ -7,42 +7,42 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
    <children>
-      <Label layoutX="206.0" layoutY="40.0" text="Quiz Completed">
+      <Label layoutX="288.0" layoutY="34.0" text="Quiz Completed">
          <font>
-            <Font name="OpenDyslexicAlta Bold" size="22.0" />
+            <Font name="OpenDyslexicAlta Bold" size="31.0" />
          </font>
       </Label>
-      <TableView fx:id="summaryTable" layoutX="61.0" layoutY="120.0" prefHeight="163.0" prefWidth="260.0">
+      <TableView fx:id="summaryTable" layoutX="61.0" layoutY="136.0" prefHeight="300.0" prefWidth="430.0">
         <columns>
-          <TableColumn fx:id="wordColumn" minWidth="160.0" prefWidth="-1.0" text="Word" />
+          <TableColumn fx:id="wordColumn" minWidth="330.0" prefWidth="-1.0" text="Word" />
           <TableColumn fx:id="scoreColumn" minWidth="99.0" prefWidth="99.0" text="Score" />
         </columns>
       </TableView>
-      <Button fx:id="playAgainButton" layoutX="376.0" layoutY="140.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="50.0" prefWidth="146.0" styleClass="large-button" text="Play again">
+      <Button fx:id="playAgainButton" layoutX="564.0" layoutY="171.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="64.0" prefWidth="174.0" styleClass="large-button" text="Play again">
          <font>
-            <Font name="OpenDyslexicAlta" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="21.0" />
          </font>
       </Button>
-      <Button fx:id="returnButton" layoutX="376.0" layoutY="221.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="50.0" prefWidth="146.0" styleClass="large-button" text="Return home">
+      <Button fx:id="returnButton" layoutX="564.0" layoutY="292.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="64.0" prefWidth="174.0" styleClass="large-button" text="Return home">
          <font>
-            <Font name="OpenDyslexicAlta" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="21.0" />
          </font>
       </Button>
       <Label layoutX="61.0" layoutY="89.0" text="Game summary: ">
          <font>
-            <Font name="OpenDyslexicAlta" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="20.0" />
          </font>
       </Label>
-      <Label layoutX="61.0" layoutY="297.0" text="TOTAL SCORE: ">
+      <Label layoutX="60.0" layoutY="457.0" text="TOTAL SCORE: ">
          <font>
-            <Font name="OpenDyslexicAlta" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="24.0" />
          </font>
       </Label>
-      <Label fx:id="totalScoreLabel" layoutX="203.0" layoutY="297.0" text="0">
+      <Label fx:id="totalScoreLabel" layoutX="268.0" layoutY="457.0" text="0">
          <font>
-            <Font name="OpenDyslexicAlta" size="17.0" />
+            <Font name="OpenDyslexicAlta" size="24.0" />
          </font>
       </Label>
    </children>

@@ -29,7 +29,7 @@ public class TopicsController implements Initializable{
 	private Stage stage;
 	private Scene scene;
 
-	private static int GRID_WIDTH = 3;
+	private static int GRID_WIDTH = 4;
 	
 	/**
 	 * This method occurs upon switching to Topics.fxml. It dynamically loads topic buttons

@@ -77,7 +77,7 @@ public class MainController implements Initializable{
 		koruSvg.getStrokeDashArray().add(strokeArraySize);
 		koruSvg.setStrokeDashOffset(strokeArraySize);
 
-		koruSvg.setStrokeWidth(5);
+		koruSvg.setStrokeWidth(3);
 		
 		
 

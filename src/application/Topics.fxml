@@ -11,17 +11,17 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TopicsController">
+<AnchorPane fx:id="anchorPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.TopicsController">
    <children>
-      <Label layoutX="235.0" layoutY="27.0" prefHeight="64.0" prefWidth="131.0" text="Topics" textFill="#274029" AnchorPane.topAnchor="27.0">
+      <Label layoutX="352.0" layoutY="27.0" prefHeight="64.0" prefWidth="131.0" text="Topics" textFill="#274029" AnchorPane.topAnchor="27.0">
          <font>
             <Font name="OpenDyslexicAlta" size="36.0" />
          </font></Label>
       <Label layoutX="61.0" layoutY="91.0" text="Please choose a topic:" AnchorPane.topAnchor="91.0">
          <font>
-            <Font name="OpenDyslexicAlta Bold" size="15.0" />
+            <Font name="OpenDyslexicAlta Bold" size="21.0" />
          </font></Label>
-      <ScrollPane hbarPolicy="NEVER" layoutX="61.0" layoutY="118.0" prefHeight="246.0" prefWidth="478.0">
+      <ScrollPane hbarPolicy="NEVER" layoutX="62.0" layoutY="138.0" prefHeight="378.0" prefWidth="710.0">
          <content>
             <GridPane fx:id="grid" prefHeight="100.0" prefWidth="110.0">
                <columnConstraints>
@@ -34,7 +34,7 @@
             <Font name="Noto Sans CJK JP" size="14.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true">
+            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
                <image>
                   <Image url="@back-btn.png" />
                </image>
