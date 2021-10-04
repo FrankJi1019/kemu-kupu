@@ -19,8 +19,8 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Slider layoutX="31.0" layoutY="55.0" prefHeight="30.0" prefWidth="190.0" />
-      <Label layoutX="59.0" layoutY="28.0" text="Speed: x1">
+      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="31.0" layoutY="55.0" max="-0.5" min="-2.0" prefHeight="30.0" prefWidth="190.0" value="-1.0" />
+      <Label fx:id="speedLabel" layoutX="59.0" layoutY="28.0" text="Speed: x1.0">
          <font>
             <Font size="20.0" />
          </font>

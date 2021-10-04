@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 
 public class PracticeController implements Initializable {
@@ -25,7 +26,11 @@ public class PracticeController implements Initializable {
 	@FXML
 	private Label hintLabel;
 	@FXML
+	private Label speedLabel;
+	@FXML
 	private TextField textField;
+	@FXML
+	private Slider speedSlider;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -42,6 +47,16 @@ public class PracticeController implements Initializable {
 		nextWord();
 		readCurrentWord();
 		updateLetterCount();
+		
+		this.speedSlider.valueProperty().addListener(c ->{
+			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
+			String roundedSpeed= String.format("Speed: x%.1f", 1/speedOfSpeech);
+			if(roundedSpeed.equals("1.0")) {
+				this.speedLabel.setText(roundedSpeed+ " (default)");
+			} else {
+				this.speedLabel.setText(roundedSpeed);
+			}
+		});
 
 	}
 	
