@@ -47,12 +47,7 @@ public class PracticeController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		// obtain all the words from all the word list
-		List<String> wordFiles = LinuxCommand.executeCommand("ls ./words");
-		
-		for (String file: wordFiles) {
-			List<String> words = FileIO.getContentFromFile(file.replace(".txt", ""));
-			this.words.addAll(words);
-		}
+		this.words = FileIO.getAllWordsFromWordsDirectory();
 		
 		// choose a random word and remove from the word list
 		nextWord();
