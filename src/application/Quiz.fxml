@@ -64,7 +64,7 @@
             <Font name="OpenDyslexicAlta" size="18.0" />
          </font>
       </Button>
-      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="43.0" layoutY="64.0" max="-0.5" min="-2" value="-1.0" />
+      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="43.0" layoutY="64.0" majorTickUnit="0.5" max="-0.5" min="-2" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="-1.0" />
       <Label layoutX="43.0" layoutY="37.0" text="Speed: ">
          <font>
             <Font name="OpenDyslexicAlta" size="17.0" />
@@ -108,6 +108,11 @@
       <Button layoutX="214.0" layoutY="126.0" mnemonicParsing="false" onAction="#addMacronisedVowel" styleClass="macron-button" text="ū">
          <font>
             <Font name="OpenDyslexicMono" size="17.0" />
+         </font>
+      </Button>
+      <Button fx:id="nextButton" layoutX="667.0" layoutY="413.0" mnemonicParsing="false" styleClass="large-button" text="Next Word">
+         <font>
+            <Font name="OpenDyslexicAlta" size="18.0" />
          </font>
       </Button>
    </children>

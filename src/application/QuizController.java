@@ -58,6 +58,8 @@ public class QuizController implements Initializable {
 	private Button hearAgainButton;
 	@FXML
 	private Button idkButton;
+	@FXML
+	private Button nextButton;
 	
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -91,15 +93,18 @@ public class QuizController implements Initializable {
 			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
 			String roundedSpeed= String.format("%.2f", 1/speedOfSpeech);
 			if(roundedSpeed.equals("1.00")) {
-				this.speedLabel.setText(roundedSpeed+ " (default)");
+				this.speedLabel.setText(roundedSpeed+ "x "+ " (default)");
 			} else {
-				this.speedLabel.setText(roundedSpeed);
+				this.speedLabel.setText(roundedSpeed + "x ");
 			}
+			
 
 		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
 		// then put all the word in the list
+		nextButton.setVisible(false);
+		
 		Random random = new Random();
 		if (allWords.size() <= 5) {
 			testWords = allWords;
@@ -421,6 +426,20 @@ public class QuizController implements Initializable {
 		userAnswerTextField.requestFocus();
 		userAnswerTextField.setText(userAnswerTextField.getText() + ((Button)event.getSource()).getText());
 		userAnswerTextField.positionCaret(userAnswerTextField.getText().length());
+	}
+	
+	public void hideAllButtonsShowNextButton() {
+		submitButton.setVisible(false);
+		hearAgainButton.setVisible(false);
+		idkButton.setVisible(false);
+		nextButton.setVisible(true);
+	}
+	
+	public void showAllButtonsHideNextButton() {
+		submitButton.setVisible(true);
+		hearAgainButton.setVisible(true);
+		idkButton.setVisible(true);
+		nextButton.setVisible(false);
 	}
 	
 }
