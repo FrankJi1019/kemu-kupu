@@ -30,12 +30,12 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <Button fx:id="hearAgainButton" layoutX="351.0" layoutY="429.0" mnemonicParsing="false" text="Hear again">
+      <Button fx:id="hearAgainButton" layoutX="351.0" layoutY="429.0" mnemonicParsing="false" onAction="#hearAgain" text="Hear again">
          <font>
             <Font size="22.0" />
          </font>
       </Button>
-      <Button fx:id="idkButton" layoutX="547.0" layoutY="429.0" mnemonicParsing="false" text="I don't know">
+      <Button fx:id="idkButton" layoutX="547.0" layoutY="429.0" mnemonicParsing="false" onAction="#idk" text="I don't know">
          <font>
             <Font size="22.0" />
          </font>

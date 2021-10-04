@@ -2,22 +2,28 @@ package application;
 
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
+import java.util.Set;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 
 public class PracticeController implements Initializable {
 	
 	private List<String> words = new ArrayList<String>();
 	private String currentWord = "";
 	private double speedOfSpeech = 1;
+	private int attempts = 1;
 	
 	@FXML
 	private Label hintLabel;
+	@FXML
+	private TextField textField;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -31,27 +37,33 @@ public class PracticeController implements Initializable {
 		}
 		
 		// choose a random word and remove from the word list
-		int wordIndex = new Random().nextInt(this.words.size());
-		currentWord = this.words.get(wordIndex);
-		this.words.remove(wordIndex);
-		
-		// speak the word
+		nextWord();
 		readCurrentWord();
-		
 		updateLetterCount();
 
 	}
 	
 	public void submit() {
-		System.out.println("SUbmit");
+		if (isAnswerCorrect() || this.attempts == 2) {
+			this.attempts = 1;
+			this.nextWord();
+			this.updateLetterCount();
+			this.readCurrentWord();
+		} else if (this.attempts == 1) {
+			this.attempts++;
+			this.readCurrentWord();
+			this.giveHint();
+		}
 	}
 	
 	public void hearAgain() {
-		System.out.println("hear again");
+		readCurrentWord();
 	}
 	
 	public void idk() {
-		System.out.println("skip");
+		this.nextWord();
+		this.updateLetterCount();
+		this.readCurrentWord();
 	}
 	
 	private void readCurrentWord() {
@@ -61,7 +73,7 @@ public class PracticeController implements Initializable {
 	
 	private void updateLetterCount() {
 		StringBuilder sb = new StringBuilder();
-		int maxCharPerLine = 50;
+		int maxCharPerLine = 50; // IMPORTANT: if you want to change this value, make sure also change the one in giveHint
 		char[] letters = this.currentWord.toCharArray();
 		for (char c: letters) {
 			if (c == ' ') {
@@ -84,6 +96,62 @@ public class PracticeController implements Initializable {
 		}
 		
 		this.hintLabel.setText(new String(hint));
+	}
+	
+	private boolean isAnswerCorrect() {
+		boolean b = this.textField.getText().equals(currentWord);
+		this.textField.clear();
+		return b;
+	}
+	
+	private void nextWord() {
+		int wordIndex = new Random().nextInt(this.words.size());
+		currentWord = this.words.get(wordIndex);
+		this.words.remove(wordIndex);
+	}
+	
+	private void giveHint() {
+		double displayRatio = 0.5;
+		int letterCount = (int)(this.currentWord.length() * displayRatio);
+		Set<Integer> indexes = new HashSet<Integer>();
+		Random random = new Random();
+		char[] letters = this.currentWord.toCharArray();
+		
+		while (indexes.size() < letterCount) {
+			int i = random.nextInt(this.currentWord.length());
+			if (letters[i] != ' ') {
+				indexes.add(i);
+			}
+		}
+		
+		StringBuilder sb = new StringBuilder();
+		int maxCharPerLine = 50;  // IMPORTANT: if you want to change this value, make sure also change the one in updateLetterCount
+		
+		for (int i = 0; i < letters.length; i++) {
+			if (indexes.contains(i)) {
+				sb.append(letters[i] + " ");
+			} else if (letters[i] != ' ') {
+				sb.append("_ ");
+			} else {
+				sb.append("  ");
+			}
+		}
+
+		char[] hint = sb.toString().toCharArray();
+		
+		// handle the long word
+		if (hint.length > maxCharPerLine) {
+			for (int i = maxCharPerLine; i > 0; i--) {
+				if (hint[i] == ' ' && hint[i-1] == ' ' && hint[i+1] == ' ') {
+					hint[i] = '\n';
+					break;
+				}
+			}
+		}
+		
+		this.hintLabel.setText(new String(hint));
+		
+		
 	}
 
 }
