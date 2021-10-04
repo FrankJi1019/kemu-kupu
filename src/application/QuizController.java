@@ -54,6 +54,10 @@ public class QuizController implements Initializable {
 	private TextField userAnswerTextField;
 	@FXML
 	private Button submitButton;
+	@FXML
+	private Button hearAgainButton;
+	@FXML
+	private Button idkButton;
 	
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -414,8 +418,9 @@ public class QuizController implements Initializable {
 	 * unable to read 'Alt + -'
 	 */
 	public void addMacronisedVowel(ActionEvent event) {
+		userAnswerTextField.requestFocus();
 		userAnswerTextField.setText(userAnswerTextField.getText() + ((Button)event.getSource()).getText());
-		
+		userAnswerTextField.positionCaret(userAnswerTextField.getText().length());
 	}
 	
 }
