@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Slider?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Label layoutX="314.0" layoutY="35.0" text="Practice Mode">
+         <font>
+            <Font size="35.0" />
+         </font>
+      </Label>
+      <Label fx:id="hintLabel" layoutX="364.0" layoutY="206.0" text="_ _ _ _ _ _ _">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Slider layoutX="31.0" layoutY="55.0" prefHeight="30.0" prefWidth="190.0" />
+      <Label layoutX="59.0" layoutY="28.0" text="Speed: x1">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="submitButton" layoutX="221.0" layoutY="429.0" mnemonicParsing="false" text="Submit">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Button fx:id="hearAgainButton" layoutX="351.0" layoutY="429.0" mnemonicParsing="false" text="Hear again">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Button fx:id="idkButton" layoutX="547.0" layoutY="429.0" mnemonicParsing="false" text="I don't know">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <Button fx:id="exitButton" layoutX="571.0" layoutY="31.0" mnemonicParsing="false" text="Exit">
+         <font>
+            <Font size="22.0" />
+         </font>
+      </Button>
+      <TextField fx:id="textField" layoutX="294.0" layoutY="351.0">
+         <font>
+            <Font size="25.0" />
+         </font>
+      </TextField>
+      <Button layoutX="25.0" layoutY="98.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ā">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="25.0" layoutY="217.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ī">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ū">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ō">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+      <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ē">
+         <font>
+            <Font size="20.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>
