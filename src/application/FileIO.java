@@ -13,7 +13,6 @@ public class FileIO {
 	
 	// Method openWavFile deleted because it is not used.
 	
-	
 	/** this method open and play filename.wav file from ./data/sounds folder.
 	 * 	when String filename are passed in.
 	 * 
@@ -111,5 +110,23 @@ public class FileIO {
 		}
 	}
 	
+	
+	/**
+	 * Method to obtain every single word from the words directory and store into List in java
+	 * @return List
+	 */
+	public static List<String> getAllWordsFromWordsDirectory(){
+		
+		// obtain all the words from all the word list
+				List<String> wordFiles = new ArrayList<>();
+				List<String> words = new ArrayList<>();
+				wordFiles = LinuxCommand.executeCommand("ls ./words");
+				
+				for (String file: wordFiles) {
+					words.addAll(FileIO.getContentFromFile(file.replace(".txt", "")));
+				}
+		
+		return words;
+	}
 	
 }

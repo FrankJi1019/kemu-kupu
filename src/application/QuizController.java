@@ -54,9 +54,20 @@ public class QuizController implements Initializable {
 	private TextField userAnswerTextField;
 	@FXML
 	private Button submitButton;
+	@FXML
+	private Button hearAgainButton;
+	@FXML
+	private Button idkButton;
+	@FXML
+	private Button nextButton;
 	
 	// this is a list of all words in the file
 	private static List<String> allWords;
+	
+	private static String CORRECT_MESSAGE = "Correct";
+	private static String FIRST_INCORRECT_MESSAGE = "Incorrect, Try Again";
+	private static String SECOND_WRONG_MESSAGE = "Wrong Again";
+	private static String SKIPPED_MESSAGE = "Skipped";
 	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
@@ -87,15 +98,18 @@ public class QuizController implements Initializable {
 			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
 			String roundedSpeed= String.format("%.2f", 1/speedOfSpeech);
 			if(roundedSpeed.equals("1.00")) {
-				this.speedLabel.setText(roundedSpeed+ " (default)");
+				this.speedLabel.setText(roundedSpeed+ "x "+ " (default)");
 			} else {
-				this.speedLabel.setText(roundedSpeed);
+				this.speedLabel.setText(roundedSpeed + "x ");
 			}
+			
 
 		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
 		// then put all the word in the list
+		nextButton.setVisible(false);
+		
 		Random random = new Random();
 		if (allWords.size() <= 5) {
 			testWords = allWords;
@@ -166,8 +180,9 @@ public class QuizController implements Initializable {
 			this.testWords.remove(0);
 			
 			// tell the user the result of their submit in the label, also play a sound to let them know
-			resultLabel.setText("Correct");
+			resultLabel.setText(CORRECT_MESSAGE);
 			FileIO.openGeneralWavFile("correct");
+			hideAllButtonsShowNextButton();
 			
 			// if there is no next word, the program should switch complete screen
 			if (this.testWords.size() == 0) {
@@ -175,12 +190,11 @@ public class QuizController implements Initializable {
 				return;
 			}
 			
-			// play the next word
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
-			
-			// update the score and letter cound
+			// clear dashes
+			clearFieldsAfterSubmit();
+	
+			// update the score
 			scoreLabel.setText(Double.toString(score));
-			this.setWordAndLetterCount();
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
@@ -194,8 +208,9 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
-			resultLabel.setText("Incorrect, Good luck next time!");
+			resultLabel.setText(SECOND_WRONG_MESSAGE);
 			FileIO.openGeneralWavFile("wrong");
+			hideAllButtonsShowNextButton();
 			
 			// if there is no next word, then switch to the complete scene
 			if (this.testWords.size() == 0) {
@@ -203,11 +218,9 @@ public class QuizController implements Initializable {
 				return;
 			}
 			
-			// let the user know the result of their submit and play the next word
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+			// clear dashes
+			clearFieldsAfterSubmit();
 			
-			// update letter count to the new word
-			this.setWordAndLetterCount();
 			
 		// user gets wrong in the 1st time, in this case, the user have another change
 		} else {
@@ -218,7 +231,7 @@ public class QuizController implements Initializable {
 			this.attemptTimes++;
 			
 			// inform the user the result of there submit and play the word again
-			resultLabel.setText("Incorrect");
+			resultLabel.setText(FIRST_INCORRECT_MESSAGE);
 			FileIO.openGeneralWavFile("wrong");
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 		}
@@ -227,7 +240,7 @@ public class QuizController implements Initializable {
 		this.userAnswerTextField.clear();
 		
 		// this is just to let the system know to clear the label, will not clear immidiately
-		this.clearResultLabel();
+		//this.clearResultLabel();
 		
 	}
 	
@@ -246,17 +259,16 @@ public class QuizController implements Initializable {
 			return;
 		}
 		
-		// reaching this point means the next exists, so play the next word
-		new Thread(new WordPlayer(this.testWords.get(0), 1, true)).start();
-		
-		// update the letter count to the next word
-		this.setWordAndLetterCount();
 		
 		// set result label
-		resultLabel.setText("Skipped, Good luck next time!");
+		resultLabel.setText(SKIPPED_MESSAGE);
+		hideAllButtonsShowNextButton();
+		
+		// clear dashes
+		clearFieldsAfterSubmit();
 		
 		// will be executed after some time
-		this.clearResultLabel();
+		//this.clearResultLabel();
 		
 		// clear text field for user to enter the next word
 		this.userAnswerTextField.clear();
@@ -414,9 +426,67 @@ public class QuizController implements Initializable {
 	 * unable to read 'Alt + -'
 	 */
 	public void addMacronisedVowel(ActionEvent event) {
+		userAnswerTextField.requestFocus();
 		userAnswerTextField.setText(userAnswerTextField.getText() + ((Button)event.getSource()).getText());
+		userAnswerTextField.positionCaret(userAnswerTextField.getText().length());
+	}
+	
+	
+	/**
+	 * this method hide all other buttons and shows next button
+	 */
+	public void hideAllButtonsShowNextButton() {
+		submitButton.setVisible(false);
+		hearAgainButton.setVisible(false);
+		idkButton.setVisible(false);
+		nextButton.setVisible(true);
+	}
+	
+	/**
+	 * this method hide next button and shows all other button
+	 */
+	
+	public void showAllButtonsHideNextButton() {
+		submitButton.setVisible(true);
+		hearAgainButton.setVisible(true);
+		idkButton.setVisible(true);
+		nextButton.setVisible(false);
+	}
+	
+	
+	/**
+	 * this method resets the speed slider to default
+	 */
+	public void resetSpeedToDefault() {
+		speedSlider.setValue(-1.00);
+	}
+	
+	public void switchToNextWord(ActionEvent event) {
+		
+		
+		//clear result label
+		resultLabel.setText("");
+		
+		// play the next word
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+					
+		// update the score and letter count
+		this.setWordAndLetterCount();
+		
+		// show all other buttons again
+		showAllButtonsHideNextButton();
 		
 	}
+	
+	
+	/**
+	 * this method clears any unwanted fields after showing NEXT button
+	 */
+	public void clearFieldsAfterSubmit() {
+		letterCountLabel.setText("");
+	}
+	
+	
 	
 }
 
