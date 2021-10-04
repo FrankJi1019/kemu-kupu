@@ -24,12 +24,17 @@
             <Font name="OpenDyslexicAlta" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="newGameButton" layoutX="240.0" layoutY="420.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
+      <Button fx:id="newGameButton" layoutX="154.0" layoutY="420.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
          <font>
             <Font name="OpenDyslexicAlta" size="20.0" />
          </font>
       </Button>
-      <Button fx:id="quitButton" layoutX="452.0" layoutY="420.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
+      <Button fx:id="quitButton" layoutX="564.0" layoutY="420.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
+         <font>
+            <Font name="OpenDyslexicAlta" size="20.0" />
+         </font>
+      </Button>
+      <Button fx:id="practiceButton" layoutX="355.0" layoutY="420.0" mnemonicParsing="false" onAction="#practice" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Practice" textFill="WHITE">
          <font>
             <Font name="OpenDyslexicAlta" size="20.0" />
          </font>
