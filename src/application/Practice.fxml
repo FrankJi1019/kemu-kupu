@@ -40,7 +40,7 @@
             <Font size="22.0" />
          </font>
       </Button>
-      <Button fx:id="exitButton" layoutX="571.0" layoutY="31.0" mnemonicParsing="false" text="Exit">
+      <Button fx:id="exitButton" layoutX="571.0" layoutY="31.0" mnemonicParsing="false" onAction="#returnHome" text="Exit">
          <font>
             <Font size="22.0" />
          </font>

@@ -1,5 +1,6 @@
 package application;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -10,11 +11,18 @@ import java.util.Set;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
+import javafx.stage.Stage;
 
 public class PracticeController implements Initializable {
 	
@@ -22,6 +30,9 @@ public class PracticeController implements Initializable {
 	private String currentWord = "";
 	private double speedOfSpeech = 1;
 	private int attempts = 1;
+	
+	private Stage stage;
+	private Scene scene;
 	
 	@FXML
 	private Label hintLabel;
@@ -89,6 +100,10 @@ public class PracticeController implements Initializable {
 	
 	public void resetSpeed() {
 		this.speedSlider.setValue(-1.0);
+	}
+	
+	public void returnHome(ActionEvent e) {
+		switchScene("Main", e);
 	}
 	
 	private void readCurrentWord() {
@@ -175,8 +190,19 @@ public class PracticeController implements Initializable {
 		}
 		
 		this.hintLabel.setText(new String(hint));
-		
-		
+	}
+	
+	private void switchScene(String filename, ActionEvent e) {
+		Parent root = null;
+		try {
+			root = FXMLLoader.load(getClass().getResource(String.format("/application/%s.fxml", filename)));
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
 	}
 
 }
