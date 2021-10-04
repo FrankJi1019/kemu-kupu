@@ -6,13 +6,18 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Label;
 
 public class PracticeController implements Initializable {
 	
 	private List<String> words = new ArrayList<String>();
 	private String currentWord = "";
 	private double speedOfSpeech = 1;
+	
+	@FXML
+	private Label hintLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -32,6 +37,8 @@ public class PracticeController implements Initializable {
 		
 		// speak the word
 		readCurrentWord();
+		
+		updateLetterCount();
 
 	}
 	
@@ -49,6 +56,34 @@ public class PracticeController implements Initializable {
 	
 	private void readCurrentWord() {
 		new Thread(new WordPlayer(this.currentWord, speedOfSpeech, true)).start();
+		System.out.println(this.currentWord);
+	}
+	
+	private void updateLetterCount() {
+		StringBuilder sb = new StringBuilder();
+		int maxCharPerLine = 50;
+		char[] letters = this.currentWord.toCharArray();
+		for (char c: letters) {
+			if (c == ' ') {
+				sb.append("  ");
+			} else {
+				sb.append("_ ");
+			}
+		}
+		
+		char[] hint = sb.toString().toCharArray();
+		
+		// handle the long word
+		if (hint.length > maxCharPerLine) {
+			for (int i = maxCharPerLine; i > 0; i--) {
+				if (hint[i] == ' ' && hint[i-1] == ' ' && hint[i+1] == ' ') {
+					hint[i] = '\n';
+					break;
+				}
+			}
+		}
+		
+		this.hintLabel.setText(new String(hint));
 	}
 
 }
