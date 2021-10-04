@@ -50,27 +50,27 @@
             <Font size="25.0" />
          </font>
       </TextField>
-      <Button layoutX="25.0" layoutY="98.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ā">
+      <Button layoutX="25.0" layoutY="98.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ā">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="25.0" layoutY="217.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ī">
+      <Button layoutX="25.0" layoutY="217.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ī">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ū">
+      <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ū">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ō">
+      <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ō">
          <font>
             <Font size="20.0" />
          </font>
       </Button>
-      <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" prefHeight="45.0" prefWidth="48.0" text="ē">
+      <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ē">
          <font>
             <Font size="20.0" />
          </font>

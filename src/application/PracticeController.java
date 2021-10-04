@@ -8,8 +8,10 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
@@ -64,6 +66,11 @@ public class PracticeController implements Initializable {
 		this.nextWord();
 		this.updateLetterCount();
 		this.readCurrentWord();
+	}
+	
+	public void addMacronisedVowel(ActionEvent event) {
+		textField.setText(textField.getText() + ((Button)event.getSource()).getText());
+		
 	}
 	
 	private void readCurrentWord() {
