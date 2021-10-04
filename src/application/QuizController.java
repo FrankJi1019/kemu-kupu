@@ -428,6 +428,8 @@ public class QuizController implements Initializable {
 		userAnswerTextField.positionCaret(userAnswerTextField.getText().length());
 	}
 	
+	
+	
 	public void hideAllButtonsShowNextButton() {
 		submitButton.setVisible(false);
 		hearAgainButton.setVisible(false);
@@ -440,6 +442,14 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(true);
 		idkButton.setVisible(true);
 		nextButton.setVisible(false);
+	}
+	
+	
+	/**
+	 * this method resets the speed slider to default
+	 */
+	public void resetSpeedToDefault() {
+		speedSlider.setValue(-1.00);
 	}
 	
 }

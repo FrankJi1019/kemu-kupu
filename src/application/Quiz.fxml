@@ -115,5 +115,9 @@
             <Font name="OpenDyslexicAlta" size="18.0" />
          </font>
       </Button>
+      <Button fx:id="defaultSpeed" layoutX="55.0" layoutY="9.0" mnemonicParsing="false" onAction="#resetSpeedToDefault" styleClass="large-button" text="default Speed">
+         <font>
+            <Font name="OpenDyslexicAlta" size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>
