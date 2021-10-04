@@ -85,7 +85,10 @@ public class PracticeController implements Initializable {
 	
 	public void addMacronisedVowel(ActionEvent event) {
 		textField.setText(textField.getText() + ((Button)event.getSource()).getText());
-		
+	}
+	
+	public void resetSpeed() {
+		this.speedSlider.setValue(-1.0);
 	}
 	
 	private void readCurrentWord() {
