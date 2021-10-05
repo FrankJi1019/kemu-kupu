@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
+import javafx.animation.PauseTransition;
+import javafx.animation.ScaleTransition;
+import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,7 +33,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
-
+import javafx.util.Duration;
 
 import java.util.Random;
 
@@ -219,6 +222,7 @@ public class QuizController implements Initializable {
 			// tell the user the result of their submit in the label, also play a sound to let them know
 			resultLabel.setText(CORRECT_MESSAGE);
 			feedbackRect.setFill(Color.web("#00b24c"));
+			playScoreIncreaseAnimation();
 			FileIO.openGeneralWavFile("correct");
 			hideAllButtonsShowNextButton();
 			isInNextButtonScene = true;
@@ -579,6 +583,18 @@ public class QuizController implements Initializable {
 		}
 	}
 	
+	public void playScoreIncreaseAnimation() {
+		double scale = 0.5;
+		ScaleTransition animation = new ScaleTransition(Duration.millis(1000), this.scoreLabel);
+		animation.setByX(scale);
+		animation.setByY(scale);	
+		animation.setCycleCount(2);
+		animation.setAutoReverse(true);
+		SequentialTransition sequentialTransition = new SequentialTransition();
+		sequentialTransition.getChildren().add(animation);
+        sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(200)));
+        sequentialTransition.play();
+	}
 	
 	
 }
