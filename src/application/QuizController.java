@@ -425,22 +425,6 @@ public class QuizController implements Initializable {
 		return false;
 	}
 	
-	/*
-	 * after the user submit, the window should displays the result of that submit (correct, incorrect,
-	 * skipped)
-	 * the result should disappear after some time, this work is delegated to another class
-	 */
-	private void clearResultLabel() {
-		FutureTask<String> query = new FutureTask<String>(new Callable<String>() {
-            @Override
-            public String call() throws Exception {
-            	resultLabel.setText("");
-            	return null;
-            }
-        });
-		new Thread(new ResultLabelCleaner(query)).start();
-	}
-	
 	/**
 	 * This method uses a button to add the macronised vowel due to the textField being
 	 * unable to read 'Alt + -'
