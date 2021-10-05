@@ -122,7 +122,7 @@ public class CompletedController {
 		ObservableList<Node> starsObjects = stars.getChildren();
 		
 		// Change this value if we want a different color
-		String starColorHex = "#000000";
+		String starColorHex = "#FFD700";
         
 		SequentialTransition sequentialTransition = new SequentialTransition();
         
@@ -144,7 +144,7 @@ public class CompletedController {
         }
         
         // Also add a pause first so that it doesnt play after initialise
-        int transitionDelay = 1000;
+        int transitionDelay = 1500;
         sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
         
         // Play it

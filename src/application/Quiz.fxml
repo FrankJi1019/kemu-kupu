@@ -132,7 +132,7 @@
             <Font name="Raleway Regular" size="13.0" />
          </font></Button>
       <Group />
-      <Button fx:id="infoButton" layoutX="644.0" layoutY="428.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
+      <Button fx:id="infoButton" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
          <font>
             <Font name="Raleway Bold" size="17.0" />
          </font>
