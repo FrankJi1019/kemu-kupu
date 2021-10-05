@@ -42,6 +42,8 @@ public class PracticeController implements Initializable {
 	private TextField textField;
 	@FXML
 	private Slider speedSlider;
+	@FXML
+	private Button submitButton;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -63,6 +65,9 @@ public class PracticeController implements Initializable {
 				this.speedLabel.setText(roundedSpeed);
 			}
 		});
+		
+		textField.requestFocus();
+		textField.positionCaret(0);
 
 	}
 	
@@ -82,6 +87,13 @@ public class PracticeController implements Initializable {
 		}
 	}
 	
+	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
+		if (e.getCode() == KeyCode.ENTER) {
+			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
+			this.submit(event);
+		}
+	}
+	
 	public void hearAgain() {
 		readCurrentWord();
 	}
@@ -92,6 +104,8 @@ public class PracticeController implements Initializable {
 	
 	public void addMacronisedVowel(ActionEvent event) {
 		textField.setText(textField.getText() + ((Button)event.getSource()).getText());
+		textField.requestFocus();
+		textField.positionCaret(textField.getText().length());
 	}
 	
 	public void resetSpeed() {
@@ -148,7 +162,8 @@ public class PracticeController implements Initializable {
 	
 	private void giveHint() {
 		double displayRatio = 0.5;
-		int letterCount = (int)(PracticeController.currentWord.length() * displayRatio);
+		String temp = PracticeController.currentWord.replace(" ", "");
+		int letterCount = (int)(temp.length() * displayRatio);
 		Set<Integer> indexes = new HashSet<Integer>();
 		Random random = new Random();
 		char[] letters = PracticeController.currentWord.toCharArray();
