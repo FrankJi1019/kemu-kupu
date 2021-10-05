@@ -27,7 +27,7 @@ import javafx.stage.Stage;
 public class PracticeController implements Initializable {
 	
 	private List<String> words = new ArrayList<String>();
-	private String currentWord = "";
+	public static String currentWord = "";
 	private double speedOfSpeech = 1;
 	private int attempts = 1;
 	
@@ -66,16 +66,19 @@ public class PracticeController implements Initializable {
 
 	}
 	
-	public void submit() {
-		if (isAnswerCorrect() || this.attempts == 2) {
+	public void submit(ActionEvent e) {
+		if (isAnswerCorrect()) {
 			this.attempts = 1;
-			this.nextWord();
-			this.updateLetterCount();
-			this.readCurrentWord();
+			FileIO.openGeneralWavFile("correct");
+			this.switchScene("PracticeComplete", e);
 		} else if (this.attempts == 1) {
+			FileIO.openGeneralWavFile("wrong");
 			this.attempts++;
 			this.readCurrentWord();
 			this.giveHint();
+		} else {
+			FileIO.openGeneralWavFile("wrong");
+			this.switchScene("PracticeComplete", e);
 		}
 	}
 	
@@ -83,10 +86,8 @@ public class PracticeController implements Initializable {
 		readCurrentWord();
 	}
 	
-	public void idk() {
-		this.nextWord();
-		this.updateLetterCount();
-		this.readCurrentWord();
+	public void idk(ActionEvent e) {
+		this.switchScene("PracticeComplete", e);
 	}
 	
 	public void addMacronisedVowel(ActionEvent event) {
@@ -102,14 +103,14 @@ public class PracticeController implements Initializable {
 	}
 	
 	private void readCurrentWord() {
-		new Thread(new WordPlayer(this.currentWord, speedOfSpeech, true)).start();
-		System.out.println(this.currentWord);
+		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true)).start();
+		System.out.println(PracticeController.currentWord);
 	}
 	
 	private void updateLetterCount() {
 		StringBuilder sb = new StringBuilder();
 		int maxCharPerLine = 50; // IMPORTANT: if you want to change this value, make sure also change the one in giveHint
-		char[] letters = this.currentWord.toCharArray();
+		char[] letters = PracticeController.currentWord.toCharArray();
 		for (char c: letters) {
 			if (c == ' ') {
 				sb.append("  ");
@@ -134,7 +135,7 @@ public class PracticeController implements Initializable {
 	}
 	
 	private boolean isAnswerCorrect() {
-		boolean b = this.textField.getText().equals(currentWord);
+		boolean b = this.textField.getText().equalsIgnoreCase(currentWord);
 		this.textField.clear();
 		return b;
 	}
@@ -142,18 +143,18 @@ public class PracticeController implements Initializable {
 	private void nextWord() {
 		int wordIndex = new Random().nextInt(this.words.size());
 		currentWord = this.words.get(wordIndex);
-		this.words.remove(wordIndex);
+//		this.words.remove(wordIndex);
 	}
 	
 	private void giveHint() {
 		double displayRatio = 0.5;
-		int letterCount = (int)(this.currentWord.length() * displayRatio);
+		int letterCount = (int)(PracticeController.currentWord.length() * displayRatio);
 		Set<Integer> indexes = new HashSet<Integer>();
 		Random random = new Random();
-		char[] letters = this.currentWord.toCharArray();
+		char[] letters = PracticeController.currentWord.toCharArray();
 		
 		while (indexes.size() < letterCount) {
-			int i = random.nextInt(this.currentWord.length());
+			int i = random.nextInt(PracticeController.currentWord.length());
 			if (letters[i] != ' ') {
 				indexes.add(i);
 			}
