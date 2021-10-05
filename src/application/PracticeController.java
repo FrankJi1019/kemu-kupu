@@ -22,6 +22,7 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class PracticeController implements Initializable {
@@ -42,6 +43,11 @@ public class PracticeController implements Initializable {
 	private TextField textField;
 	@FXML
 	private Slider speedSlider;
+	@FXML
+	private AnchorPane macronInfo;
+	@FXML
+	private Button infoButton;
+	
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -64,6 +70,8 @@ public class PracticeController implements Initializable {
 			}
 		});
 
+		// hide help pane to start off with
+		macronInfo.setVisible(false);
 	}
 	
 	public void submit(ActionEvent e) {
@@ -199,6 +207,16 @@ public class PracticeController implements Initializable {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+
+	
+	public void showInfo() {
+		if(macronInfo.isVisible()) {
+			macronInfo.setVisible(false);
+		} else {
+			macronInfo.setVisible(true);
+		}
 	}
 
 }
