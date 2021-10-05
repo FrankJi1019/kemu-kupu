@@ -37,5 +37,9 @@ public class Word {
 	public double getScore() {
 		return this.score;
 	}
+	
+	public String toString() {
+		return this.word + "," + this.score;
+	}
 
 }

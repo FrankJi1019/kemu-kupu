@@ -69,6 +69,9 @@ public class QuizController implements Initializable {
 	private static String SECOND_WRONG_MESSAGE = "Wrong Again";
 	private static String SKIPPED_MESSAGE = "Skipped";
 	
+	private static int startTimer;
+	private static int endTimer;
+	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
 	
@@ -131,6 +134,8 @@ public class QuizController implements Initializable {
 		// speak the word in another thread so it won't freezes the window
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 		
+		startTimer = (int) System.currentTimeMillis();
+		
 	}
 	
 	/*
@@ -156,6 +161,9 @@ public class QuizController implements Initializable {
 	 */
 	public void submit(ActionEvent e) throws IOException, InterruptedException {
 		
+		endTimer = (int) System.currentTimeMillis();
+		//System.out.println(endTimer-startTimer);
+		
 		// get the user answer from the text field
 		String userAnswer = userAnswerTextField.getText();
 		
@@ -172,8 +180,15 @@ public class QuizController implements Initializable {
 			
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
-			this.wordStats.add(new Word(this.testWords.get(0), (double)1 / this.attemptTimes));
-			score = score + (double)1 / this.attemptTimes;
+			
+			double thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
+			double finalThisRoundScore = thisRoundScore / this.attemptTimes;
+			String finalThisRoundScoreString = String.format("%.2f", finalThisRoundScore);
+			finalThisRoundScore = Double.parseDouble(finalThisRoundScoreString);
+			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore));
+			score = score + finalThisRoundScore;
+			String finalScore = String.format("%.2f", score);
+			score = Double.parseDouble(finalScore);
 			this.attemptTimes = 1;
 			
 			// remove the word that has finished, this means the first word in the list is the next word
@@ -183,6 +198,7 @@ public class QuizController implements Initializable {
 			resultLabel.setText(CORRECT_MESSAGE);
 			FileIO.openGeneralWavFile("correct");
 			hideAllButtonsShowNextButton();
+			
 			
 			// if there is no next word, the program should switch complete screen
 			if (this.testWords.size() == 0) {
@@ -234,6 +250,9 @@ public class QuizController implements Initializable {
 			resultLabel.setText(FIRST_INCORRECT_MESSAGE);
 			FileIO.openGeneralWavFile("wrong");
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+			
+			//restart timer
+			startTimer = (int) System.currentTimeMillis();
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -305,6 +324,7 @@ public class QuizController implements Initializable {
 		// passing data
 		CompletedController controller = loader.getController();
 		controller.setData(this.wordStats);
+		System.out.println(this.wordStats.toString());
 		
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
@@ -463,6 +483,9 @@ public class QuizController implements Initializable {
 	
 	public void switchToNextWord(ActionEvent event) {
 		
+		// reset the timer for next word.
+		startTimer = (int) System.currentTimeMillis();
+		//System.out.println(endTimer-startTimer);
 		
 		//clear result label
 		resultLabel.setText("");
@@ -484,6 +507,37 @@ public class QuizController implements Initializable {
 	 */
 	public void clearFieldsAfterSubmit() {
 		letterCountLabel.setText("");
+	}
+	
+	
+	/**
+	 * 
+	 * this method calculate score according how long user took to answer the question.
+	 */
+	public double scoreCalculation(int wordLength,int startTime,int endTime) {
+		
+		// speaking time(in seconds):       time = 0.1274(word_length) + 1.1665s
+		// user typing time(in seconds):    time = 0.4(word_length) + 0.8s
+		
+		int durationMs = endTime-startTime;
+		
+		int speakingTime = 127*wordLength + 1166;
+		int typingTime = 400*wordLength + 800;
+		int thinkingTime = durationMs - speakingTime - typingTime;
+		System.out.println(thinkingTime);
+		double score = 1.0;
+	
+		int scoreDeductionRate = thinkingTime/1000;
+		if (scoreDeductionRate <= 0) {
+			scoreDeductionRate = 0;
+		}
+		if (scoreDeductionRate > 50) {
+			scoreDeductionRate = 50;
+		}
+		
+		score = score - 0.01*scoreDeductionRate;
+		
+		return score;
 	}
 	
 	
