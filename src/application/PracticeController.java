@@ -63,6 +63,9 @@ public class PracticeController implements Initializable {
 				this.speedLabel.setText(roundedSpeed);
 			}
 		});
+		
+		textField.requestFocus();
+		textField.positionCaret(0);
 
 	}
 	
@@ -92,6 +95,8 @@ public class PracticeController implements Initializable {
 	
 	public void addMacronisedVowel(ActionEvent event) {
 		textField.setText(textField.getText() + ((Button)event.getSource()).getText());
+		textField.requestFocus();
+		textField.positionCaret(textField.getText().length());
 	}
 	
 	public void resetSpeed() {
