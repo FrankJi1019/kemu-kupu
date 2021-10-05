@@ -89,6 +89,9 @@ public class QuizController implements Initializable {
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
 	
+	// the score reduction time in millisecond for every 0.01 point 
+	private static int TIME_MS_EVERY_POINT_01_DEDUCTED = 500;
+	
 
 	/*
 	 * This is method is call when a controller instance has been created
@@ -511,7 +514,7 @@ public class QuizController implements Initializable {
 		System.out.println(thinkingTime);
 		double score = 1.0;
 	
-		int scoreDeductionRate = thinkingTime/1000;
+		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_01_DEDUCTED;
 		if (scoreDeductionRate <= 0) {
 			scoreDeductionRate = 0;
 		}

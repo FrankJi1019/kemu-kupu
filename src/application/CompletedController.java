@@ -63,7 +63,10 @@ public class CompletedController {
 		for (Word word: wordStats) {
 			totalScore += word.getScore();
 		}
-		this.totalScoreLabel.setText(Double.toString(totalScore));
+		
+		String totalScoreString = String.format("%.2f", totalScore);
+		double finalTotalScore = Double.parseDouble(totalScoreString);
+		this.totalScoreLabel.setText(Double.toString(finalTotalScore));
 		
 		double scoreBoundaryOne = 1.7;
 		double scoreBoundaryTwo = 2.5;
