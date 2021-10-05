@@ -314,8 +314,9 @@ public class QuizController implements Initializable {
 		if ((e.getCode() == KeyCode.ENTER) && (isInNextButtonScene == false)) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
-		} else {
-			
+		} else if ((e.getCode() == KeyCode.ENTER) && (isInNextButtonScene == true)){
+			ActionEvent event = new ActionEvent(this.nextButton,this.nextButton);
+			this.switchToNextWord(event);
 		}
 	}
 
