@@ -130,7 +130,8 @@
       <Button fx:id="defaultSpeed" layoutX="180.0" layoutY="64.0" mnemonicParsing="false" onAction="#resetSpeedToDefault" styleClass="large-button" text="RESET">
          <font>
             <Font name="Raleway Regular" size="13.0" />
-         </font></Button>
+         </font>
+        </Button>
       <Group />
       <Button fx:id="infoButton" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
          <font>
