@@ -28,6 +28,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.stage.Stage;
 
+
 import java.util.Random;
 
 public class QuizController implements Initializable {
@@ -71,6 +72,8 @@ public class QuizController implements Initializable {
 	
 	private static int startTimer;
 	private static int endTimer;
+	
+	private static boolean isInNextButtonScene;
 	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
@@ -137,6 +140,9 @@ public class QuizController implements Initializable {
 		// speak the word in another thread so it won't freezes the window
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 		
+		//set isInNextButtonScene to false
+		isInNextButtonScene = false;
+		
 		startTimer = (int) System.currentTimeMillis();
 		
 	}
@@ -201,6 +207,7 @@ public class QuizController implements Initializable {
 			resultLabel.setText(CORRECT_MESSAGE);
 			FileIO.openGeneralWavFile("correct");
 			hideAllButtonsShowNextButton();
+			isInNextButtonScene = true;
 			
 			
 			// if there is no next word, the program should switch complete screen
@@ -230,6 +237,7 @@ public class QuizController implements Initializable {
 			resultLabel.setText(SECOND_WRONG_MESSAGE);
 			FileIO.openGeneralWavFile("wrong");
 			hideAllButtonsShowNextButton();
+			isInNextButtonScene = true;
 			
 			// if there is no next word, then switch to the complete scene
 			if (this.testWords.size() == 0) {
@@ -285,6 +293,7 @@ public class QuizController implements Initializable {
 		// set result label
 		resultLabel.setText(SKIPPED_MESSAGE);
 		hideAllButtonsShowNextButton();
+		isInNextButtonScene = true;
 		
 		// clear dashes
 		clearFieldsAfterSubmit();
@@ -302,9 +311,11 @@ public class QuizController implements Initializable {
 	 * simply invokes the submit method
 	 */
 	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
-		if (e.getCode() == KeyCode.ENTER) {
+		if ((e.getCode() == KeyCode.ENTER) && (isInNextButtonScene == false)) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
+		} else {
+			
 		}
 	}
 
@@ -470,6 +481,10 @@ public class QuizController implements Initializable {
 	
 	public void switchToNextWord(ActionEvent event) {
 		
+		
+		
+		userAnswerTextField.setVisible(true);
+		
 		// reset the timer for next word.
 		startTimer = (int) System.currentTimeMillis();
 		//System.out.println(endTimer-startTimer);
@@ -486,6 +501,8 @@ public class QuizController implements Initializable {
 		// show all other buttons again
 		showAllButtonsHideNextButton();
 		
+		isInNextButtonScene = false;
+		
 	}
 	
 	
@@ -494,6 +511,7 @@ public class QuizController implements Initializable {
 	 */
 	public void clearFieldsAfterSubmit() {
 		letterCountLabel.setText("");
+		userAnswerTextField.setVisible(false);
 	}
 	
 	
@@ -511,7 +529,7 @@ public class QuizController implements Initializable {
 		int speakingTime = 127*wordLength + 1166;
 		int typingTime = 400*wordLength + 800;
 		int thinkingTime = durationMs - speakingTime - typingTime;
-		System.out.println(thinkingTime);
+		//System.out.println(thinkingTime);
 		double score = 1.0;
 	
 		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_01_DEDUCTED;
