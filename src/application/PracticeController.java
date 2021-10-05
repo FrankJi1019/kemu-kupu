@@ -162,7 +162,8 @@ public class PracticeController implements Initializable {
 	
 	private void giveHint() {
 		double displayRatio = 0.5;
-		int letterCount = (int)(PracticeController.currentWord.length() * displayRatio);
+		String temp = PracticeController.currentWord.replace(" ", "");
+		int letterCount = (int)(temp.length() * displayRatio);
 		Set<Integer> indexes = new HashSet<Integer>();
 		Random random = new Random();
 		char[] letters = PracticeController.currentWord.toCharArray();
