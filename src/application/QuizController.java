@@ -112,7 +112,7 @@ public class QuizController implements Initializable {
 		
 		Random random = new Random();
 		if (allWords.size() <= 5) {
-			testWords = allWords;
+			testWords.addAll(allWords);
 		}
 		while (this.testWords.size() < 5) {
 			if (QuizController.allWords.size() <= 5) break;
