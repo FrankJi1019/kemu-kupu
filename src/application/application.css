@@ -5,6 +5,7 @@
 .large-button {
 	-fx-background-color: #274029;
 	-fx-text-fill: white;
+	-fx-background-radius: 10px;
 }
 .large-button:hover{
 	-fx-scale-x: 1.1;
@@ -12,18 +13,15 @@
 }
 /* ------------------- */
 
-/* ------ Main ------- */
-
-
-/* ------------------- */
-
 /* ----- Topics  ----- */
 .topic-button {
-	-fx-background-color: #b7d7c0;
+	-fx-background-color: #a6e0ae;
+	-fx-background-radius: 10px;
 }
 .topic-button:hover{
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
+	-fx-text-fill: white;
 }
 #back-button {
 	-fx-background-color: transparent;
