@@ -1,6 +1,6 @@
 /* ----- Global  ----- */
 .background {
-	-fx-background-color: #F5F5F5;
+   -fx-background-color: linear-gradient(from 50% 70% to 50% 100%, #ffffff, #B8F6C0);
 }
 .large-button {
 	-fx-background-color: #274029;
@@ -10,6 +10,11 @@
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
 }
+/* ------------------- */
+
+/* ------ Main ------- */
+
+
 /* ------------------- */
 
 /* ----- Topics  ----- */
