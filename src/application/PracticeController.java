@@ -42,6 +42,8 @@ public class PracticeController implements Initializable {
 	private TextField textField;
 	@FXML
 	private Slider speedSlider;
+	@FXML
+	private Button submitButton;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -82,6 +84,13 @@ public class PracticeController implements Initializable {
 		} else {
 			FileIO.openGeneralWavFile("wrong");
 			this.switchScene("PracticeComplete", e);
+		}
+	}
+	
+	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
+		if (e.getCode() == KeyCode.ENTER) {
+			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
+			this.submit(event);
 		}
 	}
 	
