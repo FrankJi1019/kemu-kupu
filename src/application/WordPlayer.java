@@ -18,6 +18,8 @@ public class WordPlayer implements Runnable {
 	static boolean reading = false;
 	private boolean isImportant;
 	
+	private static double readingTimeSeconds = -1;
+	
 	// set what the word is, how fast should it be read, and if it is important
 	public WordPlayer(String word, double speed, boolean isImportant) {
 		this.word = word;
@@ -27,6 +29,8 @@ public class WordPlayer implements Runnable {
 
 	@Override
 	public void run() {
+		
+		long start = System.currentTimeMillis();
 		
 		// if another thread is executing currently and this thread is not important, then ignore this 
 		if (WordPlayer.reading && !this.isImportant) return;
@@ -42,6 +46,14 @@ public class WordPlayer implements Runnable {
 		
 		// after reading, set it to false
 		WordPlayer.reading = false;
+		
+		long end = System.currentTimeMillis();
+		
+		WordPlayer.readingTimeSeconds = (end - start) / 1000;
+	}
+	
+	public double getReadintTime() {
+		return WordPlayer.readingTimeSeconds;
 	}
 
 }
