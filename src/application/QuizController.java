@@ -26,6 +26,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 
 
@@ -61,11 +64,19 @@ public class QuizController implements Initializable {
 	private Button idkButton;
 	@FXML
 	private Button nextButton;
-	
+	@FXML
+	private AnchorPane macronInfo;
+	@FXML
+	private Rectangle feedbackRect;
+	@FXML
+	private AnchorPane macronButtons;
+	@FXML
+	private Button infoButton;
+
 	// this is a list of all words in the file
 	private static List<String> allWords;
 	
-	private static String CORRECT_MESSAGE = "Correct";
+	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
 	private static String FIRST_INCORRECT_MESSAGE = "Incorrect, Try Again";
 	private static String SECOND_WRONG_MESSAGE = "Wrong Again";
 	private static String SKIPPED_MESSAGE = "Skipped";
@@ -118,6 +129,8 @@ public class QuizController implements Initializable {
 		// get the five words that will be tested, but if there are less than 5 words in the file
 		// then put all the word in the list
 		nextButton.setVisible(false);
+		macronInfo.setVisible(false);
+		
 		
 		Random random = new Random();
 		if (allWords.size() <= 5) {
@@ -205,6 +218,7 @@ public class QuizController implements Initializable {
 			
 			// tell the user the result of their submit in the label, also play a sound to let them know
 			resultLabel.setText(CORRECT_MESSAGE);
+			feedbackRect.setFill(Color.web("#00b24c"));
 			FileIO.openGeneralWavFile("correct");
 			hideAllButtonsShowNextButton();
 			isInNextButtonScene = true;
@@ -235,6 +249,7 @@ public class QuizController implements Initializable {
 			this.testWords.remove(0);
 			
 			resultLabel.setText(SECOND_WRONG_MESSAGE);
+			feedbackRect.setFill(Color.web("#f87676"));
 			FileIO.openGeneralWavFile("wrong");
 			hideAllButtonsShowNextButton();
 			isInNextButtonScene = true;
@@ -259,6 +274,8 @@ public class QuizController implements Initializable {
 			
 			// inform the user the result of there submit and play the word again
 			resultLabel.setText(FIRST_INCORRECT_MESSAGE);
+			feedbackRect.setFill(Color.web("#f87676"));
+
 			FileIO.openGeneralWavFile("wrong");
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
 			
@@ -459,6 +476,8 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(false);
 		idkButton.setVisible(false);
 		nextButton.setVisible(true);
+		macronButtons.setVisible(false);
+		infoButton.setVisible(false);
 	}
 	
 	/**
@@ -470,6 +489,9 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(true);
 		idkButton.setVisible(true);
 		nextButton.setVisible(false);
+		macronButtons.setVisible(true);
+		infoButton.setVisible(true);
+
 	}
 	
 	
@@ -492,6 +514,9 @@ public class QuizController implements Initializable {
 		
 		//clear result label
 		resultLabel.setText("");
+		
+		// Set the color of the feedback rectangle back to grey
+		feedbackRect.setFill(Color.web("#dbdcde"));
 		
 		// play the next word
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
@@ -544,6 +569,14 @@ public class QuizController implements Initializable {
 		score = score - 0.01*scoreDeductionRate;
 		
 		return score;
+	}
+	
+	public void showInfo() {
+		if(macronInfo.isVisible()) {
+			macronInfo.setVisible(false);
+		} else {
+			macronInfo.setVisible(true);
+		}
 	}
 	
 	

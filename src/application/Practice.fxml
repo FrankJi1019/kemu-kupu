@@ -4,77 +4,113 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#keyPressed" minHeight="560.0" minWidth="840.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
    <children>
-      <Label layoutX="314.0" layoutY="35.0" text="Practice Mode">
+      <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#dbdcde" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
+      <Label layoutX="305.0" layoutY="27.0" text="Practice Mode">
          <font>
-            <Font size="35.0" />
+            <Font name="Raleway Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="hintLabel" layoutX="364.0" layoutY="206.0" text="_ _ _ _ _ _ _">
+      <Label fx:id="hintLabel" alignment="TOP_CENTER" layoutX="189.0" layoutY="180.0" prefHeight="100.0" prefWidth="474.0" text="_ _ _ _ _ _ _" textAlignment="CENTER" wrapText="true">
          <font>
-            <Font size="20.0" />
+            <Font name="Raleway Regular" size="31.0" />
          </font>
       </Label>
-      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="31.0" layoutY="55.0" majorTickUnit="0.5" max="-0.5" min="-2.0" minorTickCount="0" prefHeight="30.0" prefWidth="190.0" showTickMarks="true" snapToTicks="true" value="-1.0" />
-      <Label fx:id="speedLabel" layoutX="59.0" layoutY="28.0" text="Speed: x1.0">
+      <Button fx:id="submitButton" layoutX="298.0" layoutY="412.0" mnemonicParsing="false" onAction="#submit" prefHeight="45.0" prefWidth="118.0" styleClass="large-button" text="Submit">
          <font>
-            <Font size="20.0" />
-         </font>
-      </Label>
-      <Button fx:id="submitButton" layoutX="221.0" layoutY="429.0" mnemonicParsing="false" onAction="#submit" text="Submit">
-         <font>
-            <Font size="22.0" />
+            <Font name="Raleway Medium" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="hearAgainButton" layoutX="351.0" layoutY="429.0" mnemonicParsing="false" onAction="#hearAgain" text="Hear again">
+      <Button fx:id="hearAgainButton" layoutX="121.0" layoutY="412.0" mnemonicParsing="false" onAction="#hearAgain" prefHeight="45.0" prefWidth="140.0" styleClass="large-button" text="Hear again">
          <font>
-            <Font size="22.0" />
+            <Font name="Raleway Medium" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="idkButton" layoutX="547.0" layoutY="429.0" mnemonicParsing="false" onAction="#idk" text="I don't know">
+      <Button fx:id="idkButton" layoutX="443.0" layoutY="412.0" mnemonicParsing="false" onAction="#idk" prefHeight="45.0" prefWidth="150.0" styleClass="large-button" text="I don't know">
          <font>
-            <Font size="22.0" />
+            <Font name="Raleway Medium" size="18.0" />
          </font>
       </Button>
-      <Button fx:id="exitButton" layoutX="571.0" layoutY="31.0" mnemonicParsing="false" onAction="#returnHome" text="Exit">
+      <Button fx:id="exitButton" layoutX="703.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnHome" styleClass="large-button" text="Exit">
          <font>
-            <Font size="22.0" />
+            <Font size="18.0" />
          </font>
       </Button>
-      <TextField fx:id="textField" layoutX="294.0" layoutY="351.0">
+      <TextField fx:id="textField" layoutX="121.0" layoutY="351.0" prefHeight="53.0" prefWidth="472.0" promptText="Enter guess here">
          <font>
-            <Font size="25.0" />
+            <Font name="Raleway Medium" size="22.0" />
          </font>
       </TextField>
-      <Button layoutX="25.0" layoutY="98.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ā">
+      <Button fx:id="resetButton" layoutX="180.0" layoutY="64.0" mnemonicParsing="false" onAction="#resetSpeed" styleClass="large-button" text="RESET">
          <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button layoutX="25.0" layoutY="217.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ī">
+            <Font name="Raleway Regular" size="13.0" />
+         </font></Button>
+      <AnchorPane fx:id="macronButtons" layoutX="604.0" layoutY="320.0" prefHeight="138.0" prefWidth="76.0">
+         <children>
+            <Button layoutY="108.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="32.0" prefWidth="30.0" styleClass="macron-button" text="ū">
+               <font>
+                  <Font name="Raleway Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutY="31.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="30.0" prefWidth="30.0" styleClass="macron-button" text="ā">
+               <font>
+                  <Font name="Raleway Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="39.0" layoutY="31.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="30.0" prefWidth="30.0" styleClass="macron-button" text="ē">
+               <font>
+                  <Font name="Raleway Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutY="68.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="32.0" prefWidth="32.0" styleClass="macron-button" text="ī">
+               <font>
+                  <Font name="Raleway Bold" size="17.0" />
+               </font>
+            </Button>
+            <Button layoutX="39.0" layoutY="68.0" maxHeight="-Infinity" maxWidth="-Infinity" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="30.0" prefWidth="30.0" styleClass="macron-button" text="ō">
+               <font>
+                  <Font name="Raleway Bold" size="17.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="macronInfo" layoutX="605.0" layoutY="334.0" prefHeight="127.0" prefWidth="70.0" styleClass="info">
+         <children>
+            <Label layoutX="7.0" layoutY="2.0" prefHeight="92.0" prefWidth="68.0" text="Click to add a vowel with a macron" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Raleway Medium" size="14.0" />
+               </font>
+            </Label>
+         </children>
+      </AnchorPane>
+      <Button fx:id="infoButton" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
          <font>
-            <Font size="20.0" />
+            <Font name="Raleway Bold" size="17.0" />
          </font>
+         <tooltip>
+            <Tooltip text="What are these buttons for?">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Button>
-      <Button layoutX="25.0" layoutY="351.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ū">
+      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="38.0" layoutY="66.0" majorTickUnit="0.5" max="-0.5" min="-2" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="-1.0" />
+      <Label layoutX="42.0" layoutY="43.0" text="SPEED:">
          <font>
-            <Font size="20.0" />
+            <Font name="Raleway Bold" size="17.0" />
          </font>
-      </Button>
-      <Button layoutX="25.0" layoutY="280.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ō">
+      </Label>
+      <Label fx:id="speedLabel" layoutX="112.0" layoutY="43.0" text="1.00 (default)">
          <font>
-            <Font size="20.0" />
+            <Font name="Raleway Regular" size="17.0" />
          </font>
-      </Button>
-      <Button layoutX="25.0" layoutY="156.0" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="45.0" prefWidth="48.0" text="ē">
-         <font>
-            <Font size="20.0" />
-         </font>
-      </Button>
-      <Button fx:id="resetButton" layoutX="224.0" layoutY="59.0" mnemonicParsing="false" onAction="#resetSpeed" text="reset" />
+      </Label>
    </children>
 </AnchorPane>
