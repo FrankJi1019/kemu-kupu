@@ -9,6 +9,7 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -23,13 +24,18 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PracticeController implements Initializable {
 	
+	private static String INCORRECT_MESSAGE = "Incorrect, Try Again";
 	private List<String> words = new ArrayList<String>();
 	public static String currentWord = "";
 	public static String userAnswer = "";
+	public static boolean isCorrect;
 	private double speedOfSpeech = 1;
 	private int attempts = 1;
 	
@@ -51,7 +57,11 @@ public class PracticeController implements Initializable {
 	
     @FXML
 	private Button submitButton;
-	
+    @FXML
+    private Rectangle feedbackRect;
+    @FXML
+    private Label resultLabel;
+    
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -85,14 +95,18 @@ public class PracticeController implements Initializable {
 		if (isAnswerCorrect()) {
 			this.attempts = 1;
 			FileIO.openGeneralWavFile("correct");
+			PracticeController.isCorrect = true;
 			this.switchScene("PracticeComplete", e);
 		} else if (this.attempts == 1) {
 			FileIO.openGeneralWavFile("wrong");
 			this.attempts++;
+			feedbackRect.setFill(Color.web("#f87676"));
+			resultLabel.setText(INCORRECT_MESSAGE);
 			this.readCurrentWord();
 			this.giveHint();
 		} else {
 			FileIO.openGeneralWavFile("wrong");
+			PracticeController.isCorrect = false;
 			this.switchScene("PracticeComplete", e);
 		}
 	}
@@ -109,6 +123,15 @@ public class PracticeController implements Initializable {
 	}
 	
 	public void idk(ActionEvent e) {
+		resultLabel.setText("Skipped");
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(3000), resultLabel);
+		fadeTransition.setFromValue(1.0);
+		fadeTransition.setToValue(0);	
+		fadeTransition.setOnFinished(event -> {
+			resultLabel.setText("");
+			resultLabel.setOpacity(1.0);
+		});
+		fadeTransition.play();
 		this.nextWord();
 		this.readCurrentWord();
 		this.updateLetterCount();
@@ -161,7 +184,7 @@ public class PracticeController implements Initializable {
 	}
 	
 	private boolean isAnswerCorrect() {
-		boolean b = this.textField.getText().equalsIgnoreCase(currentWord);
+		boolean b = this.textField.getText().trim().equalsIgnoreCase(currentWord);
 		this.textField.clear();
 		return b;
 	}

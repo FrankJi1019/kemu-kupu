@@ -24,14 +24,14 @@
             <Font name="Raleway Bold" size="34.0" />
          </font>
       </Label>
-      <Label fx:id="answerLabel" alignment="TOP_CENTER" layoutX="123.0" layoutY="159.0" prefHeight="89.0" prefWidth="595.0" text="Answer" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="answerLabel" alignment="TOP_CENTER" layoutX="59.0" layoutY="123.0" prefHeight="125.0" prefWidth="727.0" text="Answer" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Raleway Medium" size="26.0" />
          </font>
       </Label>
-      <Label layoutX="327.0" layoutY="321.0" text="Good practice session!">
+      <Label fx:id="feedbackLabel" alignment="CENTER" layoutX="78.0" layoutY="311.0" prefHeight="31.0" prefWidth="708.0" text="Good practice session!">
          <font>
-            <Font name="Raleway Bold" size="17.0" />
+            <Font name="Raleway Bold" size="26.0" />
          </font>
       </Label>
    </children>

@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+import javafx.animation.FillTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,8 +12,12 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 public class PracticeCompleteController implements Initializable {
 	
@@ -21,15 +26,30 @@ public class PracticeCompleteController implements Initializable {
 	
 	private String correctAnswer = "";
 	private String userAnswer = "";
-	
+		
 	@FXML
 	private Label answerLabel;
+	@FXML
+    private Rectangle feedbackRect;
+	@FXML
+	private Label feedbackLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		this.correctAnswer = PracticeController.currentWord;
-		this.userAnswer = PracticeController.userAnswer;
-		this.answerLabel.setText(String.format("The answer is %s, and your answer is %s", this.correctAnswer, this.userAnswer));
+		boolean isCorrect = PracticeController.isCorrect;
+		this.correctAnswer = PracticeController.currentWord.toLowerCase();
+		this.userAnswer = PracticeController.userAnswer.toLowerCase();
+		this.answerLabel.setText(String.format("The answer is: %s \n You typed: %s", this.correctAnswer, this.userAnswer.trim()));
+		if(isCorrect) {
+			feedbackRect.setFill(Color.web("#00b24c"));
+			FillTransition fillTransition = new FillTransition(Duration.millis(5000),feedbackRect,Color.web("#00b24c"), Color.web("#91b2eb"));
+			feedbackLabel.setText("Great job! Good practice session!");
+			fillTransition.play();
+		} else {
+			FillTransition fillTransition = new FillTransition(Duration.millis(5000),feedbackRect,Color.web("#f87676"), Color.web("#91b2eb"));
+			feedbackLabel.setText("No worries, practice makes perfect!");
+			fillTransition.play();
+		}
 		
 	}
 	
