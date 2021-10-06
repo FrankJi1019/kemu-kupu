@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" onKeyPressed="#keyPressed" minHeight="560.0" minWidth="840.0" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#dbdcde" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="305.0" layoutY="27.0" text="Practice Mode">
@@ -51,6 +51,11 @@
          <font>
             <Font name="Raleway Regular" size="13.0" />
          </font></Button>
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="119.0" layoutY="296.0" prefHeight="48.0" prefWidth="594.0" textAlignment="CENTER" textFill="WHITE">
+         <font>
+            <Font name="Raleway Bold" size="27.0" />
+         </font>
+      </Label>
       <AnchorPane fx:id="macronButtons" layoutX="604.0" layoutY="320.0" prefHeight="138.0" prefWidth="76.0">
          <children>
             <Button layoutY="108.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="32.0" prefWidth="30.0" styleClass="macron-button" text="ū">
