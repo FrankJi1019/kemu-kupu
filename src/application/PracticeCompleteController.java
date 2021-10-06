@@ -19,12 +19,17 @@ public class PracticeCompleteController implements Initializable {
 	private Stage stage;
 	private Scene scene;
 	
+	private String correctAnswer = "";
+	private String userAnswer = "";
+	
 	@FXML
 	private Label answerLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		this.answerLabel.setText(String.format("The answer is %s", PracticeController.currentWord));
+		this.correctAnswer = PracticeController.currentWord;
+		this.userAnswer = PracticeController.userAnswer;
+		this.answerLabel.setText(String.format("The answer is %s, and your answer is %s", this.correctAnswer, this.userAnswer));
 		
 	}
 	

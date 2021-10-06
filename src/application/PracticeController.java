@@ -29,6 +29,7 @@ public class PracticeController implements Initializable {
 	
 	private List<String> words = new ArrayList<String>();
 	public static String currentWord = "";
+	public static String userAnswer = "";
 	private double speedOfSpeech = 1;
 	private int attempts = 1;
 	
@@ -48,7 +49,7 @@ public class PracticeController implements Initializable {
 	@FXML
 	private Button infoButton;
 	
-  @FXML
+    @FXML
 	private Button submitButton;
 	
 	@Override
@@ -80,6 +81,7 @@ public class PracticeController implements Initializable {
 	}
 	
 	public void submit(ActionEvent e) {
+		PracticeController.userAnswer = this.textField.getText();
 		if (isAnswerCorrect()) {
 			this.attempts = 1;
 			FileIO.openGeneralWavFile("correct");
@@ -107,6 +109,7 @@ public class PracticeController implements Initializable {
 	}
 	
 	public void idk(ActionEvent e) {
+		PracticeController.userAnswer = "Skipped";
 		this.switchScene("PracticeComplete", e);
 	}
 	
