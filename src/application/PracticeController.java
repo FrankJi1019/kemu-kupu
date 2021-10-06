@@ -109,8 +109,9 @@ public class PracticeController implements Initializable {
 	}
 	
 	public void idk(ActionEvent e) {
-		PracticeController.userAnswer = "Skipped";
-		this.switchScene("PracticeComplete", e);
+		this.nextWord();
+		this.readCurrentWord();
+		this.updateLetterCount();
 	}
 	
 	public void addMacronisedVowel(ActionEvent event) {
