@@ -58,9 +58,9 @@
             <Font name="Raleway Medium" size="18.0" />
          </font>
       </Button>
-      <Label fx:id="resultLabel" alignment="CENTER" layoutX="173.0" layoutY="296.0" prefHeight="48.0" prefWidth="498.0" textAlignment="CENTER" textFill="WHITE">
+      <Label fx:id="resultLabel" alignment="CENTER" layoutX="31.0" layoutY="296.0" prefHeight="48.0" prefWidth="770.0" textAlignment="CENTER" textFill="WHITE">
          <font>
-            <Font name="Raleway Bold" size="22.0" />
+            <Font name="Raleway Bold" size="27.0" />
          </font>
       </Label>
       <Button fx:id="hearAgainButton" layoutX="121.0" layoutY="412.0" mnemonicParsing="false" onAction="#hearAgain" prefHeight="45.0" prefWidth="140.0" styleClass="large-button" text="Hear again">
@@ -84,7 +84,7 @@
             <Font name="Raleway Regular" size="16.0" />
          </font>
       </Label>
-      <Button fx:id="nextButton" layoutX="605.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToNextWord" prefHeight="48.0" prefWidth="131.0" styleClass="large-button" text="Next word...">
+      <Button fx:id="nextButton" layoutX="354.0" layoutY="354.0" mnemonicParsing="false" onAction="#switchToNextWord" prefHeight="48.0" prefWidth="131.0" styleClass="large-button" text="Next word...">
          <font>
             <Font name="Raleway Medium" size="18.0" />
          </font>
