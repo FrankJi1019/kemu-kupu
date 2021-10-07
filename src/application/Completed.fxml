@@ -4,6 +4,9 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
@@ -21,15 +24,43 @@
           <TableColumn fx:id="scoreColumn" minWidth="89.0" prefWidth="-1.0" text="Score" />
         </columns>
       </TableView>
-      <Button fx:id="playAgainButton" layoutX="216.0" layoutY="430.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="64.0" prefWidth="174.0" styleClass="large-button" text="Play again">
+      <Button fx:id="playAgainButton" contentDisplay="CENTER" layoutX="322.0" layoutY="430.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="70.0" prefWidth="70.0" styleClass="large-button">
          <font>
             <Font name="Raleway Bold" size="21.0" />
          </font>
+         <tooltip>
+            <Tooltip text="Pueri ano | Play again">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="38.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@again-btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
       </Button>
-      <Button fx:id="returnButton" layoutX="432.0" layoutY="430.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="64.0" prefWidth="174.0" styleClass="large-button" text="Return home">
+      <Button fx:id="returnButton" contentDisplay="CENTER" layoutX="435.0" layoutY="430.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="70.0" prefWidth="70.0" styleClass="large-button">
          <font>
             <Font name="Raleway Bold" size="21.0" />
          </font>
+         <graphic>
+            <ImageView fitHeight="48.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@home-btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Kāinga | Return home">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Button>
       <Label layoutX="368.0" layoutY="100.0" text="Final score:">
          <font>
