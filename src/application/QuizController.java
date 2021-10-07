@@ -375,7 +375,9 @@ public class QuizController implements Initializable {
 		// passing data
 		CompletedController controller = loader.getController();
 		controller.setData(this.wordStats);
-		System.out.println(this.wordStats.toString());
+		
+		//developer feature for testing
+		//System.out.println(this.wordStats.toString());
 		
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
