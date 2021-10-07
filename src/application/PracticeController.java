@@ -151,8 +151,7 @@ public class PracticeController implements Initializable {
 			resultLabel.setOpacity(1.0);
 		});
 		fadeTransition.play();
-		feedbackRect.setFill(Color.web("#dbdcde"));
-		
+		feedbackRect.setFill(Color.web("#d0d0d0"));		
 		// get the next word, read it and show the letter counts
 		this.nextWord();
 		this.readCurrentWord();

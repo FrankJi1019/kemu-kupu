@@ -309,7 +309,7 @@ public class QuizController implements Initializable {
 		
 		// set result label and make rectangle grey
 		resultLabel.setText(SKIPPED_MESSAGE);
-		feedbackRect.setFill(Color.web("#dbdcde"));
+		feedbackRect.setFill(Color.web("#d0d0d0"));
 
 		hideAllButtonsShowNextButton();
 		isInNextButtonScene = true;
@@ -523,7 +523,7 @@ public class QuizController implements Initializable {
 		resultLabel.setText("");
 		
 		// Set the color of the feedback rectangle back to grey
-		feedbackRect.setFill(Color.web("#dbdcde"));
+		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
