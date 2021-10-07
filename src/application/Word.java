@@ -38,6 +38,9 @@ public class Word {
 		return this.score;
 	}
 	
+	/**
+	 * developer feature method
+	 */
 	public String toString() {
 		return this.word + "," + this.score;
 	}
