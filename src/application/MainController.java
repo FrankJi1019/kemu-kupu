@@ -53,6 +53,9 @@ public class MainController implements Initializable{
 		}
 	}
 	
+	/**
+	 * this method switches to Practice scene when called
+	 */
 	public void practice(ActionEvent e) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("/application/Practice.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
