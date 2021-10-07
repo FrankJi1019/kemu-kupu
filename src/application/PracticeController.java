@@ -139,7 +139,7 @@ public class PracticeController implements Initializable {
 			resultLabel.setOpacity(1.0);
 		});
 		fadeTransition.play();
-		feedbackRect.setFill(Color.web("#dbdcde"));
+		feedbackRect.setFill(Color.web("#d0d0d0"));
 		this.nextWord();
 		this.readCurrentWord();
 		this.updateLetterCount();
