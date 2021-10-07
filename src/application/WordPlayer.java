@@ -52,7 +52,7 @@ public class WordPlayer implements Runnable {
 		WordPlayer.readingTimeSeconds = (end - start) / 1000;
 	}
 	
-	public static double getReadintTime() {
+	public static double getReadingTime() {
 		return WordPlayer.readingTimeSeconds;
 	}
 
