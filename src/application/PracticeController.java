@@ -162,7 +162,7 @@ public class PracticeController implements Initializable {
 	private void readCurrentWord() {
 		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true)).start();
 		// developer feature
-		//System.out.println(PracticeController.currentWord);
+		System.out.println(PracticeController.currentWord);
 	}
 	
 	private void updateLetterCount() {

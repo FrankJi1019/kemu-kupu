@@ -17,7 +17,7 @@
             <Font name="Raleway Bold" size="35.0" />
          </font>
       </Label>
-      <Label fx:id="hintLabel" alignment="TOP_CENTER" layoutX="189.0" layoutY="180.0" prefHeight="100.0" prefWidth="474.0" text="_ _ _ _ _ _ _" textAlignment="CENTER" wrapText="true">
+      <Label fx:id="hintLabel" alignment="TOP_CENTER" layoutX="84.0" layoutY="180.0" prefHeight="100.0" prefWidth="665.0" text="_ _ _ _ _ _ _" textAlignment="CENTER" wrapText="true">
          <font>
             <Font name="Raleway Regular" size="31.0" />
          </font>

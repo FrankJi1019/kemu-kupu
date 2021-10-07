@@ -33,15 +33,16 @@ public class CompletedController {
 	private Stage stage;
 	private Scene scene;
 	
-	@FXML
-	private TableView<Word> summaryTable;
-	@FXML
-	private TableColumn<Word, String> wordColumn;
-	@FXML
-	private TableColumn<Word, Double> scoreColumn;
-	@FXML
-	private Label totalScoreLabel;
+	@FXML private TableView<Word> summaryTable;
+	@FXML private TableColumn<Word, String> wordColumn;
+	@FXML private TableColumn<Word, Double> scoreColumn;
+	@FXML private Label totalScoreLabel;
 	@FXML private AnchorPane stars;
+	
+	private double totalScore = 0;
+	
+	// this constant defines the colour of star that transition into.
+	private static String STAR_COLOUR_HEX = "#FFD700";
 
 	/*
 	 * This method will be invoked when other scene is switching to complete scene, this is to pass
@@ -51,7 +52,7 @@ public class CompletedController {
 	 */
 	public void setData(List<Word> wordStats) {
 		
-		// write the data to the table
+		// Write the data to the table
 		ObservableList<Word> list = FXCollections.observableArrayList(wordStats);
 		
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
@@ -59,15 +60,22 @@ public class CompletedController {
 		this.summaryTable.setItems(list);
 		
 		// iterates the list to calculate the total score and set it to the text of label
-		double totalScore = 0;
 		for (Word word: wordStats) {
-			totalScore += word.getScore();
+			this.totalScore += word.getScore();
 		}
 		
 		String totalScoreString = String.format("%.2f", totalScore);
 		double finalTotalScore = Double.parseDouble(totalScoreString);
 		this.totalScoreLabel.setText(Double.toString(finalTotalScore));
+
 		
+	}
+	
+	/**
+	 * this method controls the star animation on the completed screen with 
+	 * specific score boundary for each star.
+	 */
+	public void setAnimation() {
 		double scoreBoundaryOne = 1.7;
 		double scoreBoundaryTwo = 2.5;
 		
@@ -83,8 +91,6 @@ public class CompletedController {
 		else if(totalScore > scoreBoundaryTwo) {
 			playStarsAnimation(3);
 		}
-
-		
 	}
 	
 	public void returnHome(ActionEvent e) {
@@ -121,11 +127,15 @@ public class CompletedController {
 
 	}
 	
+	/**
+	 * this method plays the star animation with specific number of 
+	 * stars passed in as parameter
+	 * @param numOfStars
+	 */
 	public void playStarsAnimation(int numOfStars) {
 		ObservableList<Node> starsObjects = stars.getChildren();
 		
-		// Change this value if we want a different color
-		String starColorHex = "#FFD700";
+		String starColorHex = STAR_COLOUR_HEX;
         
 		SequentialTransition sequentialTransition = new SequentialTransition();
         
@@ -134,11 +144,13 @@ public class CompletedController {
         	numOfStars = 3;
         }
 		
+        // Create a simple scale for all three stars
         if(numOfStars == 0) {
             ScaleTransition animation = createScaleAnimation(stars, 400, 0.1);
 			sequentialTransition.getChildren().add(animation);
 		}
         
+        // Create a scale animation for each star
 		for (int i = 0; i < numOfStars; i++) {
         	SVGPath shape = (SVGPath)starsObjects.get(i);
             ScaleTransition animation = createScaleAnimation(shape, 400, 0.7);
@@ -146,14 +158,17 @@ public class CompletedController {
             sequentialTransition.getChildren().addAll(colorChange, animation);
         }
         
-        // Also add a pause first so that it doesnt play after initialise
+        // Pause so that it doesn't play right away on initialise
         int transitionDelay = 1500;
         sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
         
-        // Play it
+        
         sequentialTransition.play();
 	}
 
+	/*
+	 * Creates a scale transition which zooms in and out with specified values. 
+	 */
 	private ScaleTransition createScaleAnimation(Node shape, int durationInMillis, double scale) {
 		ScaleTransition animation = new ScaleTransition(Duration.millis(durationInMillis), shape);
 		animation.setByX(scale);

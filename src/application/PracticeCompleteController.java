@@ -42,11 +42,11 @@ public class PracticeCompleteController implements Initializable {
 		this.answerLabel.setText(String.format("The answer is: %s \n You typed: %s", this.correctAnswer, this.userAnswer.trim()));
 		if(isCorrect) {
 			feedbackRect.setFill(Color.web("#00b24c"));
-			FillTransition fillTransition = new FillTransition(Duration.millis(5000),feedbackRect,Color.web("#00b24c"), Color.web("#91b2eb"));
+			FillTransition fillTransition = new FillTransition(Duration.millis(1500),feedbackRect,Color.web("#00b24c"), Color.web("#91b2eb"));
 			feedbackLabel.setText("Great job! Good practice session!");
 			fillTransition.play();
 		} else {
-			FillTransition fillTransition = new FillTransition(Duration.millis(5000),feedbackRect,Color.web("#f87676"), Color.web("#91b2eb"));
+			FillTransition fillTransition = new FillTransition(Duration.millis(1500),feedbackRect,Color.web("#f87676"), Color.web("#91b2eb"));
 			feedbackLabel.setText("No worries, practice makes perfect!");
 			fillTransition.play();
 		}
