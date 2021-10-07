@@ -29,12 +29,12 @@
                </columnConstraints>
             </GridPane>
          </content></ScrollPane>
-      <Button id="back-button" fx:id="returnButton" layoutX="51.0" layoutY="40.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="38.0" prefWidth="43.0">
+      <Button fx:id="returnButton" layoutX="62.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="44.0" prefWidth="72.0" styleClass="large-button">
          <font>
             <Font name="Noto Sans CJK JP" size="14.0" />
          </font>
          <graphic>
-            <ImageView fitHeight="28.0" fitWidth="31.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
+            <ImageView fitHeight="26.0" fitWidth="26.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2">
                <image>
                   <Image url="@back-btn.png" />
                </image>
