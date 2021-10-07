@@ -27,19 +27,20 @@ public class PracticeCompleteController implements Initializable {
 	private String correctAnswer = "";
 	private String userAnswer = "";
 		
-	@FXML
-	private Label answerLabel;
-	@FXML
-    private Rectangle feedbackRect;
-	@FXML
-	private Label feedbackLabel;
+	@FXML private Label answerLabel;
+	@FXML private Rectangle feedbackRect;
+	@FXML private Label feedbackLabel;
 	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// display the user's result on the label
 		boolean isCorrect = PracticeController.isCorrect;
 		this.correctAnswer = PracticeController.currentWord.toLowerCase();
 		this.userAnswer = PracticeController.userAnswer.toLowerCase();
 		this.answerLabel.setText(String.format("The answer is: %s \n You typed: %s", this.correctAnswer, this.userAnswer.trim()));
+		
+		// display different color (and transition) based on the result of user's answer
 		if(isCorrect) {
 			feedbackRect.setFill(Color.web("#00b24c"));
 			FillTransition fillTransition = new FillTransition(Duration.millis(1500),feedbackRect,Color.web("#00b24c"), Color.web("#91b2eb"));
@@ -61,6 +62,11 @@ public class PracticeCompleteController implements Initializable {
 		this.switchScene("Main", e);
 	}
 	
+	/**
+	 * This method is used to switch between different scenes
+	 * @param filename: the filename of the scene, this string does not include the .fxml extension
+	 * @param e
+	 */
 	private void switchScene(String filename, ActionEvent e) {
 		Parent root = null;
 		try {
