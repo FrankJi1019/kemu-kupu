@@ -45,48 +45,31 @@ public class QuizController implements Initializable {
 	private Stage stage;
 	private Scene scene;
 	
-	@FXML
-	private Label scoreLabel;
-	@FXML
-	private Label wordCountLabel;
-	@FXML
-	private Label letterCountLabel;
-	@FXML
-	private Label letterNumberLabel;
-	@FXML
-	private Label resultLabel;
-	@FXML
-	private Label speedLabel;
-	@FXML
-	private Slider speedSlider;
-	@FXML
-	private TextField userAnswerTextField;
-	@FXML
-	private Button submitButton;
-	@FXML
-	private Button hearAgainButton;
-	@FXML
-	private Button idkButton;
-	@FXML
-	private Button nextButton;
-	@FXML
-	private AnchorPane macronInfo;
-	@FXML
-	private Rectangle feedbackRect;
-	@FXML
-	private AnchorPane macronButtons;
-	@FXML
-	private Button infoButton;
-	@FXML
-	private Label addition;
+	@FXML private Label scoreLabel;
+	@FXML private Label wordCountLabel;
+	@FXML private Label letterCountLabel;
+	@FXML private Label letterNumberLabel;
+	@FXML private Label resultLabel;
+	@FXML private Label speedLabel;
+	@FXML private Slider speedSlider;
+	@FXML private TextField userAnswerTextField;
+	@FXML private Button submitButton;
+	@FXML private Button hearAgainButton;
+	@FXML private Button idkButton;
+	@FXML private Button nextButton;
+	@FXML private AnchorPane macronInfo;
+	@FXML private Rectangle feedbackRect;
+	@FXML private AnchorPane macronButtons;
+	@FXML private Button infoButton;
+	@FXML private Label addition;
 
 	// this is a list of all words in the file
 	private static List<String> allWords;
 	
 	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
-	private static String FIRST_INCORRECT_MESSAGE = "Incorrect, Try Again";
-	private static String SECOND_WRONG_MESSAGE = "Wrong Again";
-	private static String SKIPPED_MESSAGE = "Skipped";
+	private static String FIRST_INCORRECT_MESSAGE = "Not quite, have another go!";
+	private static String SECOND_INCORRECT_MESSAGE = "Incorrect; but don't stop learning!";
+	private static String SKIPPED_MESSAGE = "Word Skipped...";
 	
 	private static int startTimer;
 	private static int endTimer;
@@ -265,7 +248,7 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
-			resultLabel.setText(SECOND_WRONG_MESSAGE);
+			resultLabel.setText(SECOND_INCORRECT_MESSAGE);
 			feedbackRect.setFill(Color.web("#f87676"));
 			FileIO.openGeneralWavFile("wrong");
 			hideAllButtonsShowNextButton();
@@ -525,10 +508,11 @@ public class QuizController implements Initializable {
 		speedSlider.setValue(-1.00);
 	}
 	
+	/**
+	 * this method switch to the Next word when called.
+	 */
 	public void switchToNextWord(ActionEvent event) {
-		
-		
-		
+	
 		userAnswerTextField.setVisible(true);
 		
 		// reset the timer for next word.
@@ -549,7 +533,6 @@ public class QuizController implements Initializable {
 		
 		// show all other buttons again
 		showAllButtonsHideNextButton();
-		
 		isInNextButtonScene = false;
 		
 	}
@@ -594,6 +577,9 @@ public class QuizController implements Initializable {
 		return score;
 	}
 	
+	/**
+	 * this method tells the user how to use the macron button when the ? button is pressed.
+	 */
 	public void showInfo() {
 		if(macronInfo.isVisible()) {
 			macronInfo.setVisible(false);
@@ -602,6 +588,11 @@ public class QuizController implements Initializable {
 		}
 	}
 	
+	/**
+	 * this method plays the Score Increase animation after each round of game.
+	 * @param roundScoreString
+	 * @param newScore
+	 */
 	public void playScoreIncreaseAnimation(String roundScoreString,String newScore) {
 		this.addition.setText("+ " + roundScoreString);
 		
