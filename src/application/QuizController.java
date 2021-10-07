@@ -114,6 +114,7 @@ public class QuizController implements Initializable {
 	private static int TIME_MS_EVERY_POINT_01_DEDUCTED = 500;
 	
 
+	private int lastRecordedCaretPosition = 0;
 	/*
 	 * This is method is call when a controller instance has been created
 	 */
@@ -131,6 +132,13 @@ public class QuizController implements Initializable {
 			}
 			
 
+		});
+		
+		// get the caret position 
+		userAnswerTextField.caretPositionProperty().addListener(c -> {
+			if (userAnswerTextField.isFocused()) {
+				this.lastRecordedCaretPosition = userAnswerTextField.getCaretPosition();
+		    }
 		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
@@ -474,8 +482,9 @@ public class QuizController implements Initializable {
 	 */
 	public void addMacronisedVowel(ActionEvent event) {
 		userAnswerTextField.requestFocus();
-		userAnswerTextField.setText(userAnswerTextField.getText() + ((Button)event.getSource()).getText());
-		userAnswerTextField.positionCaret(userAnswerTextField.getText().length());
+		userAnswerTextField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
+		userAnswerTextField.positionCaret(lastRecordedCaretPosition);
+
 	}
 	
 	

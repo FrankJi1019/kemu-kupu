@@ -38,6 +38,9 @@ public class PracticeController implements Initializable {
 	public static boolean isCorrect;
 	private double speedOfSpeech = 1;
 	private int attempts = 1;
+	private int lastRecordedCaretPosition = 0;
+
+	
 	
 	private Stage stage;
 	private Scene scene;
@@ -83,8 +86,12 @@ public class PracticeController implements Initializable {
 			}
 		});
 		
-		textField.requestFocus();
-		textField.positionCaret(0);
+		// get the caret position 
+		textField.caretPositionProperty().addListener(c -> {
+			if (textField.isFocused()) {
+				this.lastRecordedCaretPosition = textField.getCaretPosition();
+			}
+		});
 
 		// hide help pane to start off with
 		macronInfo.setVisible(false);
@@ -139,9 +146,9 @@ public class PracticeController implements Initializable {
 	}
 	
 	public void addMacronisedVowel(ActionEvent event) {
-		textField.setText(textField.getText() + ((Button)event.getSource()).getText());
 		textField.requestFocus();
-		textField.positionCaret(textField.getText().length());
+		textField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
+		textField.positionCaret(lastRecordedCaretPosition);
 	}
 	
 	public void resetSpeed() {
