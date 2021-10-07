@@ -145,5 +145,10 @@
             </Tooltip>
          </tooltip>
       </Button>
+      <Label fx:id="addition" layoutX="723.0" layoutY="67.0" prefHeight="24.0" prefWidth="75.0">
+         <font>
+            <Font name="Raleway Regular" size="19.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
