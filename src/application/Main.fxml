@@ -39,7 +39,7 @@
             <Font name="Raleway Bold" size="59.0" />
          </font>
       </Label>
-      <Label layoutX="339.0" layoutY="370.0" text="Select mode:">
+      <Label layoutX="351.0" layoutY="374.0" text="Select mode:">
          <font>
             <Font name="Raleway SemiBold" size="22.0" />
          </font>

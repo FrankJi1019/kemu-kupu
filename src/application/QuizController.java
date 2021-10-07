@@ -316,8 +316,10 @@ public class QuizController implements Initializable {
 		}
 		
 		
-		// set result label
+		// set result label and make rectangle grey
 		resultLabel.setText(SKIPPED_MESSAGE);
+		feedbackRect.setFill(Color.web("#dbdcde"));
+
 		hideAllButtonsShowNextButton();
 		isInNextButtonScene = true;
 		
