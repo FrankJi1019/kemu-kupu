@@ -9,6 +9,8 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
+import javafx.animation.FadeTransition;
+import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
@@ -75,6 +77,8 @@ public class QuizController implements Initializable {
 	private AnchorPane macronButtons;
 	@FXML
 	private Button infoButton;
+	@FXML
+	private Label addition;
 
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -214,6 +218,7 @@ public class QuizController implements Initializable {
 			score = score + finalThisRoundScore;
 			String finalScore = String.format("%.2f", score);
 			score = Double.parseDouble(finalScore);
+			
 			this.attemptTimes = 1;
 			
 			// remove the word that has finished, this means the first word in the list is the next word
@@ -222,7 +227,6 @@ public class QuizController implements Initializable {
 			// tell the user the result of their submit in the label, also play a sound to let them know
 			resultLabel.setText(CORRECT_MESSAGE);
 			feedbackRect.setFill(Color.web("#00b24c"));
-			playScoreIncreaseAnimation();
 			FileIO.openGeneralWavFile("correct");
 			hideAllButtonsShowNextButton();
 			isInNextButtonScene = true;
@@ -238,7 +242,8 @@ public class QuizController implements Initializable {
 			clearFieldsAfterSubmit();
 	
 			// update the score
-			scoreLabel.setText(Double.toString(score));
+			playScoreIncreaseAnimation(finalThisRoundScoreString,Double.toString(score));
+			//scoreLabel.setText(Double.toString(score));
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
@@ -583,17 +588,38 @@ public class QuizController implements Initializable {
 		}
 	}
 	
-	public void playScoreIncreaseAnimation() {
-		double scale = 0.5;
-		ScaleTransition animation = new ScaleTransition(Duration.millis(1000), this.scoreLabel);
-		animation.setByX(scale);
-		animation.setByY(scale);	
-		animation.setCycleCount(2);
-		animation.setAutoReverse(true);
-		SequentialTransition sequentialTransition = new SequentialTransition();
-		sequentialTransition.getChildren().add(animation);
-        sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(200)));
-        sequentialTransition.play();
+	public void playScoreIncreaseAnimation(String roundScoreString,String newScore) {
+		this.addition.setText("+ " + roundScoreString);
+		
+		// Animation that shows what we're incrementing by
+		FadeTransition fadeAddition = new FadeTransition(Duration.millis(1000), this.addition);
+		fadeAddition.setFromValue(1.0);
+		fadeAddition.setToValue(0);
+		fadeAddition.setOnFinished(event -> {
+			this.addition.setText("");
+			this.addition.setOpacity(1);
+		});
+		
+		// Animation that gives 'scaling' effect
+		ScaleTransition scoreLabelScale= new ScaleTransition(Duration.millis(500), this.scoreLabel);
+		
+		scoreLabelScale.setByX(0.5);
+		scoreLabelScale.setByY(0.5);	
+		scoreLabelScale.setCycleCount(2);
+		scoreLabelScale.setAutoReverse(true);
+		
+		// Animation gives an incrementing effect
+		ParallelTransition incrementEffect = new ParallelTransition();
+		incrementEffect.getChildren().addAll(fadeAddition,scoreLabelScale);
+		
+		// Play the whole score increment
+		SequentialTransition scoreIncreaseAnimation = new SequentialTransition();
+		PauseTransition pause = new PauseTransition(Duration.millis(1000));
+		pause.setOnFinished(event -> {
+			this.scoreLabel.setText(newScore);
+		});
+		scoreIncreaseAnimation.getChildren().addAll(pause, incrementEffect);
+		scoreIncreaseAnimation.play();
 	}
 	
 	
