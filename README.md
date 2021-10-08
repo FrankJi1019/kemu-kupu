@@ -1,15 +1,10 @@
 # SOFTENG 206 Assignment 3 Team 39
 
-### Note:
+### Loading Kēmu Kupu
 
-First, make sure the following directory exist:
- ./words 
- ./data 
+To run this application, type the following from the command line:
 
-To run this program, type the following from the command line:
-the StartGame.sh specifies the class path for the java program to run:
-
-First, change the file permission to excutable:
+First, give the script file StartGame.sh executable permission:
 
 ```
 > chmod +x StartGame.sh
@@ -21,16 +16,22 @@ Now run it:
 > ./StartGame.sh
 ```
 
+This will run the application (jar file) with the required arguments.
+
 -------------------------------------------------------------------
 
-Alternatively, you can run the KemuKupu.jar file straight from the current folder, and make sure there exist:
- ./words directory
- ./data directory
+Alternatively, you can run the jar file KemuKupu.jar directly from command line by typing:
 
 ```
->java -Djdk.gtk.version=2 --module-path /home/student/javafx-sdk-11.0.2/javafx --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar KemuKupu.jar
+> java -Djdk.gtk.version=2 --module-path /home/student/javafx-sdk-11.0.2/javafx --add-modules javafx.controls,javafx.media,javafx.base,javafx.fxml -jar KemuKupu.jar
 ```
+-------------------------------------------------------------------
+
+### Important Notes
+
+- In **both** cases, make sure the ``words`` and ``data`` directories exist in the same directory as the jar and script files.
 
 
-Attribution Credits:
+## Attribution Credits
+
 Sound effects obtained from https://www.zapsplat.com
