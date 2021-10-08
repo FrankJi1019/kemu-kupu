@@ -9,7 +9,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.PracticeController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#d0d0d0" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="305.0" layoutY="27.0" text="Practice Mode">
