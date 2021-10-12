@@ -66,6 +66,9 @@ public class QuizController implements Initializable {
 	@FXML private Button infoButton;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
+	
+	// the list of buttons that will be disabled while a word is being read out
+	private Button[] disableButtons = null;
 
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -110,6 +113,13 @@ public class QuizController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		this.disableButtons = new Button[]{
+			submitButton,
+			hearAgainButton,
+			idkButton,
+			infoButton
+		};
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
 		this.speedSlider.valueProperty().addListener(c ->{
@@ -159,7 +169,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 		
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
@@ -183,7 +193,12 @@ public class QuizController implements Initializable {
 	 * this is executed in another thread so that the main thread will not freeze
 	 */
 	public void hearAgain() {
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false, this.disableButtons)).start();
+		
+		// disable some buttons while the word is being read
+//		this.toggleButtons(true);
+//		while (WordPlayer.reading) {}
+//		this.toggleButtons(false);
 	}
 	
 	/*
@@ -287,7 +302,7 @@ public class QuizController implements Initializable {
 			feedbackRect.setFill(Color.web("#f87676"));
 
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
@@ -536,7 +551,7 @@ public class QuizController implements Initializable {
 		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 					
 		// update the score and letter count
 		this.setWordAndLetterCount();
@@ -646,6 +661,15 @@ public class QuizController implements Initializable {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	/*
+	 * This method is used to disable/enable certain buttons while a word is being read out
+	 */
+	private void toggleButtons(boolean disable) {
+		for (int i = 0; i < this.disableButtons.length; i++) {
+			this.disableButtons[i].setDisable(disable);
+		}
 	}
 	
 	

@@ -56,9 +56,20 @@ public class PracticeController implements Initializable {
     @FXML private Button submitButton;
     @FXML private Rectangle feedbackRect;
     @FXML private Label resultLabel;
+	@FXML private Button hearAgainButton;
+	@FXML private Button idkButton;
+    
+    private Button[] disableButtons = null;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		this.disableButtons = new Button[] {
+			submitButton,
+			infoButton,
+			hearAgainButton,
+			idkButton
+		};
 		
 		// obtain all the words from all the word list
 		this.words = FileIO.getAllWordsFromWordsDirectory();
@@ -187,7 +198,7 @@ public class PracticeController implements Initializable {
 	 * Read the current word in a new thread
 	 */
 	private void readCurrentWord() {
-		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true, this.disableButtons)).start();
 		// developer feature
 		//System.out.println(PracticeController.currentWord);
 	}
