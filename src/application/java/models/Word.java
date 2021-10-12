@@ -1,4 +1,4 @@
-package application;
+package application.java.models;
 
 /** this class is a data class for easier implementation for tracking stats for 
  	the completion screen by creating a array of this type in the QuizController.java

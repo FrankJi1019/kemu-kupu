@@ -1,4 +1,4 @@
-package application;
+package application.java.models;
 
 /*
  * This is a class to read the word out to the user in another thread

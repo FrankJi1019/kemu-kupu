@@ -1,4 +1,4 @@
-package application;
+package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +9,9 @@ import java.util.ResourceBundle;
 import java.util.concurrent.Callable;
 import java.util.concurrent.FutureTask;
 
+import application.java.models.FileIO;
+import application.java.models.Word;
+import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
 import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
@@ -352,7 +355,7 @@ public class QuizController implements Initializable {
 	 */
 	public void switchToComplete(ActionEvent e) throws IOException, InterruptedException {
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/Completed.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("../../resources/views/Completed.fxml"));
 		Parent root = loader.load();
 		
 		// passing data

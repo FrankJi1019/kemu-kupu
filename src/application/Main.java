@@ -13,10 +13,10 @@ import javafx.scene.layout.BorderPane;
 public class Main extends Application {
 	@Override
 	public void start(Stage primaryStage) throws IOException{
-		Parent root = FXMLLoader.load(getClass().getResource("Main.fxml")); 
+		Parent root = FXMLLoader.load(getClass().getResource("resources/views/Main.fxml")); 
 		primaryStage.setTitle("Kēmu Kupu");
 		Scene scene = new Scene(root);
-		String css = this.getClass().getResource("application.css").toExternalForm();
+		String css = this.getClass().getResource("resources/css/application.css").toExternalForm();
 		scene.getStylesheets().add(css);
 		primaryStage.setScene(scene);
 		primaryStage.show();

@@ -1,4 +1,4 @@
-package application;
+package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -9,6 +9,8 @@ import java.util.Random;
 import java.util.ResourceBundle;
 import java.util.Set;
 
+import application.java.models.FileIO;
+import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -303,7 +305,7 @@ public class PracticeController implements Initializable {
 	private void switchScene(String filename, ActionEvent e) {
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/%s.fxml", filename)));
+			root = FXMLLoader.load(getClass().getResource(String.format("../../resources/views/%s.fxml", filename)));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
