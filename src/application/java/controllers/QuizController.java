@@ -44,6 +44,8 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
+import application.java.models.WordTimer;
+
 public class QuizController implements Initializable {
 	
 	// these are used to switch scene
@@ -68,6 +70,7 @@ public class QuizController implements Initializable {
 	@FXML private Button infoButton;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
+	@FXML private Label timerLabel;
 	
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
@@ -113,6 +116,7 @@ public class QuizController implements Initializable {
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
 	
+	private WordTimer wordTimer = null;
 
 	private int lastRecordedCaretPosition = 0;
 	/*
@@ -127,6 +131,8 @@ public class QuizController implements Initializable {
 			idkButton,
 			infoButton
 		};
+		
+		this.wordTimer = new WordTimer(this.timerLabel);
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
 		this.speedSlider.valueProperty().addListener(c ->{
@@ -201,6 +207,9 @@ public class QuizController implements Initializable {
 		isInNextButtonScene = false;
 		
 		startTimer = (int) System.currentTimeMillis();
+	
+		this.wordTimer.start();
+		
 		
 	}
 	
@@ -249,6 +258,9 @@ public class QuizController implements Initializable {
 		// if user gets it correct (could be the 1st time or the 2nd time)
 		if (this.checkWordMatch(userAnswer)) {
 			
+			// stop the timer
+			this.wordTimer.stop();
+			
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
 			
@@ -288,6 +300,8 @@ public class QuizController implements Initializable {
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
+			
+			this.wordTimer.stop();
 			
 			// the user only has two attempts so the current word has been completed, so add it to 
 			// the statistics and update the attempt times
@@ -351,6 +365,8 @@ public class QuizController implements Initializable {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
 		this.wordStats.add(new Word(this.testWords.get(0), 0, Word.SKIP));
 		this.attemptTimes = 1;
+		
+		this.wordTimer.stop();
 		
 		// move to the next word if exists, otherwise switch to complete screen
 		this.testWords.remove(0);
@@ -593,6 +609,8 @@ public class QuizController implements Initializable {
 		// automatically set focus to the text field.
 		userAnswerTextField.requestFocus();
 		
+		this.wordTimer.start();
+		
 	}
 	
 	
@@ -767,8 +785,6 @@ public class QuizController implements Initializable {
 
 		}
 	}
-	
-	
 	
 }
 
