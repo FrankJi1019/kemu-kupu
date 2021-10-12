@@ -12,6 +12,7 @@ import java.util.Set;
 import application.java.models.FileIO;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -59,6 +60,14 @@ public class PracticeController implements Initializable {
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		// automatically set focus to the text field.
+		 Platform.runLater(new Runnable() {
+		        @Override
+		        public void run() {
+		            textField.requestFocus();
+		        }
+		    });
 		
 		// obtain all the words from all the word list
 		this.words = FileIO.getAllWordsFromWordsDirectory();
@@ -112,6 +121,8 @@ public class PracticeController implements Initializable {
 			resultLabel.setText(INCORRECT_MESSAGE);
 			this.readCurrentWord();
 			this.giveHint();
+			// automatically set focus to the text field.
+			textField.requestFocus();
 			
 		// if the user gets the word wrong for the second time
 		} else {
