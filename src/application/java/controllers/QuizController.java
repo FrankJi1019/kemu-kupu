@@ -65,6 +65,7 @@ public class QuizController implements Initializable {
 	@FXML private AnchorPane macronButtons;
 	@FXML private Button infoButton;
 	@FXML private Label addition;
+	@FXML private Label totalWordCountLabel;
 
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -98,6 +99,9 @@ public class QuizController implements Initializable {
 	
 	// the score reduction time in millisecond for every 0.01 point 
 	private static int TIME_MS_EVERY_POINT_01_DEDUCTED = 500;
+	
+	// the total amount of word assessed in this round
+	private int totalWordsCount = -1;
 	
 
 	private int lastRecordedCaretPosition = 0;
@@ -145,11 +149,14 @@ public class QuizController implements Initializable {
 			}
 		}
 		
+		this.totalWordsCount = this.testWords.size();
+		this.totalWordCountLabel.setText(String.format("Word    of %d", this.testWords.size()));
+		
 		// tell the user how many letters are in the word
 		this.setWordAndLetterCount();
 		
 		// set which number is being tested, in the initialize method, it is always the first one
-		wordCountLabel.setText(Integer.toString(6 - this.testWords.size()));
+		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
@@ -418,7 +425,7 @@ public class QuizController implements Initializable {
 		letterNumberLabel.setText(String.format("(%d letters)", wordLetterCount));
 		
 		// set which number is being tested
-		wordCountLabel.setText(Integer.toString(6 - this.testWords.size()));
+		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 	}
 	
 	/*
