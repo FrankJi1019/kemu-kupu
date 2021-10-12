@@ -3,6 +3,7 @@ package application.java.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -19,6 +20,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -73,9 +75,14 @@ public class QuizController implements Initializable {
 	// this is a list of all words in the file
 	private static List<String> allWords;
 	
+
 	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
 	private static String FIRST_INCORRECT_MESSAGE = "Not quite, have another go!";
-	private static String SECOND_INCORRECT_MESSAGE = "Incorrect; but don't stop learning!";
+	private static List<String> SECOND_INCORRECT_MESSAGE = new ArrayList<>(Arrays.asList(
+			"Incorrect, don't worry, learning is a process...",
+			"Incorrect, good luck next time!",
+			"Incorrect, failure is the mother of success!",
+			"Incorrect, don't give up, keep going!"));
 	private static String SKIPPED_MESSAGE = "Word Skipped...";
 	
 	private static int startTimer;
@@ -86,7 +93,7 @@ public class QuizController implements Initializable {
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
 	
-	private double score = 0;
+	private int score = 0;
 	
 	// This int stores how many letters are in the word that is currently being assessed
 	private int wordLetterCount = -1;
@@ -100,8 +107,8 @@ public class QuizController implements Initializable {
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
 	
-	// the score reduction time in millisecond for every 0.01 point 
-	private static int TIME_MS_EVERY_POINT_01_DEDUCTED = 500;
+	// the score reduction time in millisecond for every 1 point 
+	private static int TIME_MS_EVERY_POINT_DEDUCTED = 200;
 	
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
@@ -139,6 +146,25 @@ public class QuizController implements Initializable {
 			if (userAnswerTextField.isFocused()) {
 				this.lastRecordedCaretPosition = userAnswerTextField.getCaretPosition();
 		    }
+		});
+		
+		// sets one character to the left of caret position to macronised Vowel, if it is
+		// a vowel already, by pressing the left ALT key on keyboard.
+		
+		userAnswerTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent event) {
+				// convert text field String into char array.
+				char[] textFieldToChars = userAnswerTextField.getText().toCharArray();
+
+				if (event.getCode() == KeyCode.ALT) {
+					if (lastRecordedCaretPosition > 0) {
+						// set the one char left to the caret the selected char position.
+						int charPosition = lastRecordedCaretPosition-1;
+						char vowelChar = textFieldToChars[charPosition];
+						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
+					}
+				}
+			}
 		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
@@ -226,15 +252,13 @@ public class QuizController implements Initializable {
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
 			
-			double thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
-			double finalThisRoundScore = thisRoundScore / this.attemptTimes;
-			String finalThisRoundScoreString = String.format("%.2f", finalThisRoundScore);
-			finalThisRoundScore = Double.parseDouble(finalThisRoundScoreString);
+
+			int thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
+			int finalThisRoundScore = thisRoundScore / this.attemptTimes;
 			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore, 
 					this.attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
+
 			score = score + finalThisRoundScore;
-			String finalScore = String.format("%.2f", score);
-			score = Double.parseDouble(finalScore);
 			
 			this.attemptTimes = 1;
 			
@@ -259,7 +283,7 @@ public class QuizController implements Initializable {
 			clearFieldsAfterSubmit();
 	
 			// update the score
-			playScoreIncreaseAnimation(finalThisRoundScoreString,Double.toString(score));
+			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
 			//scoreLabel.setText(Double.toString(score));
 			
 		// user gets wrong in the 2nd time
@@ -274,7 +298,7 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
-			resultLabel.setText(SECOND_INCORRECT_MESSAGE);
+			setEncouragingMessage();
 			feedbackRect.setFill(Color.web("#f87676"));
 			FileIO.openGeneralWavFile("wrong");
 			hideAllButtonsShowNextButton();
@@ -307,6 +331,9 @@ public class QuizController implements Initializable {
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
+			
+			// automatically set focus to the text field.
+			userAnswerTextField.requestFocus();
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -365,6 +392,7 @@ public class QuizController implements Initializable {
 			this.switchToNextWord(event);
 		}
 	}
+	
 
 	/*
 	 * This method checks whether user enters the right word
@@ -562,6 +590,9 @@ public class QuizController implements Initializable {
 		showAllButtonsHideNextButton();
 		isInNextButtonScene = false;
 		
+		// automatically set focus to the text field.
+		userAnswerTextField.requestFocus();
+		
 	}
 	
 	
@@ -578,7 +609,7 @@ public class QuizController implements Initializable {
 	 * 
 	 * this method calculate score according how long user took to answer the question.
 	 */
-	public double scoreCalculation(int wordLength,int startTime,int endTime) {
+	public int scoreCalculation(int wordLength,int startTime,int endTime) {
 		
 		// speaking time(in seconds):       time = 0.1274(word_length) + 1.1665s
 		// user typing time(in seconds):    time = 0.4(word_length) + 0.8s
@@ -589,9 +620,9 @@ public class QuizController implements Initializable {
 		int typingTime = 400*wordLength + 800;
 		int thinkingTime = durationMs - speakingTime - typingTime;
 		//System.out.println(thinkingTime);
-		double score = 1.0;
+		int score = 100;
 	
-		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_01_DEDUCTED;
+		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_DEDUCTED;
 		if (scoreDeductionRate <= 0) {
 			scoreDeductionRate = 0;
 		}
@@ -599,7 +630,7 @@ public class QuizController implements Initializable {
 			scoreDeductionRate = 50;
 		}
 		
-		score = score - 0.01*scoreDeductionRate;
+		score = score - 1 * scoreDeductionRate;
 		
 		return score;
 	}
@@ -666,11 +697,72 @@ public class QuizController implements Initializable {
 	}
 	
 	/*
+	 * This method sets random encouraging message when called.
+	 */
+	
+	public void setEncouragingMessage() {
+		Random rand = new Random();
+		// select a random encouraging message from the message list.
+		resultLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
+	}
+	
+	
+	/**
+	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
+	 * and update in the text field.
+	 * @param index
+	 * @param textFieldToChars
+	 * @param macronisedLetter
+	 */
+	
+	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
+		
+		// replace vowel to macronised vowel.
+		textFieldToChars[index] = macronisedLetter;
+		// convert char array to String.
+		String textFieldCharsToString = String.valueOf(textFieldToChars);
+		userAnswerTextField.setText(textFieldCharsToString);
+		// set caret position to current position.
+		userAnswerTextField.positionCaret(index+1);
+	}
+	
+	
+	/**
+	 * this is helper method that sets the Macronised vowel with keyboard.
+	 * @param vowelChar
+	 * @param charPosition
+	 * @param textFieldToChars
+	 */
+	
+	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
+		switch(vowelChar) {
+		case 'a':
+		case 'A':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
+			break;
+		case 'e':
+		case 'E':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
+			break;
+		case 'i':
+		case 'I':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
+			break;
+		case 'o':
+		case 'O':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
+			break;
+		case 'u':
+		case 'U':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
+			break;
+
 	 * This method is used to disable/enable certain buttons while a word is being read out
 	 */
 	private void toggleButtons(boolean disable) {
 		for (int i = 0; i < this.disableButtons.length; i++) {
 			this.disableButtons[i].setDisable(disable);
+
 		}
 	}
 	
