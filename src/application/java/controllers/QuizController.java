@@ -3,6 +3,7 @@ package application.java.controllers;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
@@ -69,9 +70,14 @@ public class QuizController implements Initializable {
 	// this is a list of all words in the file
 	private static List<String> allWords;
 	
+
 	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
 	private static String FIRST_INCORRECT_MESSAGE = "Not quite, have another go!";
-	private static String SECOND_INCORRECT_MESSAGE = "Incorrect; but don't stop learning!";
+	private static List<String> SECOND_INCORRECT_MESSAGE = new ArrayList<>(Arrays.asList(
+			"Incorrect, don't worry, learning is a process...",
+			"Incorrect, good luck next time!",
+			"Incorrect, failure is the mother of success!",
+			"Incorrect, don't give up, keep going!"));
 	private static String SKIPPED_MESSAGE = "Word Skipped...";
 	
 	private static int startTimer;
@@ -247,7 +253,7 @@ public class QuizController implements Initializable {
 			// move to the next word
 			this.testWords.remove(0);
 			
-			resultLabel.setText(SECOND_INCORRECT_MESSAGE);
+			setEncouragingMessage();
 			feedbackRect.setFill(Color.web("#f87676"));
 			FileIO.openGeneralWavFile("wrong");
 			hideAllButtonsShowNextButton();
@@ -641,6 +647,16 @@ public class QuizController implements Initializable {
 		scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
+	}
+	
+	/*
+	 * This method sets random encouraging message when called.
+	 */
+	
+	public void setEncouragingMessage() {
+		Random rand = new Random();
+		// select a random encouraging message from the message list.
+		resultLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
 	}
 	
 	
