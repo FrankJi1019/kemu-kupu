@@ -68,7 +68,7 @@ public class MainController implements Initializable{
 	 * this method switches to Topics scene when called.
 	 */
 	public void newGame(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Topics.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/TopicsScreen.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
