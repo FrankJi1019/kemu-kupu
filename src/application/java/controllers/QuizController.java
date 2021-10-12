@@ -20,6 +20,7 @@ import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -131,6 +132,25 @@ public class QuizController implements Initializable {
 			if (userAnswerTextField.isFocused()) {
 				this.lastRecordedCaretPosition = userAnswerTextField.getCaretPosition();
 		    }
+		});
+		
+		// sets one character to the left of caret position to macronised Vowel, if it is
+		// a vowel already, by pressing the left ALT key on keyboard.
+		
+		userAnswerTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent event) {
+				// convert text field String into char array.
+				char[] textFieldToChars = userAnswerTextField.getText().toCharArray();
+
+				if (event.getCode() == KeyCode.ALT) {
+					if (lastRecordedCaretPosition > 0) {
+						// set the one char left to the caret the selected char position.
+						int charPosition = lastRecordedCaretPosition-1;
+						char vowelChar = textFieldToChars[charPosition];
+						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
+					}
+				}
+			}
 		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
@@ -346,6 +366,7 @@ public class QuizController implements Initializable {
 			this.switchToNextWord(event);
 		}
 	}
+	
 
 	/*
 	 * This method checks whether user enters the right word
@@ -657,6 +678,59 @@ public class QuizController implements Initializable {
 		Random rand = new Random();
 		// select a random encouraging message from the message list.
 		resultLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
+	}
+	
+	
+	/**
+	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
+	 * and update in the text field.
+	 * @param index
+	 * @param textFieldToChars
+	 * @param macronisedLetter
+	 */
+	
+	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
+		
+		// replace vowel to macronised vowel.
+		textFieldToChars[index] = macronisedLetter;
+		// convert char array to String.
+		String textFieldCharsToString = String.valueOf(textFieldToChars);
+		userAnswerTextField.setText(textFieldCharsToString);
+		// set caret position to current position.
+		userAnswerTextField.positionCaret(index+1);
+	}
+	
+	
+	/**
+	 * this is helper method that sets the Macronised vowel with keyboard.
+	 * @param vowelChar
+	 * @param charPosition
+	 * @param textFieldToChars
+	 */
+	
+	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
+		switch(vowelChar) {
+		case 'a':
+		case 'A':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
+			break;
+		case 'e':
+		case 'E':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
+			break;
+		case 'i':
+		case 'I':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
+			break;
+		case 'o':
+		case 'O':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
+			break;
+		case 'u':
+		case 'U':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
+			break;
+		}
 	}
 	
 	

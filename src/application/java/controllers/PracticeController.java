@@ -14,6 +14,7 @@ import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -96,6 +97,25 @@ public class PracticeController implements Initializable {
 		textField.caretPositionProperty().addListener(c -> {
 			if (textField.isFocused()) {
 				this.lastRecordedCaretPosition = textField.getCaretPosition();
+			}
+		});
+		
+		// sets one character to the left of caret position to macronised Vowel, if it is
+		// a vowel already, by pressing the left ALT key on keyboard.
+
+		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
+			public void handle(KeyEvent event) {
+				// convert text field String into char array.
+				char[] textFieldToChars = textField.getText().toCharArray();
+
+				if (event.getCode() == KeyCode.ALT) {
+					if (lastRecordedCaretPosition > 0) {
+						// set the one char left to the caret the selected char position.
+						int charPosition = lastRecordedCaretPosition-1;
+						char vowelChar = textFieldToChars[charPosition];
+						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
+					}
+				}
 			}
 		});
 
@@ -341,5 +361,58 @@ public class PracticeController implements Initializable {
 			macronInfo.setVisible(true);
 		}
 	}
+	
+	/**
+	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
+	 * and update in the text field.
+	 * @param index
+	 * @param textFieldToChars
+	 * @param macronisedLetter
+	 */
+	
+	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
+		
+		// replace vowel to macronised vowel.
+		textFieldToChars[index] = macronisedLetter;
+		// convert char array to String.
+		String textFieldCharsToString = String.valueOf(textFieldToChars);
+		textField.setText(textFieldCharsToString);
+		// set caret position to current position.
+		textField.positionCaret(index+1);
+	}
+	
+	
+	/**
+	 * this is helper method that sets the Macronised vowel with keyboard.
+	 * @param vowelChar
+	 * @param charPosition
+	 * @param textFieldToChars
+	 */
+	
+	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
+		switch(vowelChar) {
+		case 'a':
+		case 'A':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
+			break;
+		case 'e':
+		case 'E':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
+			break;
+		case 'i':
+		case 'I':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
+			break;
+		case 'o':
+		case 'O':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
+			break;
+		case 'u':
+		case 'U':
+			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
+			break;
+		}
+	}
+	
 
 }
