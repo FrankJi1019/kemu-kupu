@@ -39,7 +39,7 @@ public class MainController implements Initializable{
 		// added confirmation alert window
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Quiting Game");
-		alert.setHeaderText("Are you sure to Quit?");
+		alert.setHeaderText("Are you sure you want to Quit?");
 		
 		// if click ok then quit game
 		Optional<ButtonType> result = alert.showAndWait();
