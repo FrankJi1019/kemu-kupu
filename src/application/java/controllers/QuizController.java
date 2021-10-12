@@ -284,6 +284,9 @@ public class QuizController implements Initializable {
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
+			
+			// automatically set focus to the text field.
+			userAnswerTextField.requestFocus();
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -537,6 +540,9 @@ public class QuizController implements Initializable {
 		// show all other buttons again
 		showAllButtonsHideNextButton();
 		isInNextButtonScene = false;
+		
+		// automatically set focus to the text field.
+		userAnswerTextField.requestFocus();
 		
 	}
 	
