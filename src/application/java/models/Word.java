@@ -7,7 +7,7 @@ package application.java.models;
 
 public class Word {
 	String word;
-	double score;
+	int score;
 
 	
 	/** constructor
@@ -16,7 +16,7 @@ public class Word {
 	 * @param score
 	 */
 	
-	public Word(String word, double score) {
+	public Word(String word, int score) {
 		this.word = word;
 		this.score = score;
 	}
@@ -34,7 +34,7 @@ public class Word {
 	 * @return score
 	 */
 	
-	public double getScore() {
+	public int getScore() {
 		return this.score;
 	}
 	

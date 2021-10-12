@@ -82,7 +82,7 @@ public class QuizController implements Initializable {
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
 	
-	private double score = 0;
+	private int score = 0;
 	
 	// This int stores how many letters are in the word that is currently being assessed
 	private int wordLetterCount = -1;
@@ -96,8 +96,8 @@ public class QuizController implements Initializable {
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
 	
-	// the score reduction time in millisecond for every 0.01 point 
-	private static int TIME_MS_EVERY_POINT_01_DEDUCTED = 500;
+	// the score reduction time in millisecond for every 1 point 
+	private static int TIME_MS_EVERY_POINT_DEDUCTED = 200;
 	
 
 	private int lastRecordedCaretPosition = 0;
@@ -204,14 +204,10 @@ public class QuizController implements Initializable {
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
 			
-			double thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
-			double finalThisRoundScore = thisRoundScore / this.attemptTimes;
-			String finalThisRoundScoreString = String.format("%.2f", finalThisRoundScore);
-			finalThisRoundScore = Double.parseDouble(finalThisRoundScoreString);
+			int thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
+			int finalThisRoundScore = thisRoundScore / this.attemptTimes;
 			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore));
 			score = score + finalThisRoundScore;
-			String finalScore = String.format("%.2f", score);
-			score = Double.parseDouble(finalScore);
 			
 			this.attemptTimes = 1;
 			
@@ -236,7 +232,7 @@ public class QuizController implements Initializable {
 			clearFieldsAfterSubmit();
 	
 			// update the score
-			playScoreIncreaseAnimation(finalThisRoundScoreString,Double.toString(score));
+			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
 			//scoreLabel.setText(Double.toString(score));
 			
 		// user gets wrong in the 2nd time
@@ -560,7 +556,7 @@ public class QuizController implements Initializable {
 	 * 
 	 * this method calculate score according how long user took to answer the question.
 	 */
-	public double scoreCalculation(int wordLength,int startTime,int endTime) {
+	public int scoreCalculation(int wordLength,int startTime,int endTime) {
 		
 		// speaking time(in seconds):       time = 0.1274(word_length) + 1.1665s
 		// user typing time(in seconds):    time = 0.4(word_length) + 0.8s
@@ -571,9 +567,9 @@ public class QuizController implements Initializable {
 		int typingTime = 400*wordLength + 800;
 		int thinkingTime = durationMs - speakingTime - typingTime;
 		//System.out.println(thinkingTime);
-		double score = 1.0;
+		int score = 100;
 	
-		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_01_DEDUCTED;
+		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_DEDUCTED;
 		if (scoreDeductionRate <= 0) {
 			scoreDeductionRate = 0;
 		}
@@ -581,7 +577,7 @@ public class QuizController implements Initializable {
 			scoreDeductionRate = 50;
 		}
 		
-		score = score - 0.01*scoreDeductionRate;
+		score = score - 1 * scoreDeductionRate;
 		
 		return score;
 	}

@@ -62,12 +62,16 @@ public class PracticeController implements Initializable {
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		// automatically set focus to the text field.
+		// Attribution: https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429
+		
 		 Platform.runLater(new Runnable() {
 		        @Override
 		        public void run() {
 		            textField.requestFocus();
 		        }
 		    });
+		 
+		// Attribution End
 		
 		// obtain all the words from all the word list
 		this.words = FileIO.getAllWordsFromWordsDirectory();

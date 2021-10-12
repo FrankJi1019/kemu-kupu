@@ -36,11 +36,11 @@ public class CompletedController {
 	
 	@FXML private TableView<Word> summaryTable;
 	@FXML private TableColumn<Word, String> wordColumn;
-	@FXML private TableColumn<Word, Double> scoreColumn;
+	@FXML private TableColumn<Word, Integer> scoreColumn;
 	@FXML private Label totalScoreLabel;
 	@FXML private AnchorPane stars;
 	
-	private double totalScore = 0;
+	private int totalScore = 0;
 	
 	// this constant defines the colour of star that transition into.
 	private static String STAR_COLOUR_HEX = "#FFD700";
@@ -57,7 +57,7 @@ public class CompletedController {
 		ObservableList<Word> list = FXCollections.observableArrayList(wordStats);
 		
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
-		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Double>("score"));
+		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Integer>("score"));
 		this.summaryTable.setItems(list);
 		
 		// iterates the list to calculate the total score and set it to the text of label
@@ -65,9 +65,9 @@ public class CompletedController {
 			this.totalScore += word.getScore();
 		}
 		
-		String totalScoreString = String.format("%.2f", totalScore);
-		double finalTotalScore = Double.parseDouble(totalScoreString);
-		this.totalScoreLabel.setText(Double.toString(finalTotalScore));
+		String totalScoreString = Integer.toString(totalScore);
+		int finalTotalScore = Integer.parseInt(totalScoreString);
+		this.totalScoreLabel.setText(Integer.toString(finalTotalScore));
 
 		
 	}
@@ -77,8 +77,8 @@ public class CompletedController {
 	 * specific score boundary for each star.
 	 */
 	public void setAnimation() {
-		double scoreBoundaryOne = 1.7;
-		double scoreBoundaryTwo = 2.5;
+		int scoreBoundaryOne = 170;
+		int scoreBoundaryTwo = 350;
 		
 		if(totalScore == 0) {
 			playStarsAnimation(0);
