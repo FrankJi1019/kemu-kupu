@@ -22,7 +22,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
-public class TopicsController implements Initializable{
+public class TopicsScreenController implements Initializable{
 
 	@FXML GridPane grid;
 	@FXML Button returnButton;

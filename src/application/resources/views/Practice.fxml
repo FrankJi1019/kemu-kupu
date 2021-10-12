@@ -5,11 +5,13 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.PracticeController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.PracticeController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#d0d0d0" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="305.0" layoutY="27.0" text="Practice Mode">
@@ -35,11 +37,6 @@
       <Button fx:id="idkButton" layoutX="443.0" layoutY="412.0" mnemonicParsing="false" onAction="#idk" prefHeight="45.0" prefWidth="150.0" styleClass="large-button" text="I don't know">
          <font>
             <Font name="Raleway Medium" size="18.0" />
-         </font>
-      </Button>
-      <Button fx:id="exitButton" layoutX="703.0" layoutY="37.0" mnemonicParsing="false" onAction="#returnHome" styleClass="large-button" text="Exit">
-         <font>
-            <Font size="18.0" />
          </font>
       </Button>
       <TextField fx:id="textField" layoutX="121.0" layoutY="351.0" prefHeight="53.0" prefWidth="472.0" promptText="Enter guess here">
@@ -117,5 +114,24 @@
             <Font name="Raleway Regular" size="17.0" />
          </font>
       </Label>
+      <Button fx:id="exitButton" contentDisplay="CENTER" layoutX="755.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
+         <font>
+            <Font name="Raleway Bold" size="21.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Kāinga | Return home">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/home-btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
    </children>
 </AnchorPane>

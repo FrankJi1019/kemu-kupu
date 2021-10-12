@@ -19,6 +19,7 @@ public class Main extends Application {
 		String css = this.getClass().getResource("resources/css/application.css").toExternalForm();
 		scene.getStylesheets().add(css);
 		primaryStage.setScene(scene);
+		primaryStage.setResizable(false);
 		primaryStage.show();
 	}
 	

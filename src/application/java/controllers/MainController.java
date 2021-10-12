@@ -39,7 +39,7 @@ public class MainController implements Initializable{
 		// added confirmation alert window
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Quiting Game");
-		alert.setHeaderText("Are you sure to Quit?");
+		alert.setHeaderText("Are you sure you want to Quit?");
 		
 		// if click ok then quit game
 		Optional<ButtonType> result = alert.showAndWait();
@@ -68,7 +68,7 @@ public class MainController implements Initializable{
 	 * this method switches to Topics scene when called.
 	 */
 	public void newGame(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Topics.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/TopicsScreen.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

@@ -6,11 +6,13 @@
 <?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="560.0" prefWidth="840.0" stylesheets="@../css/application.css"  xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.QuizController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="560.0" prefWidth="840.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.QuizController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#d0d0d0" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="295.0" layoutY="16.0" text="New Game" textFill="#274029">
@@ -18,12 +20,12 @@
             <Font name="Raleway Bold" size="46.0" />
          </font>
       </Label>
-      <Label layoutX="652.0" layoutY="36.0" text="SCORE:">
+      <Label layoutX="593.0" layoutY="37.0" text="SCORE:">
          <font>
             <Font name="Raleway Bold" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="scoreLabel" layoutX="723.0" layoutY="36.0" text="0">
+      <Label fx:id="scoreLabel" layoutX="664.0" layoutY="37.0" text="0">
          <font>
             <Font name="Raleway Regular" size="19.0" />
          </font>
@@ -145,10 +147,29 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Label fx:id="addition" layoutX="723.0" layoutY="67.0" prefHeight="24.0" prefWidth="75.0">
+      <Label fx:id="addition" layoutX="664.0" layoutY="68.0" prefHeight="24.0" prefWidth="75.0">
          <font>
             <Font name="Raleway Regular" size="19.0" />
          </font>
       </Label>
+      <Button fx:id="returnButton" contentDisplay="CENTER" layoutX="755.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
+         <font>
+            <Font name="Raleway Bold" size="21.0" />
+         </font>
+         <graphic>
+            <ImageView fitHeight="34.0" fitWidth="33.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/home-btn.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Kāinga | Return home">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>
