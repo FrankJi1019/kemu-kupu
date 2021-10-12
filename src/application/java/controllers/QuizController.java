@@ -756,8 +756,10 @@ public class QuizController implements Initializable {
 		case 'U':
 			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
 			break;
-
-	 * This method is used to disable/enable certain buttons while a word is being read out
+		}
+	}
+	 /* 
+	 This method is used to disable/enable certain buttons while a word is being read out
 	 */
 	private void toggleButtons(boolean disable) {
 		for (int i = 0; i < this.disableButtons.length; i++) {
