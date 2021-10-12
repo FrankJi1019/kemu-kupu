@@ -230,7 +230,8 @@ public class QuizController implements Initializable {
 			double finalThisRoundScore = thisRoundScore / this.attemptTimes;
 			String finalThisRoundScoreString = String.format("%.2f", finalThisRoundScore);
 			finalThisRoundScore = Double.parseDouble(finalThisRoundScoreString);
-			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore));
+			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore, 
+					this.attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
 			score = score + finalThisRoundScore;
 			String finalScore = String.format("%.2f", score);
 			score = Double.parseDouble(finalScore);
@@ -267,7 +268,7 @@ public class QuizController implements Initializable {
 			// the user only has two attempts so the current word has been completed, so add it to 
 			// the statistics and update the attempt times
 			// note that in this case there is no need to update the score
-			this.wordStats.add(new Word(this.testWords.get(0), 0));
+			this.wordStats.add(new Word(this.testWords.get(0), 0, Word.INCORRECT));
 			this.attemptTimes = 1;
 			
 			// move to the next word
@@ -321,7 +322,7 @@ public class QuizController implements Initializable {
 	 */
 	public void dontKnow(ActionEvent e) throws IOException, InterruptedException {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
-		this.wordStats.add(new Word(this.testWords.get(0), 0));
+		this.wordStats.add(new Word(this.testWords.get(0), 0, Word.SKIP));
 		this.attemptTimes = 1;
 		
 		// move to the next word if exists, otherwise switch to complete screen

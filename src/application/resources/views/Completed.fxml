@@ -20,8 +20,9 @@
       </Label>
       <TableView fx:id="summaryTable" layoutX="216.0" layoutY="219.0" prefHeight="196.0" prefWidth="390.0" stylesheets="@../css/application.css">
         <columns>
-          <TableColumn fx:id="wordColumn" minWidth="300.0" prefWidth="-1.0" text="Word" />
-          <TableColumn fx:id="scoreColumn" minWidth="89.0" prefWidth="-1.0" text="Score" />
+          <TableColumn fx:id="wordColumn" minWidth="202.0" prefWidth="202.0" text="Word" />
+          <TableColumn fx:id="scoreColumn" minWidth="84.0" prefWidth="86.0" text="Score" />
+            <TableColumn fx:id="resultColumn" minWidth="77.0" prefWidth="101.0" text="Result" />
         </columns>
       </TableView>
       <Button fx:id="playAgainButton" contentDisplay="CENTER" layoutX="322.0" layoutY="430.0" mnemonicParsing="false" onAction="#playAgain" prefHeight="70.0" prefWidth="70.0" styleClass="large-button">
