@@ -356,6 +356,7 @@ public class QuizController implements Initializable {
 	 * simply invokes the submit method
 	 */
 	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
+		if (WordPlayer.reading) return;
 		if ((e.getCode() == KeyCode.ENTER) && (isInNextButtonScene == false)) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);

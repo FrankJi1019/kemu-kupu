@@ -136,6 +136,7 @@ public class PracticeController implements Initializable {
 	 * Pressing enter on the keyboard is the same as submit action
 	 */
 	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
+		if (WordPlayer.reading) return;
 		if (e.getCode() == KeyCode.ENTER) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
