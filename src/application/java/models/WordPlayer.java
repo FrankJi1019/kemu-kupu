@@ -1,5 +1,7 @@
 package application.java.models;
 
+import javafx.scene.control.Button;
+
 /*
  * This is a class to read the word out to the user in another thread
  */
@@ -15,16 +17,19 @@ public class WordPlayer implements Runnable {
 	
 	// if there is a word being read at the moment and another thread wants to start, it will start
 	// after the current thread finishes only if the next thread is marked as important
-	static boolean reading = false;
+	public static boolean reading = false;
 	private boolean isImportant;
 	
 	private static double readingTimeSeconds = -1;
 	
+	private Button[] disableButtons = null;
+	
 	// set what the word is, how fast should it be read, and if it is important
-	public WordPlayer(String word, double speed, boolean isImportant) {
+	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons) {
 		this.word = word;
 		this.speed = speed;
 		this.isImportant = isImportant;
+		this.disableButtons = disableButtons;
 	}
 
 	@Override
@@ -39,6 +44,8 @@ public class WordPlayer implements Runnable {
 		// set the reading to true because this thread starts to read the word
 		WordPlayer.reading = true;
 		
+		this.toggleButtons(true);
+		
 		// this block ensures only one word being read at a time
 		synchronized (lock) {
 			FileIO.speakMaori(this.word, this.speed);
@@ -47,6 +54,8 @@ public class WordPlayer implements Runnable {
 		// after reading, set it to false
 		WordPlayer.reading = false;
 		
+		this.toggleButtons(false);
+		
 		long end = System.currentTimeMillis();
 		
 		WordPlayer.readingTimeSeconds = (end - start) / 1000;
@@ -54,6 +63,12 @@ public class WordPlayer implements Runnable {
 	
 	public static double getReadingTime() {
 		return WordPlayer.readingTimeSeconds;
+	}
+	
+	private void toggleButtons(boolean disable) {
+		for (int i = 0; i < this.disableButtons.length; i++) {
+			this.disableButtons[i].setDisable(disable);
+		}
 	}
 
 }

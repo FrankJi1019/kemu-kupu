@@ -37,6 +37,7 @@ public class CompletedController {
 	@FXML private TableView<Word> summaryTable;
 	@FXML private TableColumn<Word, String> wordColumn;
 	@FXML private TableColumn<Word, Double> scoreColumn;
+	@FXML private TableColumn<Word, String> resultColumn;
 	@FXML private Label totalScoreLabel;
 	@FXML private AnchorPane stars;
 	
@@ -58,6 +59,7 @@ public class CompletedController {
 		
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
 		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Double>("score"));
+		this.resultColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("result"));
 		this.summaryTable.setItems(list);
 		
 		// iterates the list to calculate the total score and set it to the text of label
@@ -65,6 +67,7 @@ public class CompletedController {
 			this.totalScore += word.getScore();
 		}
 		
+		// Display the total score
 		String totalScoreString = String.format("%.2f", totalScore);
 		double finalTotalScore = Double.parseDouble(totalScoreString);
 		this.totalScoreLabel.setText(Double.toString(finalTotalScore));
