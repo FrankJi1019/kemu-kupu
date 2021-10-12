@@ -67,6 +67,10 @@ public class QuizController implements Initializable {
 	@FXML private AnchorPane macronButtons;
 	@FXML private Button infoButton;
 	@FXML private Label addition;
+	@FXML private Label totalWordCountLabel;
+	
+	// the list of buttons that will be disabled while a word is being read out
+	private Button[] disableButtons = null;
 
 	// this is a list of all words in the file
 	private static List<String> allWords;
@@ -106,6 +110,9 @@ public class QuizController implements Initializable {
 	// the score reduction time in millisecond for every 1 point 
 	private static int TIME_MS_EVERY_POINT_DEDUCTED = 200;
 	
+	// the total amount of word assessed in this round
+	private int totalWordsCount = -1;
+	
 
 	private int lastRecordedCaretPosition = 0;
 	/*
@@ -113,6 +120,13 @@ public class QuizController implements Initializable {
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		this.disableButtons = new Button[]{
+			submitButton,
+			hearAgainButton,
+			idkButton,
+			infoButton
+		};
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
 		this.speedSlider.valueProperty().addListener(c ->{
@@ -171,14 +185,17 @@ public class QuizController implements Initializable {
 			}
 		}
 		
+		this.totalWordsCount = this.testWords.size();
+		this.totalWordCountLabel.setText(String.format("Word    of %d", this.testWords.size()));
+		
 		// tell the user how many letters are in the word
 		this.setWordAndLetterCount();
 		
 		// set which number is being tested, in the initialize method, it is always the first one
-		wordCountLabel.setText(Integer.toString(6 - this.testWords.size()));
+		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 		
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
@@ -202,7 +219,12 @@ public class QuizController implements Initializable {
 	 * this is executed in another thread so that the main thread will not freeze
 	 */
 	public void hearAgain() {
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false, this.disableButtons)).start();
+		
+		// disable some buttons while the word is being read
+//		this.toggleButtons(true);
+//		while (WordPlayer.reading) {}
+//		this.toggleButtons(false);
 	}
 	
 	/*
@@ -230,9 +252,12 @@ public class QuizController implements Initializable {
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
 			
+
 			int thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
 			int finalThisRoundScore = thisRoundScore / this.attemptTimes;
-			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore));
+			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore, 
+					this.attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
+
 			score = score + finalThisRoundScore;
 			
 			this.attemptTimes = 1;
@@ -267,7 +292,7 @@ public class QuizController implements Initializable {
 			// the user only has two attempts so the current word has been completed, so add it to 
 			// the statistics and update the attempt times
 			// note that in this case there is no need to update the score
-			this.wordStats.add(new Word(this.testWords.get(0), 0));
+			this.wordStats.add(new Word(this.testWords.get(0), 0, Word.INCORRECT));
 			this.attemptTimes = 1;
 			
 			// move to the next word
@@ -302,7 +327,7 @@ public class QuizController implements Initializable {
 			feedbackRect.setFill(Color.web("#f87676"));
 
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
@@ -324,7 +349,7 @@ public class QuizController implements Initializable {
 	 */
 	public void dontKnow(ActionEvent e) throws IOException, InterruptedException {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
-		this.wordStats.add(new Word(this.testWords.get(0), 0));
+		this.wordStats.add(new Word(this.testWords.get(0), 0, Word.SKIP));
 		this.attemptTimes = 1;
 		
 		// move to the next word if exists, otherwise switch to complete screen
@@ -358,6 +383,7 @@ public class QuizController implements Initializable {
 	 * simply invokes the submit method
 	 */
 	public void keyPressed(KeyEvent e) throws IOException, InterruptedException {
+		if (WordPlayer.reading) return;
 		if ((e.getCode() == KeyCode.ENTER) && (isInNextButtonScene == false)) {
 			ActionEvent event = new ActionEvent(this.submitButton, this.submitButton);
 			this.submit(event);
@@ -444,7 +470,7 @@ public class QuizController implements Initializable {
 		letterNumberLabel.setText(String.format("(%d letters)", wordLetterCount));
 		
 		// set which number is being tested
-		wordCountLabel.setText(Integer.toString(6 - this.testWords.size()));
+		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 	}
 	
 	/*
@@ -555,7 +581,7 @@ public class QuizController implements Initializable {
 		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
 					
 		// update the score and letter count
 		this.setWordAndLetterCount();
@@ -730,6 +756,13 @@ public class QuizController implements Initializable {
 		case 'U':
 			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
 			break;
+
+	 * This method is used to disable/enable certain buttons while a word is being read out
+	 */
+	private void toggleButtons(boolean disable) {
+		for (int i = 0; i < this.disableButtons.length; i++) {
+			this.disableButtons[i].setDisable(disable);
+
 		}
 	}
 	
