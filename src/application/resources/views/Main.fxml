@@ -56,7 +56,7 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Button fx:id="quitButton" layoutX="554.0" layoutY="420.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
+      <Button fx:id="quitButton" layoutX="535.0" layoutY="420.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
          <font>
             <Font name="Raleway SemiBold" size="20.0" />
          </font>
