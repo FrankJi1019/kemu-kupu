@@ -11,14 +11,14 @@
 <?import javafx.scene.shape.SVGPath?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.CompletedController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.CompletedController">
    <children>
       <Label layoutX="256.0" layoutY="34.0" text="Quiz Complete" textFill="#274029">
          <font>
             <Font name="Raleway Bold" size="46.0" />
          </font>
       </Label>
-      <TableView fx:id="summaryTable" layoutX="216.0" layoutY="219.0" prefHeight="196.0" prefWidth="390.0" stylesheets="@application.css">
+      <TableView fx:id="summaryTable" layoutX="216.0" layoutY="219.0" prefHeight="196.0" prefWidth="390.0" stylesheets="@../css/application.css">
         <columns>
           <TableColumn fx:id="wordColumn" minWidth="300.0" prefWidth="-1.0" text="Word" />
           <TableColumn fx:id="scoreColumn" minWidth="89.0" prefWidth="-1.0" text="Score" />
@@ -38,7 +38,7 @@
          <graphic>
             <ImageView fitHeight="38.0" fitWidth="42.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@again-btn.png" />
+                  <Image url="@../images/again-btn.png" />
                </image>
             </ImageView>
          </graphic>
@@ -50,7 +50,7 @@
          <graphic>
             <ImageView fitHeight="48.0" fitWidth="52.0" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@home-btn.png" />
+                  <Image url="@../images/home-btn.png" />
                </image>
             </ImageView>
          </graphic>

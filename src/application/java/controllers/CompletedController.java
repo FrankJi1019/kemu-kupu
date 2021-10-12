@@ -1,10 +1,11 @@
-package application;
+package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.java.models.Word;
 import javafx.animation.FillTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
@@ -113,7 +114,7 @@ public class CompletedController {
 		try {
 			// establish the full relative path using the name of the scene
 			// this is relative easy to do because all fxml files are stored in the same package
-			String path = String.format("/application/%s.fxml", sceneName);
+			String path = String.format("../../resources/views/%s.fxml", sceneName);
 			
 			Parent root = FXMLLoader.load(getClass().getResource(path));
 			stage = (Stage)((Node)e.getSource()).getScene().getWindow();

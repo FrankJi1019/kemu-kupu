@@ -1,4 +1,4 @@
-package application;
+package application.java.controllers;
 
 
 import java.io.IOException;
@@ -57,7 +57,7 @@ public class MainController implements Initializable{
 	 * this method switches to Practice scene when called
 	 */
 	public void practice(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Practice.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -68,7 +68,7 @@ public class MainController implements Initializable{
 	 * this method switches to Topics scene when called.
 	 */
 	public void newGame(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/Topics.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Topics.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

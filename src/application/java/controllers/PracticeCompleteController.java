@@ -1,4 +1,4 @@
-package application;
+package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
@@ -70,7 +70,7 @@ public class PracticeCompleteController implements Initializable {
 	private void switchScene(String filename, ActionEvent e) {
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/%s.fxml", filename)));
+			root = FXMLLoader.load(getClass().getResource(String.format("../../resources/views/%s.fxml", filename)));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
