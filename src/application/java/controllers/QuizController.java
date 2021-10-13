@@ -31,6 +31,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
 import javafx.scene.control.Alert.AlertType;
@@ -71,6 +72,7 @@ public class QuizController implements Initializable {
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
 	@FXML private Label timerLabel;
+	@FXML private ProgressBar scoreBar;
 	
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
@@ -121,6 +123,8 @@ public class QuizController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		this.scoreBar.setProgress(1);
+		
 		// define which button to disable when TTS system reads out word
 		this.disableButtons = new Button[]{
 			submitButton,
@@ -130,7 +134,7 @@ public class QuizController implements Initializable {
 		};
 		
 		// create a new timer instance
-		this.wordTimer = new WordTimer(this.timerLabel);
+		this.wordTimer = new WordTimer(this.timerLabel, this.scoreBar);
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
 		this.speedSlider.valueProperty().addListener(c ->{
@@ -201,6 +205,7 @@ public class QuizController implements Initializable {
 		
 		// speak the word in another thread so it won't freezes the window
 		this.timerLabel.setText("Score: 100");
+		this.scoreBar.setProgress(1);
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 		
 		//set isInNextButtonScene to false
@@ -254,6 +259,7 @@ public class QuizController implements Initializable {
 		// if user gets it correct (could be the 1st time or the 2nd time)
 		if (this.checkWordMatch(userAnswer)) {
 			this.timerLabel.setText("Score: 100");
+			this.scoreBar.setProgress(1);
 			// stop the timer
 			this.wordTimer.stop();
 			
@@ -298,6 +304,7 @@ public class QuizController implements Initializable {
 		// user gets wrong in the 2nd time
 		} else if (attemptTimes == 2) {
 			this.timerLabel.setText("Score: 100");
+			this.scoreBar.setProgress(1);
 			this.wordTimer.stop();
 			
 			// the user only has two attempts so the current word has been completed, so add it to 
@@ -342,6 +349,7 @@ public class QuizController implements Initializable {
 			this.wordTimer.stop();
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
 			this.timerLabel.setText("Score: 50");
+			this.scoreBar.setProgress(0.5);
 			
 			// automatically set focus to the text field.
 			userAnswerTextField.requestFocus();
@@ -555,6 +563,7 @@ public class QuizController implements Initializable {
 		macronButtons.setVisible(false);
 		infoButton.setVisible(false);
 		this.timerLabel.setVisible(false);
+		this.scoreBar.setVisible(false);
 	}
 	
 	/**
@@ -569,6 +578,7 @@ public class QuizController implements Initializable {
 		macronButtons.setVisible(true);
 		infoButton.setVisible(true);
 		this.timerLabel.setVisible(true);
+		this.scoreBar.setVisible(true);
 	}
 	
 	
@@ -594,6 +604,7 @@ public class QuizController implements Initializable {
 		
 		// play the next word
 		this.timerLabel.setText("Score: 100");
+		this.scoreBar.setProgress(1);
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 					
 		// update the score and letter count

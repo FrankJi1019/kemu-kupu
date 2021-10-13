@@ -6,10 +6,12 @@ import java.util.TimerTask;
 import application.java.controllers.QuizController;
 import javafx.application.Platform;
 import javafx.scene.control.Label;
+import javafx.scene.control.ProgressBar;
 
 public class WordTimer {
 	
 	private Label timerLabel = null;
+	private ProgressBar scoreBar = null;
 	private int time = 0;
 	private Timer timer = new Timer();
 	private TimerTask tt = null;
@@ -21,8 +23,9 @@ public class WordTimer {
 	// the time increases after [precision] milliseconds
 	private int precision = 200;
 	
-	public WordTimer(Label timerLabel) {
+	public WordTimer(Label timerLabel, ProgressBar scoreBar) {
 		this.timerLabel = timerLabel;
+		this.scoreBar = scoreBar;
 		
 	}
 	
@@ -48,7 +51,8 @@ public class WordTimer {
 							}
 							score--;
 							//timerLabel.setText(new Integer(time - wordLengthTime).toString());
-							timerLabel.setText("Score: "+score);
+							timerLabel.setText("Score: "+ score);
+							scoreBar.setProgress((double)score / 100);
 							finalScore = score;
 							
 						}
