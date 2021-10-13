@@ -27,7 +27,13 @@ public class WordPlayer implements Runnable {
 	
 	private WordTimer timer = null;
 	
-	// set what the word is, how fast should it be read, and if it is important
+	/*
+	 * There are two constructors
+	 * The first one is for when there should not be a new timer
+	 * such as when submitting word, click dont know
+	 * The second is for then there should be a new timer
+	 * such as when hearing the word again
+	 */
 	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons) {
 		this.word = word;
 		this.speed = speed;
@@ -61,11 +67,7 @@ public class WordPlayer implements Runnable {
 			FileIO.speakMaori(this.word, this.speed);
 		}
 		
-		
-		
-		
 		this.toggleButtons(false);
-		
 		
 		if (this.timer != null) {
 			this.startTimer();
@@ -76,20 +78,33 @@ public class WordPlayer implements Runnable {
 		
 	}
 	
+	/**
+	 * @return the time taken for reading the previous word
+	 */
 	public static double getReadingTime() {
 		return WordPlayer.readingTimeSeconds;
 	}
 	
+	/**
+	 * When reading a word, some buttons need to be disabled, and after reading, those buttons need to be enbled
+	 * @param disable: true when the buttons need to be disabled, false when the buttons need to be enabled
+	 */
 	private void toggleButtons(boolean disable) {
 		for (int i = 0; i < this.disableButtons.length; i++) {
 			this.disableButtons[i].setDisable(disable);
 		}
 	}
 	
+	/*
+	 * After reading the word, start the timer so that the score will be updated as time goes
+	 */
 	private void startTimer() {
 		this.timer.start(calculateTypingTimeInMs());
 	}
 	
+	/*
+	 * This method calculates how long the user should be given for thinking and typing
+	 */
 	private int calculateTypingTimeInMs() {
 		return 400 * this.word.length() + 800;
 	}

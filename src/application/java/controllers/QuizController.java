@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
-import java.util.concurrent.Callable;
-import java.util.concurrent.FutureTask;
 
 import application.java.models.FileIO;
 import application.java.models.Word;
@@ -18,7 +16,6 @@ import javafx.animation.ParallelTransition;
 import javafx.animation.PauseTransition;
 import javafx.animation.ScaleTransition;
 import javafx.animation.SequentialTransition;
-import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -81,7 +78,6 @@ public class QuizController implements Initializable {
 	private static List<String> allWords;
 	
 	// constants for displaying messages
-	
 	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
 	private static String FIRST_INCORRECT_MESSAGE = "Not quite, have another go!";
 	private static List<String> SECOND_INCORRECT_MESSAGE = new ArrayList<>(Arrays.asList(
@@ -92,7 +88,6 @@ public class QuizController implements Initializable {
 	private static String SKIPPED_MESSAGE = "Word Skipped...";
 	
 	private static boolean isInNextButtonScene;
-	
 	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
@@ -117,6 +112,7 @@ public class QuizController implements Initializable {
 	private WordTimer wordTimer = null;
 
 	private int lastRecordedCaretPosition = 0;
+	
 	/*
 	 * This is method is call when a controller instance has been created
 	 */
@@ -145,8 +141,6 @@ public class QuizController implements Initializable {
 			} else {
 				this.speedLabel.setText(roundedSpeed + "x ");
 			}
-			
-
 		});
 		
 		// get the caret position 
@@ -180,7 +174,7 @@ public class QuizController implements Initializable {
 		nextButton.setVisible(false);
 		macronInfo.setVisible(false);
 		
-		// check if wordlist size < 5 then add all words to current round
+		// check if word list size < 5 then add all words to current round
 		Random random = new Random();
 		if (allWords.size() <= 5) {
 			testWords.addAll(allWords);
@@ -233,11 +227,6 @@ public class QuizController implements Initializable {
 	 */
 	public void hearAgain() {
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false, this.disableButtons)).start();
-		
-		// disable some buttons while the word is being read
-//		this.toggleButtons(true);
-//		while (WordPlayer.reading) {}
-//		this.toggleButtons(false);
 	}
 	
 	/*

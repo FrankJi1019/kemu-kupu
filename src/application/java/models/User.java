@@ -1,5 +1,10 @@
 package application.java.models;
 
+/**
+ * This method simply stores the information of an user's store
+ * together with some getter method
+ */
+
 public class User {
 	
 	String username;

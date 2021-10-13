@@ -66,6 +66,7 @@ public class CompletedController {
 		// Write the data to the table
 		ObservableList<Word> list = FXCollections.observableArrayList(wordStats);
 		
+		// note that, if you want to change the text display as result, please go to Word.java
 		this.wordColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("word"));
 		this.scoreColumn.setCellValueFactory(new PropertyValueFactory<Word, Integer>("score"));
 		this.resultColumn.setCellValueFactory(new PropertyValueFactory<Word, String>("result"));

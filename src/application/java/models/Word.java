@@ -29,10 +29,10 @@ public class Word {
 		this.score = score;
 		switch(result) {
 		case Word.CORRECT_FIRST:
-			this.result = "Correct on first attempt";
+			this.result = "Correct 1st";
 			break;
 		case Word.CORRECT_SECOND:
-			this.result = "Correct on second attempt";
+			this.result = "Correct 2nd";
 			break;
 		case Word.INCORRECT:
 			this.result = "Incorrect";

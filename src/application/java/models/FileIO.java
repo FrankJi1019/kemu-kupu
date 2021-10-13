@@ -141,10 +141,16 @@ public class FileIO {
 		return words;
 	}
 	
+	/**
+	 * this method saves the scoreBoard to a hidden txt file that persists.
+	 * @param scoreBoard
+	 */
 	public static void saveGame(HashMap<String,Integer> scoreBoard) {
+		// delete the previous version of txt file and create new empty file
 		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
 		LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
 		
+		// append the user info in the scoreboard to the txt file
 		for (String playerName: scoreBoard.keySet()) {
 			int playerScore = scoreBoard.get(playerName);
 			
@@ -153,10 +159,18 @@ public class FileIO {
 		}
 	}
 	
+	/**
+	 * this method loads scoreBoard from the hidden txt file and sort it in a decended order and output
+	 * it into HashMap for in game use.
+	 * @return
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public static HashMap<String,Integer> loadGame() throws InterruptedException, IOException{
 		HashMap<String,Integer> scoreBoard = new HashMap<>();
 		String command;
 		
+		// check if the scoreBOard txt file exist or not, if not create new and return empty HashMap
 		if ((LinuxCommand.getErrorCode("cat "+GAMELOG_DIRECTORY+".gameLog.txt")) == 0){
 			command = "cat "+GAMELOG_DIRECTORY+".gameLog.txt";
 		} else {
@@ -164,27 +178,34 @@ public class FileIO {
 			return scoreBoard;
 		}
 		
+		// start new process in linux bash command to read the scoreBoard txt file line by line
 		ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 		Process process = pb.start();
 			
 		BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
 			
 		int exitStatus = process.waitFor();
-			
+		
 		if (exitStatus == 0) {
 			String line;
 			while ((line = stdout.readLine()) != null) {
+				// store user individual scores together into a HashMap (the scoreBoard)
 				List<String> separate = new ArrayList<>(Arrays.asList(line.split(",")));
 				String userName = separate.get(0);
 				int userScore = Integer.parseInt(separate.get(1));
 				scoreBoard.put(userName, userScore);
 			}
 		}
-		
+		// return the sorted HashMap (scoreBoard)
 		return sortByValue(scoreBoard);
 		
 	}
 	
+	/**
+	 * this method sorts a HashMap by its value in a decending fashion.
+	 * @param hm
+	 * @return
+	 */
 	
 	// Attribution Credit: https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
 	 public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)

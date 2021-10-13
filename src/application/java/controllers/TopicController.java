@@ -39,20 +39,9 @@ public class TopicController {
 	 * @throws IOException 
 	 */
 	public void switchToQuiz(ActionEvent event) throws IOException {
-		// Set the quiz word-list to the topic selected through the button title
-//		String topicSelected = this.btn.getText();
-//		String fileName = topicSelected.replace(" ", "-");
-//		List<String> words = FileIO.getContentFromFile(fileName);
-//		QuizController.setWords(words);
+
 		TopicsScreenController.topicName = this.btn.getText();
 		this.button.setText(String.format("Start game with\n%s", this.btn.getText()));
-
-//		// Switch the scene
-//		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
-//		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-//		scene = new Scene(root);
-//		stage.setScene(scene);
-//		stage.show();
 
 	}
 
