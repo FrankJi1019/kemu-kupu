@@ -93,6 +93,7 @@ public class QuizController implements Initializable {
 	
 	private static boolean isInNextButtonScene;
 	
+	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
 	
@@ -105,7 +106,7 @@ public class QuizController implements Initializable {
 	private List<Word> wordStats = new ArrayList<Word>();
 	
 	// records how many times that the user has attempted, recall that the user have max 2 attemps
-	private int attemptTimes = 1;
+	public static int attemptTimes = 1;
 	
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
@@ -207,9 +208,7 @@ public class QuizController implements Initializable {
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
 		
-		startTimer = (int) System.currentTimeMillis();
-	
-//		this.wordTimer.start();
+		WordTimer.finalScore = 100;
 		
 		
 	}
@@ -266,14 +265,13 @@ public class QuizController implements Initializable {
 			// statistics, update score and reset the number of attempts
 			
 
-			int thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
-			int finalThisRoundScore = thisRoundScore / this.attemptTimes;
+			int finalThisRoundScore = WordTimer.finalScore;
 			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore, 
-					this.attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
+					attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
 
 			score = score + finalThisRoundScore;
 			
-			this.attemptTimes = 1;
+			attemptTimes = 1;
 			
 			// remove the word that has finished, this means the first word in the list is the next word
 			this.testWords.remove(0);
@@ -299,8 +297,10 @@ public class QuizController implements Initializable {
 			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
 			//scoreLabel.setText(Double.toString(score));
 			
+			WordTimer.finalScore = 100;
+			
 		// user gets wrong in the 2nd time
-		} else if (this.attemptTimes == 2) {
+		} else if (attemptTimes == 2) {
 			this.timerLabel.setText("Score: 100");
 			this.wordTimer.stop();
 			
@@ -308,7 +308,7 @@ public class QuizController implements Initializable {
 			// the statistics and update the attempt times
 			// note that in this case there is no need to update the score
 			this.wordStats.add(new Word(this.testWords.get(0), 0, Word.INCORRECT));
-			this.attemptTimes = 1;
+			attemptTimes = 1;
 			
 			// move to the next word
 			this.testWords.remove(0);
@@ -328,6 +328,7 @@ public class QuizController implements Initializable {
 			// clear dashes
 			clearFieldsAfterSubmit();
 			
+			WordTimer.finalScore = 100;
 			
 		// user gets wrong in the 1st time, in this case, the user have another change
 		} else {
@@ -335,20 +336,24 @@ public class QuizController implements Initializable {
 			// show the hint, for assignment 3 the hint is to display the second letter
 			this.showHint();
 			
-			this.attemptTimes++;
+			attemptTimes++;
 			
 			// inform the user the result of there submit and play the word again
 			resultLabel.setText(FIRST_INCORRECT_MESSAGE);
 			feedbackRect.setFill(Color.web("#f87676"));
 
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
+			this.wordTimer.stop();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
+			this.timerLabel.setText("Score: 50");
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
 			
 			// automatically set focus to the text field.
 			userAnswerTextField.requestFocus();
+			
+			WordTimer.finalScore = 50;
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -365,7 +370,7 @@ public class QuizController implements Initializable {
 	public void dontKnow(ActionEvent e) throws IOException, InterruptedException {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
 		this.wordStats.add(new Word(this.testWords.get(0), 0, Word.SKIP));
-		this.attemptTimes = 1;
+		attemptTimes = 1;
 		
 		this.wordTimer.stop();
 		
@@ -625,37 +630,7 @@ public class QuizController implements Initializable {
 		userAnswerTextField.setVisible(false);
 	}
 	
-	
-	/**
-	 * 
-	 * this method calculate score according how long user took to answer the question.
-	 */
-	public int scoreCalculation(int wordLength,int startTime,int endTime) {
-		
-		// speaking time(in seconds):       time = 0.1274(word_length) + 1.1665s
-		// user typing time(in seconds):    time = 0.4(word_length) + 0.8s
-		
-		int durationMs = endTime-startTime;
-		
-//		int speakingTime = 127*wordLength + 1166;
-		int typingTime = 400*wordLength + 800;
-		int thinkingTime = durationMs - typingTime;
-		//System.out.println(thinkingTime);
-		int score = 100;
-	
-		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_DEDUCTED;
-		if (scoreDeductionRate <= 0) {
-			scoreDeductionRate = 0;
-		}
-		if (scoreDeductionRate > 50) {
-			scoreDeductionRate = 50;
-		}
-		
-		score = score - 1 * scoreDeductionRate;
-		
-		return score;
-	}
-	
+
 	/**
 	 * this method tells the user how to use the macron button when the ? button is pressed.
 	 */

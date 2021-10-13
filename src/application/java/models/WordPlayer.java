@@ -47,8 +47,6 @@ public class WordPlayer implements Runnable {
 	public void run() {
 		
 		
-		long start = System.currentTimeMillis();
-		
 		// if another thread is executing currently and this thread is not important, then ignore this 
 		if (WordPlayer.reading && !this.isImportant) return;
 		// if (MyRunnable.reading) return;
@@ -63,8 +61,8 @@ public class WordPlayer implements Runnable {
 			FileIO.speakMaori(this.word, this.speed);
 		}
 		
-		// after reading, set it to false
-		WordPlayer.reading = false;
+		
+		
 		
 		this.toggleButtons(false);
 		
@@ -73,10 +71,9 @@ public class WordPlayer implements Runnable {
 			this.startTimer();
 		}
 		
+		// after reading, set it to false
+		WordPlayer.reading = false;
 		
-		long end = System.currentTimeMillis();
-		
-		WordPlayer.readingTimeSeconds = (end - start) / 1000;
 	}
 	
 	public static double getReadingTime() {
@@ -94,7 +91,6 @@ public class WordPlayer implements Runnable {
 	}
 	
 	private int calculateTypingTimeInMs() {
-		System.out.println((400 *this.word.length() +800)/1000);
 		return 400 * this.word.length() + 800;
 	}
 
