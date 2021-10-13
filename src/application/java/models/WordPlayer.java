@@ -24,12 +24,22 @@ public class WordPlayer implements Runnable {
 	
 	private Button[] disableButtons = null;
 	
+	private WordTimer timer = null;
+	
 	// set what the word is, how fast should it be read, and if it is important
 	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons) {
 		this.word = word;
 		this.speed = speed;
 		this.isImportant = isImportant;
 		this.disableButtons = disableButtons;
+	}
+	
+	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons, WordTimer timer) {
+		this.word = word;
+		this.speed = speed;
+		this.isImportant = isImportant;
+		this.disableButtons = disableButtons;
+		this.timer = timer;
 	}
 
 	@Override
@@ -55,6 +65,10 @@ public class WordPlayer implements Runnable {
 		WordPlayer.reading = false;
 		
 		this.toggleButtons(false);
+		if (this.timer != null) {
+			this.startTimer();
+		}
+		
 		
 		long end = System.currentTimeMillis();
 		
@@ -69,6 +83,10 @@ public class WordPlayer implements Runnable {
 		for (int i = 0; i < this.disableButtons.length; i++) {
 			this.disableButtons[i].setDisable(disable);
 		}
+	}
+	
+	private void startTimer() {
+		this.timer.start();
 	}
 
 }

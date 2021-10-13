@@ -10,7 +10,7 @@ public class WordTimer {
 	
 	private Label timerLabel = null;
 	private double time = 0;
-	private Timer timer = null;
+	private Timer timer = new Timer();
 	private TimerTask tt = null;
 	
 	// the time increases after [precision] seconds
@@ -18,6 +18,11 @@ public class WordTimer {
 	
 	public WordTimer(Label timerLabel) {
 		this.timerLabel = timerLabel;
+		
+	}
+	
+	public void start() {
+		this.timer.cancel();
 		this.timer = new Timer();
 		this.tt = new TimerTask() {
 			@Override
@@ -30,13 +35,11 @@ public class WordTimer {
 				});
 			}
 		};
-	}
-	
-	public void start() {
 		this.timer.scheduleAtFixedRate(tt, 0, (int)(1000 * this.precision));
 	}
 	
 	public void stop() {
+		
 		timer.cancel();
 		this.timer = new Timer();
 		this.tt = new TimerTask() {
