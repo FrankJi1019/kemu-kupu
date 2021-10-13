@@ -79,6 +79,12 @@
          </font>
          <tooltip>
             <Tooltip text="Kēmu | Test your Maori spelling knowledge!">
+            <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
       <Button fx:id="helpButton" layoutX="761.0" layoutY="33.0" mnemonicParsing="false" onAction="#helpScreen" prefHeight="40.0" prefWidth="40.0" styleClass="help-button" text="?" textFill="WHITE">
          <font>
             <Font name="Raleway ExtraBold" size="20.0" />

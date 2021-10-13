@@ -87,15 +87,13 @@ public class HelpController implements Initializable{
 			toggleButton.setOnAction(e -> {
 				imageInFocus.setImage(images.get(toggleID));
 				caption.setText(captions.get(toggleID));
+				imageSelectedID = toggleID;
 			});
 		
 		}
 		// Fire a button to start off with to make sure the screen starts here
 		((ToggleButton) imageRadioToggles.get(0)).fire();
 	}
-
-	
-	
 
 	/*
 	 * nextImage() changes the image when the right arrow is clicked.
@@ -113,6 +111,7 @@ public class HelpController implements Initializable{
 		((ToggleButton) imageRadioToggles.get(imageSelectedID)).fire();
 		
 	}
+	
 	/*
 	 * prevImage() changes the image when the right arrow is clicked.
 	 * It does so by firing the RadioToggleButton action, effectively 
