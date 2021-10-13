@@ -44,6 +44,8 @@ import javafx.util.Duration;
 
 import java.util.Random;
 
+import application.java.models.WordTimer;
+
 public class QuizController implements Initializable {
 	
 	// these are used to switch scene
@@ -68,6 +70,7 @@ public class QuizController implements Initializable {
 	@FXML private Button infoButton;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
+	@FXML private Label timerLabel;
 	
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
@@ -90,6 +93,7 @@ public class QuizController implements Initializable {
 	
 	private static boolean isInNextButtonScene;
 	
+	
 	// This is a list of five words that will be tested
 	private List<String> testWords = new ArrayList<String>();
 	
@@ -102,7 +106,7 @@ public class QuizController implements Initializable {
 	private List<Word> wordStats = new ArrayList<Word>();
 	
 	// records how many times that the user has attempted, recall that the user have max 2 attemps
-	private int attemptTimes = 1;
+	public static int attemptTimes = 1;
 	
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
@@ -113,6 +117,7 @@ public class QuizController implements Initializable {
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
 	
+	private WordTimer wordTimer = null;
 
 	private int lastRecordedCaretPosition = 0;
 	/*
@@ -127,6 +132,8 @@ public class QuizController implements Initializable {
 			idkButton,
 			infoButton
 		};
+		
+		this.wordTimer = new WordTimer(this.timerLabel);
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
 		this.speedSlider.valueProperty().addListener(c ->{
@@ -195,12 +202,14 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
+		this.timerLabel.setText("Score: 100");
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 		
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
 		
-		startTimer = (int) System.currentTimeMillis();
+		WordTimer.finalScore = 100;
+		
 		
 	}
 	
@@ -248,19 +257,21 @@ public class QuizController implements Initializable {
 		
 		// if user gets it correct (could be the 1st time or the 2nd time)
 		if (this.checkWordMatch(userAnswer)) {
+			this.timerLabel.setText("Score: 100");
+			// stop the timer
+			this.wordTimer.stop();
 			
 			// no matter this is the 1st or 2nd try, this word has been completed, so add this word to 
 			// statistics, update score and reset the number of attempts
 			
 
-			int thisRoundScore = scoreCalculation(wordLetterCount, startTimer, endTimer);
-			int finalThisRoundScore = thisRoundScore / this.attemptTimes;
+			int finalThisRoundScore = WordTimer.finalScore;
 			this.wordStats.add(new Word(this.testWords.get(0), finalThisRoundScore, 
-					this.attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
+					attemptTimes == 1? Word.CORRECT_FIRST : Word.CORRECT_SECOND));
 
 			score = score + finalThisRoundScore;
 			
-			this.attemptTimes = 1;
+			attemptTimes = 1;
 			
 			// remove the word that has finished, this means the first word in the list is the next word
 			this.testWords.remove(0);
@@ -286,14 +297,18 @@ public class QuizController implements Initializable {
 			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
 			//scoreLabel.setText(Double.toString(score));
 			
+			WordTimer.finalScore = 100;
+			
 		// user gets wrong in the 2nd time
-		} else if (this.attemptTimes == 2) {
+		} else if (attemptTimes == 2) {
+			this.timerLabel.setText("Score: 100");
+			this.wordTimer.stop();
 			
 			// the user only has two attempts so the current word has been completed, so add it to 
 			// the statistics and update the attempt times
 			// note that in this case there is no need to update the score
 			this.wordStats.add(new Word(this.testWords.get(0), 0, Word.INCORRECT));
-			this.attemptTimes = 1;
+			attemptTimes = 1;
 			
 			// move to the next word
 			this.testWords.remove(0);
@@ -313,6 +328,7 @@ public class QuizController implements Initializable {
 			// clear dashes
 			clearFieldsAfterSubmit();
 			
+			WordTimer.finalScore = 100;
 			
 		// user gets wrong in the 1st time, in this case, the user have another change
 		} else {
@@ -320,20 +336,24 @@ public class QuizController implements Initializable {
 			// show the hint, for assignment 3 the hint is to display the second letter
 			this.showHint();
 			
-			this.attemptTimes++;
+			attemptTimes++;
 			
 			// inform the user the result of there submit and play the word again
 			resultLabel.setText(FIRST_INCORRECT_MESSAGE);
 			feedbackRect.setFill(Color.web("#f87676"));
 
 			FileIO.openGeneralWavFile("wrong");
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
+			this.wordTimer.stop();
+			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
+			this.timerLabel.setText("Score: 50");
 			
 			//restart timer
 			startTimer = (int) System.currentTimeMillis();
 			
 			// automatically set focus to the text field.
 			userAnswerTextField.requestFocus();
+			
+			WordTimer.finalScore = 50;
 		}
 		
 		// clear the result label that shows corrent, incorrect or skipped
@@ -350,7 +370,9 @@ public class QuizController implements Initializable {
 	public void dontKnow(ActionEvent e) throws IOException, InterruptedException {
 		// if the user press dont know, it means the current has finished and the score for this word is 0
 		this.wordStats.add(new Word(this.testWords.get(0), 0, Word.SKIP));
-		this.attemptTimes = 1;
+		attemptTimes = 1;
+		
+		this.wordTimer.stop();
 		
 		// move to the next word if exists, otherwise switch to complete screen
 		this.testWords.remove(0);
@@ -539,6 +561,7 @@ public class QuizController implements Initializable {
 		nextButton.setVisible(true);
 		macronButtons.setVisible(false);
 		infoButton.setVisible(false);
+		this.timerLabel.setVisible(false);
 	}
 	
 	/**
@@ -552,7 +575,7 @@ public class QuizController implements Initializable {
 		nextButton.setVisible(false);
 		macronButtons.setVisible(true);
 		infoButton.setVisible(true);
-
+		this.timerLabel.setVisible(true);
 	}
 	
 	
@@ -581,7 +604,8 @@ public class QuizController implements Initializable {
 		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons)).start();
+		this.timerLabel.setText("Score: 100");
+		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 					
 		// update the score and letter count
 		this.setWordAndLetterCount();
@@ -592,6 +616,8 @@ public class QuizController implements Initializable {
 		
 		// automatically set focus to the text field.
 		userAnswerTextField.requestFocus();
+		
+//		this.wordTimer.stop();
 		
 	}
 	
@@ -604,37 +630,7 @@ public class QuizController implements Initializable {
 		userAnswerTextField.setVisible(false);
 	}
 	
-	
-	/**
-	 * 
-	 * this method calculate score according how long user took to answer the question.
-	 */
-	public int scoreCalculation(int wordLength,int startTime,int endTime) {
-		
-		// speaking time(in seconds):       time = 0.1274(word_length) + 1.1665s
-		// user typing time(in seconds):    time = 0.4(word_length) + 0.8s
-		
-		int durationMs = endTime-startTime;
-		
-		int speakingTime = 127*wordLength + 1166;
-		int typingTime = 400*wordLength + 800;
-		int thinkingTime = durationMs - speakingTime - typingTime;
-		//System.out.println(thinkingTime);
-		int score = 100;
-	
-		int scoreDeductionRate = thinkingTime/TIME_MS_EVERY_POINT_DEDUCTED;
-		if (scoreDeductionRate <= 0) {
-			scoreDeductionRate = 0;
-		}
-		if (scoreDeductionRate > 50) {
-			scoreDeductionRate = 50;
-		}
-		
-		score = score - 1 * scoreDeductionRate;
-		
-		return score;
-	}
-	
+
 	/**
 	 * this method tells the user how to use the macron button when the ? button is pressed.
 	 */
@@ -767,8 +763,6 @@ public class QuizController implements Initializable {
 
 		}
 	}
-	
-	
 	
 }
 

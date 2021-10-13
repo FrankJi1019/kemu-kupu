@@ -20,9 +20,12 @@ public class WordPlayer implements Runnable {
 	public static boolean reading = false;
 	private boolean isImportant;
 	
+	
 	private static double readingTimeSeconds = -1;
 	
 	private Button[] disableButtons = null;
+	
+	private WordTimer timer = null;
 	
 	// set what the word is, how fast should it be read, and if it is important
 	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons) {
@@ -31,11 +34,18 @@ public class WordPlayer implements Runnable {
 		this.isImportant = isImportant;
 		this.disableButtons = disableButtons;
 	}
+	
+	public WordPlayer(String word, double speed, boolean isImportant, Button[] disableButtons, WordTimer timer) {
+		this.word = word;
+		this.speed = speed;
+		this.isImportant = isImportant;
+		this.disableButtons = disableButtons;
+		this.timer = timer;
+	}
 
 	@Override
 	public void run() {
 		
-		long start = System.currentTimeMillis();
 		
 		// if another thread is executing currently and this thread is not important, then ignore this 
 		if (WordPlayer.reading && !this.isImportant) return;
@@ -51,14 +61,19 @@ public class WordPlayer implements Runnable {
 			FileIO.speakMaori(this.word, this.speed);
 		}
 		
-		// after reading, set it to false
-		WordPlayer.reading = false;
+		
+		
 		
 		this.toggleButtons(false);
 		
-		long end = System.currentTimeMillis();
 		
-		WordPlayer.readingTimeSeconds = (end - start) / 1000;
+		if (this.timer != null) {
+			this.startTimer();
+		}
+		
+		// after reading, set it to false
+		WordPlayer.reading = false;
+		
 	}
 	
 	public static double getReadingTime() {
@@ -69,6 +84,14 @@ public class WordPlayer implements Runnable {
 		for (int i = 0; i < this.disableButtons.length; i++) {
 			this.disableButtons[i].setDisable(disable);
 		}
+	}
+	
+	private void startTimer() {
+		this.timer.start(calculateTypingTimeInMs());
+	}
+	
+	private int calculateTypingTimeInMs() {
+		return 400 * this.word.length() + 800;
 	}
 
 }
