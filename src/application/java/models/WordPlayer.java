@@ -65,6 +65,13 @@ public class WordPlayer implements Runnable {
 		WordPlayer.reading = false;
 		
 		this.toggleButtons(false);
+		
+		try {
+			Thread.sleep(this.calculateTypingTime());
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		
 		if (this.timer != null) {
 			this.startTimer();
 		}
@@ -87,6 +94,11 @@ public class WordPlayer implements Runnable {
 	
 	private void startTimer() {
 		this.timer.start();
+	}
+	
+	private int calculateTypingTime() {
+		System.out.println(400 * this.word.length() + 800);
+		return 400 * this.word.length() + 800;
 	}
 
 }

@@ -612,7 +612,7 @@ public class QuizController implements Initializable {
 		// automatically set focus to the text field.
 		userAnswerTextField.requestFocus();
 		
-		// this.wordTimer.start();
+//		this.wordTimer.stop();
 		
 	}
 	
@@ -637,9 +637,9 @@ public class QuizController implements Initializable {
 		
 		int durationMs = endTime-startTime;
 		
-		int speakingTime = 127*wordLength + 1166;
+//		int speakingTime = 127*wordLength + 1166;
 		int typingTime = 400*wordLength + 800;
-		int thinkingTime = durationMs - speakingTime - typingTime;
+		int thinkingTime = durationMs - typingTime;
 		//System.out.println(thinkingTime);
 		int score = 100;
 	
