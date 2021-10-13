@@ -48,5 +48,17 @@
             </Tooltip>
          </tooltip>
       </Button>
+      <Button fx:id="startButton" layoutX="550.0" layoutY="26.0" mnemonicParsing="false" onAction="#startGame" prefHeight="55.0" prefWidth="200.0" styleClass="large-button" text="Start Game With">
+         <font>
+            <Font name="Noto Sans CJK JP" size="14.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Whakahoki | Return to main-menu">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
    </children>
 </AnchorPane>
