@@ -34,7 +34,7 @@ public class HelpController implements Initializable{
 	@FXML ToggleGroup imageSelectGroup;
 	@FXML Label caption;
 
-	private static int imageID = 0;
+	private static int imageSelectedID = 0;
 	
 	private static final String IMAGES_DIRECTORY_PATH = "application/resources/images/";
 
@@ -53,10 +53,22 @@ public class HelpController implements Initializable{
 	}
 
 	public void nextImage() {
-		System.out.println("extImage ran");
+		imageSelectedID++;
+		List<Toggle> imageRadioToggles = imageSelectGroup.getToggles();
+		if(imageSelectedID > imageRadioToggles.size()-1) {
+			imageSelectedID = 0;
+		}
+		((ToggleButton) imageRadioToggles.get(imageSelectedID)).fire();
+		
 	}
 	public void prevImage() {
-		System.out.println("prevImage ran");
+		imageSelectedID--;
+		List<Toggle> imageRadioToggles = imageSelectGroup.getToggles();
+		if(imageSelectedID < 0) {
+			imageSelectedID = imageRadioToggles.size()-1;
+		}
+		((ToggleButton) imageRadioToggles.get(imageSelectedID)).fire();
+
 	}
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
@@ -65,17 +77,20 @@ public class HelpController implements Initializable{
 	}
 
 	private void setToggleActions() {
-		List<Toggle> toggles = imageSelectGroup.getToggles();
-		for (Toggle toggle : toggles) {
+		List<Toggle> imageRadioToggles = imageSelectGroup.getToggles();
+		for (Toggle toggle : imageRadioToggles) {
 			ToggleButton toggleButton = (ToggleButton) toggle;
-			int toggleID = toggles.indexOf(toggle);
-			toggleButton.setOnAction(e -> {
-				imageInFocus.setImage(images.get(toggleID));
-				caption.setText(captions.get(toggleID));
-			});
+			int toggleID = imageRadioToggles.indexOf(toggle);
+			// If we've for some reason got more toggles than images, we don't want an error - so don't give any extra toggles functionality
+			if(toggleID < images.size()) {
+				toggleButton.setOnAction(e -> {
+					imageInFocus.setImage(images.get(toggleID));
+					caption.setText(captions.get(toggleID));
+				});
+			}
 		}
 		
-		((ToggleButton) toggles.get(0)).fire();
+		((ToggleButton) imageRadioToggles.get(0)).fire();
 	}
 
 	private void initialiseImageMap() {
@@ -87,13 +102,14 @@ public class HelpController implements Initializable{
 		addImage("home-btn.png", "This is to show that descriptione I can use images");
 	}
 
-	public Image createImageFile(String filename) {
-		return new Image(IMAGES_DIRECTORY_PATH + filename, imageInFocus.getFitWidth(), imageInFocus.getFitHeight(), true, true);
-	}
 
 	public void addImage(String filename, String description) {
 		images.add(createImageFile(filename));
 		captions.add(description);
+	}
+	
+	public Image createImageFile(String filename) {
+		return new Image(IMAGES_DIRECTORY_PATH + filename, imageInFocus.getFitWidth(), imageInFocus.getFitHeight(), true, true);
 	}
 }
 

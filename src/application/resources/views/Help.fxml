@@ -53,12 +53,12 @@
                   <RadioButton layoutX="175.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
                </children>
             </AnchorPane>
-            <Button layoutX="590.0" mnemonicParsing="false" onAction="#nextImage" prefHeight="377.0" prefWidth="56.0" style="-fx-background-color: none;" text="&gt;" AnchorPane.bottomAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button layoutX="642.0" layoutY="85.0" mnemonicParsing="false" onAction="#nextImage" prefHeight="240.0" prefWidth="56.0" styleClass="help-nav-arrow" text="&gt;" AnchorPane.bottomAnchor="85.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
                <font>
                   <Font name="Raleway Bold" size="24.0" />
                </font>
             </Button>
-            <Button mnemonicParsing="false" onAction="#prevImage" prefHeight="377.0" prefWidth="56.0" style="-fx-background-color: none;" text="&lt;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <Button layoutY="85.0" mnemonicParsing="false" onAction="#prevImage" prefHeight="240.0" prefWidth="56.0" styleClass="help-nav-arrow" text="&lt;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="85.0">
                <font>
                   <Font name="Raleway Bold" size="24.0" />
                </font>
