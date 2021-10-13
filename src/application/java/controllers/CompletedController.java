@@ -2,9 +2,11 @@ package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.java.models.FileIO;
 import application.java.models.Word;
 import javafx.animation.FillTransition;
 import javafx.animation.PauseTransition;
@@ -21,6 +23,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -40,6 +43,7 @@ public class CompletedController {
 	@FXML private TableColumn<Word, String> resultColumn;
 	@FXML private Label totalScoreLabel;
 	@FXML private AnchorPane stars;
+	@FXML private TextField nameTextField;
 	
 	private int totalScore = 0;
 	
@@ -105,6 +109,12 @@ public class CompletedController {
 	
 	public void playAgain(ActionEvent e) {
 		this.switchScene(e, "Quiz");
+	}
+	
+	public void save() throws InterruptedException, IOException {
+		HashMap<String, Integer> loadedData = FileIO.loadGame();
+		loadedData.put(this.nameTextField.getText(), this.totalScore);
+		FileIO.saveGame(FileIO.sortByValue(loadedData));
 	}
 	
 	
