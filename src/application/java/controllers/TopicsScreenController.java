@@ -46,6 +46,7 @@ public class TopicsScreenController implements Initializable{
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		List<Topic> topicList = generateListOfTopics();
+		topicName = "";
 		
 		// If we don't find any topics (so /words is empty), tell the user
 		if (topicList.isEmpty()) {

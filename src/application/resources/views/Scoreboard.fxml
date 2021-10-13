@@ -6,10 +6,9 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.ScoreboardController">
    <children>
-      <Button layoutX="299.0" layoutY="475.0" mnemonicParsing="false" onAction="#returnHome" text="Return Home">
+      <Button layoutX="259.0" layoutY="393.0" mnemonicParsing="false" onAction="#returnHome" text="Return Home">
          <font>
             <Font size="24.0" />
          </font>
@@ -20,5 +19,10 @@
           <TableColumn fx:id="scoreColumn" prefWidth="75.0" text="Score" />
         </columns>
       </TableView>
+      <Button layoutX="465.0" layoutY="393.0" mnemonicParsing="false" onAction="#reset" text="Reset">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>

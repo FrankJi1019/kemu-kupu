@@ -20,10 +20,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -49,6 +51,8 @@ public class CompletedController {
 	
 	// this constant defines the colour of star that transition into.
 	private static String STAR_COLOUR_HEX = "#FFD700";
+	
+	private boolean isSaved = false;
 
 	/*
 	 * This method will be invoked when other scene is switching to complete scene, this is to pass
@@ -76,9 +80,6 @@ public class CompletedController {
 		int finalTotalScore = Integer.parseInt(totalScoreString);
 		this.totalScoreLabel.setText(Integer.toString(finalTotalScore));
 
-
-
-		
 	}
 	
 	/**
@@ -112,9 +113,24 @@ public class CompletedController {
 	}
 	
 	public void save() throws InterruptedException, IOException {
-		HashMap<String, Integer> loadedData = FileIO.loadGame();
-		loadedData.put(this.nameTextField.getText(), this.totalScore);
-		FileIO.saveGame(FileIO.sortByValue(loadedData));
+		if (isSaved) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Data saved");
+			alert.setHeaderText("Data has been saved already");
+			alert.showAndWait();
+		} else {
+			HashMap<String, Integer> loadedData = FileIO.loadGame();
+			loadedData.put(this.nameTextField.getText(), this.totalScore);
+			FileIO.saveGame(FileIO.sortByValue(loadedData));
+			
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Data saved");
+			alert.setHeaderText("Your score is saved to the score board");
+			alert.showAndWait();
+			
+			isSaved = true;
+		}
+
 	}
 	
 	

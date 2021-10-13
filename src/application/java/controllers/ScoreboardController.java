@@ -67,6 +67,11 @@ public class ScoreboardController implements Initializable {
 		this.switchScene("Main", e);
 	}
 	
+	public void reset() {
+		FileIO.deleteGame();
+		this.initialize(null, null);
+	}
+	
 	private void switchScene(String filename, ActionEvent e) {
 		Parent root = null;
 		try {

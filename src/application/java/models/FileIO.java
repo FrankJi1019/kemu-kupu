@@ -210,6 +210,11 @@ public class FileIO {
 	        return temp;
 	    }
 	 
+	 
 	// Attribution ends
+	 
+	 public static void deleteGame() {
+		 LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+	 }
 
 }
