@@ -7,12 +7,44 @@
 	-fx-text-fill: white;
 	-fx-background-radius: 10px;
 }
-.large-button:hover{
+.large-button:hover, .help-button:hover{
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
 }
-/* ------------------- */
+.help-button {
+	-fx-background-color: #274029;
+	-fx-text-fill: white;
+	-fx-background-radius: 50%;
+}
 
+.help-focus-rect{
+	-fx-background-color: #e4e4e4;
+	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
+}
+
+.help-nav-arrow{
+		-fx-background-color: none;
+		-fx-border-radius: 0;
+		-fx-border-width: 0;
+}
+.help-nav-arrow:hover{
+		-fx-background-color: #dbdbdb;
+}
+.radio:hover {
+    -fx-border-color: lightgrey; 
+}
+.radio {
+    -fx-border-color: #274029; 
+    -fx-background-color: white;
+    -fx-border-width:2px;
+    -fx-border-radius: 50%; 
+}
+
+.radio-button:selected .radio .dot {
+    -fx-background-color: #274029;
+    -fx-background-insets: 0;
+}
+/* ------------------- */
 /* ----- Topics  ----- */
 .topic-button {
 	-fx-background-color: #a6e0ae;

@@ -76,6 +76,14 @@ public class MainController implements Initializable{
 	}
 
 	
+	public void helpScreen(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Help.fxml"));
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
 	/**
 	 * This methods runs on start up. It is used to add an animation to the start screen.
 	 * The animation is loosely based on:
