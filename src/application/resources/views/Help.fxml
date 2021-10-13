@@ -2,8 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.RadioButton?>
-<?import javafx.scene.control.ToggleGroup?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -12,7 +10,7 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.HelpController">
    <children>
-      <Label layoutX="390.0" layoutY="47.0" text="Help">
+      <Label layoutX="379.0" layoutY="47.0" text="Help">
          <font>
             <Font name="Raleway Bold" size="36.0" />
          </font>
@@ -36,34 +34,21 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <AnchorPane id="." layoutX="83.0" layoutY="120.0" prefHeight="410.0" prefWidth="698.0" styleClass="help-focus-rect">
+      <AnchorPane id="." layoutX="71.0" layoutY="122.0" prefHeight="410.0" prefWidth="698.0" styleClass="help-focus-rect">
          <children>
             <ImageView fx:id="imageInFocus" fitHeight="320.0" fitWidth="480.0" layoutX="109.0" layoutY="14.0" pickOnBounds="true" preserveRatio="true" />
-            <AnchorPane layoutX="261.0" layoutY="378.0" prefHeight="18.0" prefWidth="200.0" AnchorPane.bottomAnchor="14.0">
-               <children>
-                  <RadioButton layoutX="7.0" mnemonicParsing="false">
-                     <toggleGroup>
-                        <ToggleGroup fx:id="imageSelectGroup" />
-                     </toggleGroup>
-                  </RadioButton>
-                  <RadioButton layoutX="41.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
-                  <RadioButton layoutX="73.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
-                  <RadioButton layoutX="107.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
-                  <RadioButton layoutX="141.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
-                  <RadioButton layoutX="175.0" mnemonicParsing="false" toggleGroup="$imageSelectGroup" />
-               </children>
-            </AnchorPane>
+            <AnchorPane fx:id="radioButtons" layoutX="47.0" layoutY="378.0" prefHeight="22.0" prefWidth="604.0" AnchorPane.bottomAnchor="10.0" />
             <Button layoutX="642.0" layoutY="85.0" mnemonicParsing="false" onAction="#nextImage" prefHeight="240.0" prefWidth="56.0" styleClass="help-nav-arrow" text="&gt;" AnchorPane.bottomAnchor="85.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="85.0">
                <font>
                   <Font name="Raleway Bold" size="24.0" />
                </font>
             </Button>
-            <Button layoutY="85.0" mnemonicParsing="false" onAction="#prevImage" prefHeight="240.0" prefWidth="56.0" styleClass="help-nav-arrow" text="&lt;" AnchorPane.bottomAnchor="85.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="85.0">
+            <Button layoutY="85.0" mnemonicParsing="false" onAction="#prevImage" prefHeight="240.0" prefWidth="56.0" styleClass="help-nav-arrow" text="&lt;" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="85.0">
                <font>
                   <Font name="Raleway Bold" size="24.0" />
                </font>
             </Button>
-            <Label fx:id="caption" alignment="TOP_CENTER" layoutX="56.0" layoutY="334.0" prefHeight="44.0" prefWidth="610.0" text="caption" wrapText="true">
+            <Label fx:id="caption" alignment="TOP_CENTER" layoutX="44.0" layoutY="334.0" prefHeight="44.0" prefWidth="610.0" text="caption" wrapText="true">
                <font>
                   <Font name="Raleway Regular" size="13.0" />
                </font>
