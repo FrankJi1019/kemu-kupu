@@ -39,7 +39,7 @@
             <Font name="Raleway Bold" size="59.0" />
          </font>
       </Label>
-      <Label layoutX="351.0" layoutY="304.0" text="Select mode:">
+      <Label layoutX="351.0" layoutY="320.0" text="Please select:">
          <font>
             <Font name="Raleway SemiBold" size="22.0" />
          </font>
@@ -79,6 +79,12 @@
          </font>
          <tooltip>
             <Tooltip text="Kēmu | Test your Maori spelling knowledge!">
+      <Button fx:id="helpButton" layoutX="761.0" layoutY="33.0" mnemonicParsing="false" onAction="#helpScreen" prefHeight="40.0" prefWidth="40.0" styleClass="help-button" text="?" textFill="WHITE">
+         <font>
+            <Font name="Raleway ExtraBold" size="20.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Āwhina | Help">
                <font>
                   <Font name="Raleway Regular" size="14.0" />
                </font>
