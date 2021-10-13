@@ -120,15 +120,35 @@ public class CompletedController {
 			alert.showAndWait();
 		} else {
 			HashMap<String, Integer> loadedData = FileIO.loadGame();
-			loadedData.put(this.nameTextField.getText(), this.totalScore);
-			FileIO.saveGame(FileIO.sortByValue(loadedData));
+			String userName = this.nameTextField.getText();
+			if (loadedData.containsKey(userName)) {
+				if (loadedData.get(userName) > this.totalScore) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Notification");
+					alert.setHeaderText("You already have a higher score saved at the scoreboard!");
+					alert.showAndWait();
+				} else {
+					FileIO.saveGame(FileIO.sortByValue(loadedData));
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Data saved");
+					alert.setHeaderText("Your score is saved to the score board");
+					alert.showAndWait();
+					
+					isSaved = true;
+				}
+			} else {
+				loadedData.put(userName, this.totalScore);
+				FileIO.saveGame(FileIO.sortByValue(loadedData));
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Data saved");
+				alert.setHeaderText("Your score is saved to the score board");
+				alert.showAndWait();
+				
+				isSaved = true;
+			}
 			
-			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Data saved");
-			alert.setHeaderText("Your score is saved to the score board");
-			alert.showAndWait();
-			
-			isSaved = true;
 		}
 
 	}
