@@ -36,7 +36,7 @@ import javafx.util.Duration;
 public class PracticeController implements Initializable {
 	
 	private static String INCORRECT_MESSAGE = "Incorrect, Try Again";
-	private List<String> words = new ArrayList<String>();
+	private static List<String> words = new ArrayList<String>();
 	public static String currentWord = "";
 	public static String userAnswer = "";
 	public static boolean isCorrect;
@@ -88,7 +88,10 @@ public class PracticeController implements Initializable {
 
 		
 		// obtain all the words from all the word list
-		this.words = FileIO.getAllWordsFromWordsDirectory();
+		if (words.isEmpty()) {
+			words = FileIO.getAllWordsFromWordsDirectory();
+		}
+		
 		
 		// choose a random word and remove from the word list
 		nextWord();
@@ -289,8 +292,8 @@ public class PracticeController implements Initializable {
 	 * This method is used when the user skip the current one - user gets a new word if he/she doesn't know
 	 */
 	private void nextWord() {
-		int wordIndex = new Random().nextInt(this.words.size());
-		currentWord = this.words.get(wordIndex);
+		int wordIndex = new Random().nextInt(words.size());
+		currentWord = words.get(wordIndex);
 //		this.words.remove(wordIndex);
 	}
 	
@@ -426,6 +429,10 @@ public class PracticeController implements Initializable {
 			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
 			break;
 		}
+	}
+	
+	public static void wordsSetter(List<String> wordsList) {
+		words = wordsList;
 	}
 	
 

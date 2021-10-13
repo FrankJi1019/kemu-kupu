@@ -30,6 +30,7 @@ public class TopicsScreenController implements Initializable{
 	@FXML Button returnButton;
 	@FXML AnchorPane anchorPane;
 	@FXML Button startButton;
+	@FXML Button allTopicsButton;
 	
 	private Stage stage;
 	private Scene scene;
@@ -38,6 +39,8 @@ public class TopicsScreenController implements Initializable{
 	
 	public static String topicName = "";
 	
+	public static boolean isPractice;
+	
 	/**
 	 * This method occurs upon switching to Topics.fxml. It dynamically loads topic buttons
 	 *  (Topic.fxml) based on what exists inside the words folder, and adds them to a 
@@ -45,6 +48,9 @@ public class TopicsScreenController implements Initializable{
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		allTopicsButton.setVisible(isPractice);
+		
 		List<Topic> topicList = generateListOfTopics();
 		topicName = "";
 		
@@ -122,17 +128,50 @@ public class TopicsScreenController implements Initializable{
 	
 	public void startGame(ActionEvent event) throws IOException {
 		
-		String topicSelected = TopicsScreenController.topicName;
-		
-		if (topicSelected.equals("")) {
-			return;
+		if (isPractice == false) {
+
+			String topicSelected = TopicsScreenController.topicName;
+
+			if (topicSelected.equals("")) {
+				return;
+			}
+
+			String fileName = topicSelected.replace(" ", "-");
+			List<String> words = FileIO.getContentFromFile(fileName);
+			QuizController.setWords(words);
+
+			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} else if (isPractice == true) {
+			String topicSelected = TopicsScreenController.topicName;
+
+			if (topicSelected.equals("")) {
+				return;
+			}
+
+			String fileName = topicSelected.replace(" ", "-");
+			List<String> words = FileIO.getContentFromFile(fileName);
+			PracticeController.wordsSetter(words);
+
+			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+
 		}
+	}
+	
+	public void startPracticeAllTopics(ActionEvent event) throws IOException {
 		
-		String fileName = topicSelected.replace(" ", "-");
-		List<String> words = FileIO.getContentFromFile(fileName);
-		QuizController.setWords(words);
-		
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
+
+		List<String> words = FileIO.getAllWordsFromWordsDirectory();
+		PracticeController.wordsSetter(words);
+
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

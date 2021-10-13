@@ -115,8 +115,8 @@ public class CompletedController {
 	public void save() throws InterruptedException, IOException {
 		if (isSaved) {
 			Alert alert = new Alert(AlertType.INFORMATION);
-			alert.setTitle("Data saved");
-			alert.setHeaderText("Data has been saved already");
+			alert.setTitle("Warning!");
+			alert.setHeaderText("Data has been saved previously already");
 			alert.showAndWait();
 		} else {
 			HashMap<String, Integer> loadedData = FileIO.loadGame();
