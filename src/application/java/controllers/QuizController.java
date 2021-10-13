@@ -201,7 +201,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		this.timerLabel.setText("Time: 0");
+		this.timerLabel.setText("Score: 100");
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 		
 		//set isInNextButtonScene to false
@@ -258,7 +258,7 @@ public class QuizController implements Initializable {
 		
 		// if user gets it correct (could be the 1st time or the 2nd time)
 		if (this.checkWordMatch(userAnswer)) {
-			this.timerLabel.setText("Time: 0");
+			this.timerLabel.setText("Score: 100");
 			// stop the timer
 			this.wordTimer.stop();
 			
@@ -301,7 +301,7 @@ public class QuizController implements Initializable {
 			
 		// user gets wrong in the 2nd time
 		} else if (this.attemptTimes == 2) {
-			this.timerLabel.setText("Time: 0");
+			this.timerLabel.setText("Score: 100");
 			this.wordTimer.stop();
 			
 			// the user only has two attempts so the current word has been completed, so add it to 
@@ -599,7 +599,7 @@ public class QuizController implements Initializable {
 		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
-		this.timerLabel.setText("Time: 0");
+		this.timerLabel.setText("Score: 100");
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 					
 		// update the score and letter count

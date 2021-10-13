@@ -20,6 +20,7 @@ public class WordPlayer implements Runnable {
 	public static boolean reading = false;
 	private boolean isImportant;
 	
+	
 	private static double readingTimeSeconds = -1;
 	
 	private Button[] disableButtons = null;
@@ -45,6 +46,7 @@ public class WordPlayer implements Runnable {
 	@Override
 	public void run() {
 		
+		
 		long start = System.currentTimeMillis();
 		
 		// if another thread is executing currently and this thread is not important, then ignore this 
@@ -66,11 +68,6 @@ public class WordPlayer implements Runnable {
 		
 		this.toggleButtons(false);
 		
-		try {
-			Thread.sleep(this.calculateTypingTime());
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		}
 		
 		if (this.timer != null) {
 			this.startTimer();
@@ -93,11 +90,11 @@ public class WordPlayer implements Runnable {
 	}
 	
 	private void startTimer() {
-		this.timer.start();
+		this.timer.start(calculateTypingTimeInMs());
 	}
 	
-	private int calculateTypingTime() {
-		System.out.println(400 * this.word.length() + 800);
+	private int calculateTypingTimeInMs() {
+		System.out.println((400 *this.word.length() +800)/1000);
 		return 400 * this.word.length() + 800;
 	}
 
