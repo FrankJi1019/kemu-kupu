@@ -78,7 +78,8 @@ public class QuizController implements Initializable {
 	// this is a list of all words in the file
 	private static List<String> allWords;
 	
-
+	// constants for displaying messages
+	
 	private static String CORRECT_MESSAGE = "Correct  " + new String(Character.toChars(0x1F603));
 	private static String FIRST_INCORRECT_MESSAGE = "Not quite, have another go!";
 	private static List<String> SECOND_INCORRECT_MESSAGE = new ArrayList<>(Arrays.asList(
@@ -87,9 +88,6 @@ public class QuizController implements Initializable {
 			"Incorrect, failure is the mother of success!",
 			"Incorrect, don't give up, keep going!"));
 	private static String SKIPPED_MESSAGE = "Word Skipped...";
-	
-	private static int startTimer;
-	private static int endTimer;
 	
 	private static boolean isInNextButtonScene;
 	
@@ -111,9 +109,6 @@ public class QuizController implements Initializable {
 	// the speed of word being read out
 	private double speedOfSpeech = 1;
 	
-	// the score reduction time in millisecond for every 1 point 
-	private static int TIME_MS_EVERY_POINT_DEDUCTED = 200;
-	
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
 	
@@ -126,6 +121,7 @@ public class QuizController implements Initializable {
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		// define which button to disable when TTS system reads out word
 		this.disableButtons = new Button[]{
 			submitButton,
 			hearAgainButton,
@@ -133,6 +129,7 @@ public class QuizController implements Initializable {
 			infoButton
 		};
 		
+		// create a new timer instance
 		this.wordTimer = new WordTimer(this.timerLabel);
 		
 		// display the speed of speech, clearly indicating whether the current speed is the default
@@ -179,11 +176,12 @@ public class QuizController implements Initializable {
 		nextButton.setVisible(false);
 		macronInfo.setVisible(false);
 		
-		
+		// check if wordlist size < 5 then add all words to current round
 		Random random = new Random();
 		if (allWords.size() <= 5) {
 			testWords.addAll(allWords);
 		}
+		// if wordlist size > 5 then find 5 random non repeating words from it.
 		while (this.testWords.size() < 5) {
 			if (QuizController.allWords.size() <= 5) break;
 			String word = QuizController.allWords.get(random.nextInt(QuizController.allWords.size()));
@@ -208,6 +206,7 @@ public class QuizController implements Initializable {
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
 		
+		//initialise score countdown to 100.
 		WordTimer.finalScore = 100;
 		
 		
@@ -240,9 +239,6 @@ public class QuizController implements Initializable {
 	 * This is the action for submit button
 	 */
 	public void submit(ActionEvent e) throws IOException, InterruptedException {
-		
-		endTimer = (int) System.currentTimeMillis();
-		//System.out.println(endTimer-startTimer);
 		
 		// get the user answer from the text field
 		String userAnswer = userAnswerTextField.getText();
@@ -346,9 +342,6 @@ public class QuizController implements Initializable {
 			this.wordTimer.stop();
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
 			this.timerLabel.setText("Score: 50");
-			
-			//restart timer
-			startTimer = (int) System.currentTimeMillis();
 			
 			// automatically set focus to the text field.
 			userAnswerTextField.requestFocus();
@@ -593,10 +586,6 @@ public class QuizController implements Initializable {
 	
 		userAnswerTextField.setVisible(true);
 		
-		// reset the timer for next word.
-		startTimer = (int) System.currentTimeMillis();
-		//System.out.println(endTimer-startTimer);
-		
 		//clear result label
 		resultLabel.setText("");
 		
@@ -752,15 +741,6 @@ public class QuizController implements Initializable {
 		case 'U':
 			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
 			break;
-		}
-	}
-	 /* 
-	 This method is used to disable/enable certain buttons while a word is being read out
-	 */
-	private void toggleButtons(boolean disable) {
-		for (int i = 0; i < this.disableButtons.length; i++) {
-			this.disableButtons[i].setDisable(disable);
-
 		}
 	}
 	

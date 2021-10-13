@@ -126,36 +126,50 @@ public class TopicsScreenController implements Initializable{
 		stage.show();
 	}
 	
+	/**
+	 * This methods switch to corresponding scene depends on if Game/Practice module selected.
+	 * @param event
+	 * @throws IOException
+	 */
 	public void startGame(ActionEvent event) throws IOException {
 		
+		// if Game module is selected
 		if (isPractice == false) {
 
 			String topicSelected = TopicsScreenController.topicName;
-
+			
+			// if no topic selected, do not proceed
 			if (topicSelected.equals("")) {
 				return;
 			}
-
+			
+			// sets selected wordlist to the game module.
 			String fileName = topicSelected.replace(" ", "-");
 			List<String> words = FileIO.getContentFromFile(fileName);
 			QuizController.setWords(words);
-
+			
+			// switch scene to Game module to start game.
 			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
 			stage.show();
+			
+		// if Practice module is selected
 		} else if (isPractice == true) {
 			String topicSelected = TopicsScreenController.topicName;
-
+			
+			// if no topic selected, do not proceed
 			if (topicSelected.equals("")) {
 				return;
 			}
 
+			// sets selected wordlist to the practice module.
 			String fileName = topicSelected.replace(" ", "-");
 			List<String> words = FileIO.getContentFromFile(fileName);
 			PracticeController.wordsSetter(words);
 
+			// switch scene to Practice module to start practice.
 			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
@@ -165,12 +179,18 @@ public class TopicsScreenController implements Initializable{
 		}
 	}
 	
+	/**
+	 * this method is called when all topics button been clicked in the Practice selection scene.
+	 * @param event
+	 * @throws IOException
+	 */
 	public void startPracticeAllTopics(ActionEvent event) throws IOException {
 		
-
+		// sets all wordlist to the practice module.
 		List<String> words = FileIO.getAllWordsFromWordsDirectory();
 		PracticeController.wordsSetter(words);
 
+		// switch scene to Practice module to start practice.
 		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);

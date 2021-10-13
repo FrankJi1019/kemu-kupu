@@ -52,6 +52,7 @@ public class CompletedController {
 	// this constant defines the colour of star that transition into.
 	private static String STAR_COLOUR_HEX = "#FFD700";
 	
+	// this boolean checks that is user has saved socre or not.
 	private boolean isSaved = false;
 
 	/*
@@ -112,32 +113,47 @@ public class CompletedController {
 		this.switchScene(e, "Quiz");
 	}
 	
+	/**
+	 * this methods saves the user score along with user name into scoreBoard HashMap entry.
+	 * @throws InterruptedException
+	 * @throws IOException
+	 */
 	public void save() throws InterruptedException, IOException {
+		// if game score has been saved already
 		if (isSaved) {
+			// notify user that it has already previously saved.
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Warning!");
-			alert.setHeaderText("Data has been saved previously already");
+			alert.setHeaderText("Data has been saved previously already, you cannot save it again");
 			alert.showAndWait();
+		// if game score has not yet been saved
 		} else {
 			HashMap<String, Integer> loadedData = FileIO.loadGame();
+			// retrieve user name from text field
 			String userName = this.nameTextField.getText();
+			// if username already exist in scoreBoard
 			if (loadedData.containsKey(userName)) {
+				// if this round score is lower than the previously recorded score
 				if (loadedData.get(userName) > this.totalScore) {
+					// inform user, and do not update score
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Notification");
-					alert.setHeaderText("You already have a higher score saved at the scoreboard!");
+					alert.setHeaderText("You already have a higher score saved at the scoreboard, this score will not be saved");
 					alert.showAndWait();
+					// if this round score is lower than the previously recorded score	
 				} else {
+					// save score
 					FileIO.saveGame(FileIO.sortByValue(loadedData));
-					
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Data saved");
 					alert.setHeaderText("Your score is saved to the score board");
 					alert.showAndWait();
-					
+
 					isSaved = true;
 				}
+			// if user name doesn't exist in scoreBard
 			} else {
+				// add user stats to scoreBoard
 				loadedData.put(userName, this.totalScore);
 				FileIO.saveGame(FileIO.sortByValue(loadedData));
 				

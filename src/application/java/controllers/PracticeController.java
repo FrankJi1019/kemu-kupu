@@ -431,6 +431,11 @@ public class PracticeController implements Initializable {
 		}
 	}
 	
+	
+	/**
+	 * setter method to set the words.
+	 * @param wordsList
+	 */
 	public static void wordsSetter(List<String> wordsList) {
 		words = wordsList;
 	}
