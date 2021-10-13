@@ -2,9 +2,11 @@ package application.java.controllers;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.java.models.FileIO;
 import application.java.models.Word;
 import javafx.animation.FillTransition;
 import javafx.animation.PauseTransition;
@@ -18,9 +20,12 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.paint.Color;
@@ -40,11 +45,14 @@ public class CompletedController {
 	@FXML private TableColumn<Word, String> resultColumn;
 	@FXML private Label totalScoreLabel;
 	@FXML private AnchorPane stars;
+	@FXML private TextField nameTextField;
 	
 	private int totalScore = 0;
 	
 	// this constant defines the colour of star that transition into.
 	private static String STAR_COLOUR_HEX = "#FFD700";
+	
+	private boolean isSaved = false;
 
 	/*
 	 * This method will be invoked when other scene is switching to complete scene, this is to pass
@@ -72,9 +80,6 @@ public class CompletedController {
 		int finalTotalScore = Integer.parseInt(totalScoreString);
 		this.totalScoreLabel.setText(Integer.toString(finalTotalScore));
 
-
-
-		
 	}
 	
 	/**
@@ -105,6 +110,47 @@ public class CompletedController {
 	
 	public void playAgain(ActionEvent e) {
 		this.switchScene(e, "Quiz");
+	}
+	
+	public void save() throws InterruptedException, IOException {
+		if (isSaved) {
+			Alert alert = new Alert(AlertType.INFORMATION);
+			alert.setTitle("Warning!");
+			alert.setHeaderText("Data has been saved previously already");
+			alert.showAndWait();
+		} else {
+			HashMap<String, Integer> loadedData = FileIO.loadGame();
+			String userName = this.nameTextField.getText();
+			if (loadedData.containsKey(userName)) {
+				if (loadedData.get(userName) > this.totalScore) {
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Notification");
+					alert.setHeaderText("You already have a higher score saved at the scoreboard!");
+					alert.showAndWait();
+				} else {
+					FileIO.saveGame(FileIO.sortByValue(loadedData));
+					
+					Alert alert = new Alert(AlertType.INFORMATION);
+					alert.setTitle("Data saved");
+					alert.setHeaderText("Your score is saved to the score board");
+					alert.showAndWait();
+					
+					isSaved = true;
+				}
+			} else {
+				loadedData.put(userName, this.totalScore);
+				FileIO.saveGame(FileIO.sortByValue(loadedData));
+				
+				Alert alert = new Alert(AlertType.INFORMATION);
+				alert.setTitle("Data saved");
+				alert.setHeaderText("Your score is saved to the score board");
+				alert.showAndWait();
+				
+				isSaved = true;
+			}
+			
+		}
+
 	}
 	
 	

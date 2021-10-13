@@ -57,7 +57,8 @@ public class MainController implements Initializable{
 	 * this method switches to Practice scene when called
 	 */
 	public void practice(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
+		TopicsScreenController.isPractice = true;
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/TopicsScreen.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -68,7 +69,19 @@ public class MainController implements Initializable{
 	 * this method switches to Topics scene when called.
 	 */
 	public void newGame(ActionEvent e) throws IOException {
+		TopicsScreenController.isPractice = false;
 		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/TopicsScreen.fxml"));
+		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	/*
+	 * This method is the action for score board button, used to switch the scene to the score board
+	 */
+	public void scoreBoard(ActionEvent e) throws IOException {
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Scoreboard.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

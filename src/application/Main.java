@@ -1,7 +1,9 @@
 package application;
 	
 import java.io.IOException;
+import java.util.HashMap;
 
+import application.java.models.FileIO;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.stage.Stage;
@@ -23,7 +25,7 @@ public class Main extends Application {
 		primaryStage.show();
 	}
 	
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException, IOException {
 		launch(args);
 		
 	}

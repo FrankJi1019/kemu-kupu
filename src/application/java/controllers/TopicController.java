@@ -8,6 +8,7 @@ import application.java.models.Topic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -24,6 +25,8 @@ public class TopicController {
 
 	private Stage stage;
 	private Scene scene;
+	
+	private Button button = null;
 
 	// Image dir exists outside src to give future ability to add topics (and images)
 	private static String IMAGE_DIRECTORY = "./data/images/";
@@ -37,17 +40,19 @@ public class TopicController {
 	 */
 	public void switchToQuiz(ActionEvent event) throws IOException {
 		// Set the quiz word-list to the topic selected through the button title
-		String topicSelected = this.btn.getText();
-		String fileName = topicSelected.replace(" ", "-");
-		List<String> words = FileIO.getContentFromFile(fileName);
-		QuizController.setWords(words);
+//		String topicSelected = this.btn.getText();
+//		String fileName = topicSelected.replace(" ", "-");
+//		List<String> words = FileIO.getContentFromFile(fileName);
+//		QuizController.setWords(words);
+		TopicsScreenController.topicName = this.btn.getText();
+		this.button.setText(String.format("Start game with\n%s", this.btn.getText()));
 
-		// Switch the scene
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+//		// Switch the scene
+//		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
+//		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+//		scene = new Scene(root);
+//		stage.setScene(scene);
+//		stage.show();
 
 	}
 
@@ -62,5 +67,8 @@ public class TopicController {
 		Image image  = new Image("file:" + IMAGE_DIRECTORY + topic.getIconSrc());
 		img.setImage(image);
 	}
-
+	
+	public void setButton(Button b) {
+		this.button = b;
+	}
 }

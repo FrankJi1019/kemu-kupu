@@ -4,6 +4,7 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
@@ -80,5 +81,18 @@
             <Font name="Raleway Bold" size="24.0" />
          </font>
       </Label>
+      <Button contentDisplay="CENTER" layoutX="658.0" layoutY="189.0" mnemonicParsing="false" onAction="#save" prefHeight="42.0" prefWidth="92.0" styleClass="large-button" text="Save">
+         <font>
+            <Font name="Raleway Bold" size="21.0" />
+         </font>
+         <tooltip>
+            <Tooltip text="Kāinga | Return home">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
+      </Button>
+      <TextField fx:id="nameTextField" layoutX="613.0" layoutY="138.0" />
    </children>
 </AnchorPane>

@@ -6,8 +6,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
-import application.java.models.LinuxCommand;
-import application.java.models.Topic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -22,16 +20,26 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 
+import application.java.models.FileIO;
+import application.java.models.LinuxCommand;
+import application.java.models.Topic;
+
 public class TopicsScreenController implements Initializable{
 
 	@FXML GridPane grid;
 	@FXML Button returnButton;
 	@FXML AnchorPane anchorPane;
+	@FXML Button startButton;
+	@FXML Button allTopicsButton;
 	
 	private Stage stage;
 	private Scene scene;
 
 	private static int GRID_WIDTH = 4;
+	
+	public static String topicName = "";
+	
+	public static boolean isPractice;
 	
 	/**
 	 * This method occurs upon switching to Topics.fxml. It dynamically loads topic buttons
@@ -40,7 +48,11 @@ public class TopicsScreenController implements Initializable{
 	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
+		
+		allTopicsButton.setVisible(isPractice);
+		
 		List<Topic> topicList = generateListOfTopics();
+		topicName = "";
 		
 		// If we don't find any topics (so /words is empty), tell the user
 		if (topicList.isEmpty()) {
@@ -60,6 +72,7 @@ public class TopicsScreenController implements Initializable{
 				TopicController  topicController = loader.getController();
 				
 				topicController.setData(item);
+				topicController.setButton(this.startButton);
 				
 				// Create another row when max-grid width reached
 				if(col==(GRID_WIDTH+1)) {
@@ -107,6 +120,58 @@ public class TopicsScreenController implements Initializable{
 	 */
 	public void returnHome(ActionEvent event) throws IOException {
 		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Main.fxml"));
+		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+		scene = new Scene(root);
+		stage.setScene(scene);
+		stage.show();
+	}
+	
+	public void startGame(ActionEvent event) throws IOException {
+		
+		if (isPractice == false) {
+
+			String topicSelected = TopicsScreenController.topicName;
+
+			if (topicSelected.equals("")) {
+				return;
+			}
+
+			String fileName = topicSelected.replace(" ", "-");
+			List<String> words = FileIO.getContentFromFile(fileName);
+			QuizController.setWords(words);
+
+			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+		} else if (isPractice == true) {
+			String topicSelected = TopicsScreenController.topicName;
+
+			if (topicSelected.equals("")) {
+				return;
+			}
+
+			String fileName = topicSelected.replace(" ", "-");
+			List<String> words = FileIO.getContentFromFile(fileName);
+			PracticeController.wordsSetter(words);
+
+			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
+			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
+			scene = new Scene(root);
+			stage.setScene(scene);
+			stage.show();
+
+		}
+	}
+	
+	public void startPracticeAllTopics(ActionEvent event) throws IOException {
+		
+
+		List<String> words = FileIO.getAllWordsFromWordsDirectory();
+		PracticeController.wordsSetter(words);
+
+		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

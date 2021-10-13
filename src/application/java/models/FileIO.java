@@ -1,7 +1,18 @@
 package application.java.models;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
+
 
 /** 
  *  this class features any commands that are required file Input/Output.
@@ -10,6 +21,7 @@ public class FileIO {
 
 	// directory constants
 	private static String WAVE_DIRECTORY = "./data/sounds/";
+	private static String GAMELOG_DIRECTORY = "./data/logs/";
 
 	// Method openWavFile deleted because it is not used.
 
@@ -128,5 +140,81 @@ public class FileIO {
 
 		return words;
 	}
+	
+	public static void saveGame(HashMap<String,Integer> scoreBoard) {
+		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+		LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
+		
+		for (String playerName: scoreBoard.keySet()) {
+			int playerScore = scoreBoard.get(playerName);
+			
+			String writeOut = (playerName + "," + playerScore);
+			LinuxCommand.executeCommand("echo "+ writeOut + " >> "+GAMELOG_DIRECTORY+ ".gameLog.txt");
+		}
+	}
+	
+	public static HashMap<String,Integer> loadGame() throws InterruptedException, IOException{
+		HashMap<String,Integer> scoreBoard = new HashMap<>();
+		String command;
+		
+		if ((LinuxCommand.getErrorCode("cat "+GAMELOG_DIRECTORY+".gameLog.txt")) == 0){
+			command = "cat "+GAMELOG_DIRECTORY+".gameLog.txt";
+		} else {
+			LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
+			return scoreBoard;
+		}
+		
+		ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
+		Process process = pb.start();
+			
+		BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
+			
+		int exitStatus = process.waitFor();
+			
+		if (exitStatus == 0) {
+			String line;
+			while ((line = stdout.readLine()) != null) {
+				List<String> separate = new ArrayList<>(Arrays.asList(line.split(",")));
+				String userName = separate.get(0);
+				int userScore = Integer.parseInt(separate.get(1));
+				scoreBoard.put(userName, userScore);
+			}
+		}
+		
+		return sortByValue(scoreBoard);
+		
+	}
+	
+	
+	// Attribution Credit: https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
+	 public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)
+	    {
+	        // Create a list from elements of HashMap
+	        List<Map.Entry<String, Integer> > list =
+	               new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+	 
+	        // Sort the list
+	        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+	            public int compare(Map.Entry<String, Integer> o1,
+	                               Map.Entry<String, Integer> o2)
+	            {
+	                return (o2.getValue()).compareTo(o1.getValue());
+	            }
+	        });
+	         
+	        // put data from sorted list to hashmap
+	        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+	        for (Map.Entry<String, Integer> aa : list) {
+	            temp.put(aa.getKey(), aa.getValue());
+	        }
+	        return temp;
+	    }
+	 
+	 
+	// Attribution ends
+	 
+	 public static void deleteGame() {
+		 LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+	 }
 
 }
