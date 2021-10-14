@@ -44,7 +44,7 @@
             <Font name="Raleway SemiBold" size="22.0" />
          </font>
       </Label>
-      <Button fx:id="newGameButton" layoutX="249.0" layoutY="345.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
+      <Button fx:id="newGameButton" layoutX="165.0" layoutY="374.0" mnemonicParsing="false" onAction="#newGame" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Games" textFill="WHITE">
          <font>
             <Font name="Raleway SemiBold" size="20.0" />
          </font>
@@ -56,12 +56,19 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Button fx:id="quitButton" layoutX="476.0" layoutY="449.0" mnemonicParsing="false" onAction="#quit" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Quit" textFill="WHITE">
+      <Button fx:id="quitButton" layoutX="380.0" layoutY="482.0" mnemonicParsing="false" onAction="#quit" prefHeight="34.0" prefWidth="80.0" styleClass="large-button" text="Quit" textFill="WHITE">
          <font>
             <Font name="Raleway SemiBold" size="20.0" />
          </font>
+         <tooltip>
+            <Tooltip text="Whakamutu | Close the game">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip>
       </Button>
-      <Button fx:id="practiceButton" layoutX="476.0" layoutY="345.0" mnemonicParsing="false" onAction="#practice" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Practice" textFill="WHITE">
+      <Button fx:id="practiceButton" layoutX="345.0" layoutY="374.0" mnemonicParsing="false" onAction="#practice" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Practice" textFill="WHITE">
          <font>
             <Font name="Raleway SemiBold" size="20.0" />
          </font>
@@ -73,12 +80,12 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Button fx:id="newGameButton1" layoutX="249.0" layoutY="442.0" mnemonicParsing="false" onAction="#scoreBoard" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Score Board" textFill="WHITE">
+      <Button fx:id="newGameButton1" layoutX="525.0" layoutY="374.0" mnemonicParsing="false" onAction="#scoreBoard" prefHeight="75.0" prefWidth="150.0" styleClass="large-button" text="Scoreboard" textFill="WHITE">
          <font>
             <Font name="Raleway SemiBold" size="20.0" />
          </font>
          <tooltip>
-            <Tooltip text="Kēmu | Test your Maori spelling knowledge!">
+            <Tooltip text="Papa tātai | See the highest scores achieved!">
             <font>
                   <Font name="Raleway Regular" size="14.0" />
                </font>
