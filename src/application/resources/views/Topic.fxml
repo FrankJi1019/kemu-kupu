@@ -6,13 +6,13 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="140.0" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.TopicController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="140.0" prefWidth="140.0" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.TopicController">
    <children>
-      <Button fx:id="btn" contentDisplay="TOP" mnemonicParsing="false" onAction="#switchToQuiz" prefHeight="100.0" prefWidth="100.0" styleClass="topic-button" stylesheets="@../css/application.css"  text="Default topic" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <Button fx:id="btn" contentDisplay="TOP" mnemonicParsing="false" onAction="#setSelectedTopic" prefHeight="100.0" prefWidth="100.0" styleClass="topic-button" stylesheets="@../css/application.css" text="Default topic" textAlignment="CENTER" textOverrun="CENTER_WORD_ELLIPSIS" wrapText="true" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
          <graphic>
             <ImageView fx:id="img" fitHeight="42.0" fitWidth="50.0" nodeOrientation="INHERIT" pickOnBounds="true" preserveRatio="true">
                <image>
-                  <Image url="@../../data/images/default.png" />
+                  <Image url="@../../../../data/images/default.png" />
                </image>
             </ImageView>
          </graphic>

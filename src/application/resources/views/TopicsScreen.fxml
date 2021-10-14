@@ -48,9 +48,9 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Button fx:id="startButton" layoutX="550.0" layoutY="26.0" mnemonicParsing="false" onAction="#startGame" prefHeight="55.0" prefWidth="200.0" styleClass="large-button" text="Start Game With">
+      <Button fx:id="startButton" alignment="TOP_LEFT" layoutX="619.0" layoutY="37.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="44.0" minWidth="153.0" mnemonicParsing="false" onAction="#startGame" prefWidth="153.0" styleClass="start-btn" text="Select a topic!" wrapText="true">
          <font>
-            <Font name="Noto Sans CJK JP" size="14.0" />
+            <Font name="Raleway ExtraBold" size="14.0" />
          </font>
          <tooltip>
             <Tooltip text="Whakahoki | Return to main-menu">
