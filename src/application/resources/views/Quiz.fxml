@@ -21,12 +21,12 @@
             <Font name="Raleway Bold" size="46.0" />
          </font>
       </Label>
-      <Label layoutX="593.0" layoutY="37.0" text="SCORE:">
+      <Label layoutX="635.0" layoutY="37.0" text="SCORE:">
          <font>
             <Font name="Raleway Bold" size="19.0" />
          </font>
       </Label>
-      <Label fx:id="scoreLabel" layoutX="664.0" layoutY="37.0" text="0">
+      <Label fx:id="scoreLabel" layoutX="706.0" layoutY="37.0" text="0">
          <font>
             <Font name="Raleway Regular" size="19.0" />
          </font>
@@ -163,12 +163,12 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Label fx:id="addition" layoutX="664.0" layoutY="68.0" prefHeight="24.0" prefWidth="75.0">
+      <Label fx:id="addition" layoutX="701.0" layoutY="65.0" prefHeight="24.0" prefWidth="75.0">
          <font>
-            <Font name="Raleway Regular" size="19.0" />
+            <Font name="Raleway Medium" size="24.0" />
          </font>
       </Label>
-      <Button fx:id="returnButton" contentDisplay="CENTER" layoutX="755.0" layoutY="39.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
+      <Button fx:id="returnButton" contentDisplay="CENTER" layoutX="19.0" layoutY="493.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
          <font>
             <Font name="Raleway Bold" size="21.0" />
          </font>
@@ -187,11 +187,11 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Label fx:id="timerLabel" layoutX="549.0" layoutY="87.0" text="Score: 100">
+      <Label fx:id="timerLabel" alignment="TOP_CENTER" layoutX="787.0" layoutY="60.0" text="100">
          <font>
-            <Font size="24.0" />
+            <Font name="Raleway Medium" size="14.0" />
          </font>
       </Label>
-      <ProgressBar fx:id="scoreBar" layoutX="527.0" layoutY="133.0" prefWidth="200.0" progress="1.0" />
+      <ProgressBar fx:id="scoreBar" layoutX="635.0" layoutY="64.0" prefHeight="13.0" prefWidth="150.0" progress="1.0" />
    </children>
 </AnchorPane>

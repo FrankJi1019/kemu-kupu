@@ -52,13 +52,6 @@
          <font>
             <Font name="Raleway ExtraBold" size="14.0" />
          </font>
-         <tooltip>
-            <Tooltip text="Whakahoki | Return to main-menu">
-               <font>
-                  <Font name="Raleway Regular" size="14.0" />
-               </font>
-            </Tooltip>
-         </tooltip>
       </Button>
       <Button fx:id="allTopicsButton" layoutX="354.0" layoutY="523.0" mnemonicParsing="false" onAction="#startPracticeAllTopics" text="Start with All Topics" />
    </children>
