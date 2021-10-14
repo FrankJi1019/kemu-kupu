@@ -609,6 +609,9 @@ public class QuizController implements Initializable {
 		// automatically set focus to the text field.
 		userAnswerTextField.requestFocus();
 		
+		//initialise score countdown to 100.
+		WordTimer.finalScore = 100;
+		
 //		this.wordTimer.stop();
 		
 	}
