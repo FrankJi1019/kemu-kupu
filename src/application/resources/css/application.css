@@ -1,4 +1,5 @@
-/* ----- Global  ----- */
+/* - Global and Main - */
+
 .background {
    -fx-background-color: linear-gradient(from 50% 70% to 50% 100%, #ffffff, #B8F6C0);
 }
@@ -7,6 +8,18 @@
 	-fx-text-fill: white;
 	-fx-background-radius: 10px;
 }
+
+.save-btn{
+	-fx-background-color: white;
+	-fx-text-fill: #274029;
+	-fx-background-radius: 10px;
+}
+
+.save-rect{
+	-fx-background-radius: 10px;
+	-fx-background-color: #274029;
+}
+
 .large-button:hover, .help-button:hover{
 	-fx-scale-x: 1.1;
 	-fx-scale-y: 1.1;
@@ -16,7 +29,6 @@
 	-fx-text-fill: white;
 	-fx-background-radius: 50%;
 }
-
 .help-focus-rect{
 	-fx-background-color: #e4e4e4;
 	-fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.8), 20, 0, 0, 0);
@@ -55,9 +67,24 @@
 	-fx-scale-y: 1.1;
 	-fx-text-fill: white;
 }
+.topic-button:focused{
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
+	-fx-text-fill: white;
+	-fx-background-color: #91b2eb;
+}
 .empty-msg {
 	-fx-text-fill: red; 
 	-fx-font-family: OpenDyslexicAlta;
+}
+.start-btn{
+	-fx-text-fill: white;
+	-fx-background-radius: 10px;
+	-fx-background-color: #91b2eb;
+}
+.start-btn:hover{
+	-fx-scale-x: 1.1;
+	-fx-scale-y: 1.1;
 }
 /* ------------------- */
 
@@ -84,6 +111,9 @@
 	-fx-background-color: black;
 	-fx-background-radius: 3px;
 	-fx-opacity: 0.8;
+}
+.progress-bar .bar { 
+	-fx-background-color: #274029;
 }
 /* ------------------- */
 

@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 import java.util.ResourceBundle;
 import java.util.Set;
 
@@ -22,8 +23,11 @@ import javafx.fxml.Initializable;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -66,10 +70,25 @@ public class ScoreboardController implements Initializable {
 	public void returnHome(ActionEvent e) {
 		this.switchScene("Main", e);
 	}
-	
+
 	public void reset() {
-		FileIO.deleteGame();
-		this.initialize(null, null);
+		// added confirmation alert window
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Clearing scores");
+		alert.setHeaderText("Are you sure you want to clear the statistics?");
+
+		// if click ok then quit game
+		Optional<ButtonType> result = alert.showAndWait();
+		if (result.get() == ButtonType.OK) {
+			FileIO.deleteGame();
+			this.initialize(null, null);
+		}
+
+		// otherwise return to game, close the alert.
+		if (result.get() == ButtonType.CANCEL) {
+			alert.close();
+		}
+		
 	}
 	
 	private void switchScene(String filename, ActionEvent e) {

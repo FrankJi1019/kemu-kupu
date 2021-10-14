@@ -26,22 +26,22 @@ public class TopicController {
 	private Stage stage;
 	private Scene scene;
 	
-	private Button button = null;
+	private Button startButton = null;
 
 	// Image dir exists outside src to give future ability to add topics (and images)
 	private static String IMAGE_DIRECTORY = "./data/images/";
 
 	/**
-	 * This method switches scene to the quiz and uses the chosen topic to set the word-list
-	 * to the correct file.
+	 * This method sets the selected topic, ready to press p
 	 * 
 	 * @param event created by Topic Button press
 	 * @throws IOException 
 	 */
-	public void switchToQuiz(ActionEvent event) throws IOException {
+	public void setSelectedTopic(ActionEvent event) throws IOException {
 
 		TopicsScreenController.topicName = this.btn.getText();
-		this.button.setText(String.format("Start game with\n%s", this.btn.getText()));
+		this.startButton.setText(String.format("START >> \nTopic: %s", this.btn.getText()));
+		this.startButton.setStyle("-fx-background-color: #91b2eb;");
 
 	}
 
@@ -57,7 +57,7 @@ public class TopicController {
 		img.setImage(image);
 	}
 	
-	public void setButton(Button b) {
-		this.button = b;
+	public void setStartButton(Button b) {
+		this.startButton = b;
 	}
 }

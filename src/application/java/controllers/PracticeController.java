@@ -374,8 +374,10 @@ public class PracticeController implements Initializable {
 	public void showInfo() {
 		if(macronInfo.isVisible()) {
 			macronInfo.setVisible(false);
+			infoButton.setText("?");
 		} else {
 			macronInfo.setVisible(true);
+			infoButton.setText("X");
 		}
 	}
 	

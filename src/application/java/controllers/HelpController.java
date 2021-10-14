@@ -50,12 +50,12 @@ public class HelpController implements Initializable{
 
 	
 	private void initialiseImageData() {
-		addImage("back-btn.png", "1 This is to show that description I can use images");
-		addImage("home-btn.png", "2 This is to show that description I can use images");
-		addImage("back-btn.png", "3 This is to show that descriptione I can use images");
-		addImage("home-btn.png", "4 This is to show that description I can use images");
-		addImage("home-btn.png", "5 This is to show that descripteion I can use images");
-		addImage("home-btn.png", "6 This is to show that descriptione I can use images");
+		addImage("slide1.png", "Kēmu Kupu is a simple and fun way to learn how to spell words in Te Reo Māori! Through great Text-To-Speech Technology, Kēmu Kupu also allows you to begin to make sense of how the Māori language comes together! Clicking the 'Games' module allows you to test what you know and don't know - and can be a great starting point!");
+		addImage("slide2.png", "To start a game, select a topic from the available options, and then click START to begin.");
+		addImage("slide3.png", "At the top of the game screen, there's a slider to control word-reading-speed and a score counter - which will change depending on how long you take to spell the word, and if you get it correct. The bottom two buttons are super useful when you're a bit stuck. The all important vowels-with-macrons can be added as well, with more information available at the '?' button. ");
+		addImage("slide4.png", "Once you complete your game, you'll be able to review your score, and can even save it too!");
+		addImage("slide5.png", "In practice mode, you are able to practice your Māori spelling skills. In the topic selection however, you might see a button you didn't see in games mode; this button let's you practice with all the words, randomly picking from each topic - a great tool for building up confidence across lots of topics at once! ");
+		addImage("slide6.png", "In practice mode, rather than being given only one letter as a hint, you'll see more of the word - helping you to go further with your Māori spelling skills. ");
 	}
 	
 	/*

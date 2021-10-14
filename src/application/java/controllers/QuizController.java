@@ -31,6 +31,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.ProgressBar;
 import javafx.scene.control.Slider;
 import javafx.scene.control.TextField;
+import javafx.scene.image.ImageView;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
@@ -198,7 +199,7 @@ public class QuizController implements Initializable {
 		wordCountLabel.setText(Integer.toString(this.totalWordsCount + 1 - this.testWords.size()));
 		
 		// speak the word in another thread so it won't freezes the window
-		this.timerLabel.setText("Score: 100");
+		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 		
@@ -247,7 +248,7 @@ public class QuizController implements Initializable {
 		
 		// if user gets it correct (could be the 1st time or the 2nd time)
 		if (this.checkWordMatch(userAnswer)) {
-			this.timerLabel.setText("Score: 100");
+			this.timerLabel.setText("  100");
 			this.scoreBar.setProgress(1);
 			// stop the timer
 			this.wordTimer.stop();
@@ -292,7 +293,7 @@ public class QuizController implements Initializable {
 			
 		// user gets wrong in the 2nd time
 		} else if (attemptTimes == 2) {
-			this.timerLabel.setText("Score: 100");
+			this.timerLabel.setText("  100");
 			this.scoreBar.setProgress(1);
 			this.wordTimer.stop();
 			
@@ -337,7 +338,7 @@ public class QuizController implements Initializable {
 			FileIO.openGeneralWavFile("wrong");
 			this.wordTimer.stop();
 			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
-			this.timerLabel.setText("Score: 50");
+			this.timerLabel.setText("  50");
 			this.scoreBar.setProgress(0.5);
 			
 			// automatically set focus to the text field.
@@ -553,6 +554,7 @@ public class QuizController implements Initializable {
 		infoButton.setVisible(false);
 		this.timerLabel.setVisible(false);
 		this.scoreBar.setVisible(false);
+
 	}
 	
 	/**
@@ -568,6 +570,7 @@ public class QuizController implements Initializable {
 		infoButton.setVisible(true);
 		this.timerLabel.setVisible(true);
 		this.scoreBar.setVisible(true);
+
 	}
 	
 	
@@ -592,7 +595,7 @@ public class QuizController implements Initializable {
 		feedbackRect.setFill(Color.web("#d0d0d0"));
 		
 		// play the next word
-		this.timerLabel.setText("Score: 100");
+		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
 		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
 					
@@ -626,8 +629,10 @@ public class QuizController implements Initializable {
 	public void showInfo() {
 		if(macronInfo.isVisible()) {
 			macronInfo.setVisible(false);
+			infoButton.setText("?");
 		} else {
 			macronInfo.setVisible(true);
+			infoButton.setText("X");
 		}
 	}
 	
@@ -669,7 +674,7 @@ public class QuizController implements Initializable {
 		scoreIncreaseAnimation.getChildren().addAll(pause, incrementEffect);
 		scoreIncreaseAnimation.play();
 	}
-	
+
 	/*
 	 * This method leads the user back to the home screen
 	 */

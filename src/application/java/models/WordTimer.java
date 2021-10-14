@@ -75,7 +75,7 @@ public class WordTimer {
 							
 							// update related values
 							score--;
-							timerLabel.setText("Score: "+ score);
+							timerLabel.setText("  "+ score);
 							scoreBar.setProgress((double)score / 100);
 							finalScore = score;
 							
