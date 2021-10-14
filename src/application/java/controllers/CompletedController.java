@@ -125,7 +125,7 @@ public class CompletedController {
 			// notify user that it has already previously saved.
 			Alert alert = new Alert(AlertType.INFORMATION);
 			alert.setTitle("Warning!");
-			alert.setHeaderText("Data has been saved previously already, you cannot save it again");
+			alert.setHeaderText("Data has been saved previously already - you cannot save it again.");
 			alert.showAndWait();
 		// if game score has not yet been saved
 		} else {
@@ -139,7 +139,7 @@ public class CompletedController {
 					// inform user, and do not update score
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Notification");
-					alert.setHeaderText("You already have a higher score saved at the scoreboard, this score will not be saved");
+					alert.setHeaderText("You already have a higher score saved at the scoreboard! This score will not be saved.");
 					alert.showAndWait();
 					// if this round score is lower than the previously recorded score	
 				} else {
@@ -147,7 +147,7 @@ public class CompletedController {
 					FileIO.saveGame(FileIO.sortByValue(loadedData));
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Data saved");
-					alert.setHeaderText("Your score is saved to the score board");
+					alert.setHeaderText("Your score has been saved to the scoreboard!");
 					alert.showAndWait();
 
 					isSaved = true;
@@ -160,7 +160,7 @@ public class CompletedController {
 				
 				Alert alert = new Alert(AlertType.INFORMATION);
 				alert.setTitle("Data saved");
-				alert.setHeaderText("Your score is saved to the score board");
+				alert.setHeaderText("Your score has been saved to the scoreboard!");
 				alert.showAndWait();
 				
 				isSaved = true;
