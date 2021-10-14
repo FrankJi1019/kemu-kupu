@@ -53,6 +53,20 @@
             <Font name="Raleway ExtraBold" size="14.0" />
          </font>
       </Button>
-      <Button fx:id="allTopicsButton" layoutX="354.0" layoutY="523.0" mnemonicParsing="false" onAction="#startPracticeAllTopics" text="Start with All Topics" />
+      <Button fx:id="allTopicsButton" contentDisplay="GRAPHIC_ONLY" layoutX="556.0" layoutY="38.0" mnemonicParsing="false" onAction="#startPracticeAllTopics" prefHeight="44.0" prefWidth="57.0" styleClass="start-btn" text="Start with All Topics">
+         <graphic>
+            <ImageView fitHeight="32.0" fitWidth="38.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../images/random.png" />
+               </image>
+            </ImageView>
+         </graphic>
+         <tooltip>
+            <Tooltip text="Random | Practice with all topics!">
+               <font>
+                  <Font name="Raleway Regular" size="14.0" />
+               </font>
+            </Tooltip>
+         </tooltip></Button>
    </children>
 </AnchorPane>
