@@ -121,9 +121,24 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="macronInfo" layoutX="605.0" layoutY="308.0" prefHeight="152.0" prefWidth="157.0" styleClass="info">
+      <AnchorPane fx:id="macronInfo" layoutX="581.0" layoutY="308.0" prefHeight="160.0" prefWidth="157.0" styleClass="info">
          <children>
-            <Label layoutX="7.0" layoutY="2.0" prefHeight="114.0" prefWidth="131.0" text="You can also add a macron this way: enter a vowel and followed by pressing the left ALT key." textAlignment="CENTER" textFill="WHITE" wrapText="true">
+            <Label alignment="CENTER" layoutX="9.0" layoutY="6.0" prefHeight="30.0" prefWidth="140.0" text="ADDING A MACRON:" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Raleway Bold" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="9.0" layoutY="28.0" prefHeight="38.0" prefWidth="140.0" text="Click any one of these buttons " textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Raleway Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="67.0" layoutY="55.0" prefHeight="38.0" prefWidth="24.0" text="OR" textAlignment="CENTER" textFill="WHITE" wrapText="true">
+               <font>
+                  <Font name="Raleway Medium" size="14.0" />
+               </font>
+            </Label>
+            <Label alignment="CENTER" layoutX="9.0" layoutY="80.0" prefHeight="38.0" prefWidth="140.0" text="Type in a vowel, then click the left ALT-key" textAlignment="CENTER" textFill="WHITE" wrapText="true">
                <font>
                   <Font name="Raleway Medium" size="14.0" />
                </font>
@@ -136,9 +151,9 @@
          </font>
         </Button>
       <Group />
-      <Button fx:id="infoButton" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
+      <Button fx:id="infoButton" alignment="CENTER" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
          <font>
-            <Font name="Raleway Bold" size="17.0" />
+            <Font name="Raleway Bold" size="15.0" />
          </font>
          <tooltip>
             <Tooltip text="What are these buttons for?">
