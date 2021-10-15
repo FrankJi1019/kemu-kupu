@@ -134,7 +134,7 @@ public class CompletedController {
 			String userName = this.nameTextField.getText();
 			// if username already exist in scoreBoard
 			if (loadedData.containsKey(userName)) {
-				// if this round score is lower than the previously recorded score
+			// if this round score is lower than the previously recorded score
 				if (loadedData.get(userName) > this.totalScore) {
 					// inform user, and do not update score
 					Alert alert = new Alert(AlertType.INFORMATION);
@@ -144,6 +144,7 @@ public class CompletedController {
 					// if this round score is lower than the previously recorded score	
 				} else {
 					// save score
+					loadedData.put(userName, this.totalScore);
 					FileIO.saveGame(FileIO.sortByValue(loadedData));
 					Alert alert = new Alert(AlertType.INFORMATION);
 					alert.setTitle("Data saved");
