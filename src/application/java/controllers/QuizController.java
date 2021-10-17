@@ -420,7 +420,7 @@ public class QuizController implements Initializable {
 	 */
 	public void switchToComplete(ActionEvent e) throws IOException, InterruptedException {
 		
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("../../resources/views/Completed.fxml"));
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/resources/views/Completed.fxml"));
 		Parent root = loader.load();
 		
 		// passing data
@@ -682,7 +682,7 @@ public class QuizController implements Initializable {
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Main.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
 		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

@@ -67,7 +67,7 @@ public class TopicsScreenController implements Initializable{
 		// Add each topic button (Topic.fxml) to the Grid Pane
 		for(Topic item : topicList) {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("../../resources/views/Topic.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/application/resources/views/Topic.fxml"));
 			try {
 				AnchorPane anchorPane = loader.load();
 				TopicController  topicController = loader.getController();
@@ -133,7 +133,7 @@ public class TopicsScreenController implements Initializable{
 	 * This method switches back to the main menu when the return home button is pressed
 	 */
 	public void returnHome(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Main.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);
@@ -163,7 +163,7 @@ public class TopicsScreenController implements Initializable{
 			QuizController.setWords(words);
 
 			// switch scene to Game module to start game.
-			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Quiz.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Quiz.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -184,7 +184,7 @@ public class TopicsScreenController implements Initializable{
 			PracticeController.wordsSetter(words);
 
 			// switch scene to Practice module to start practice.
-			Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
+			Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Practice.fxml"));
 			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 			scene = new Scene(root);
 			stage.setScene(scene);
@@ -205,7 +205,7 @@ public class TopicsScreenController implements Initializable{
 		PracticeController.wordsSetter(words);
 
 		// switch scene to Practice module to start practice.
-		Parent root = FXMLLoader.load(getClass().getResource("../../resources/views/Practice.fxml"));
+		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Practice.fxml"));
 		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
 		scene = new Scene(root);
 		stage.setScene(scene);

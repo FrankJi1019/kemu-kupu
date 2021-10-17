@@ -183,7 +183,7 @@ public class CompletedController {
 		try {
 			// establish the full relative path using the name of the scene
 			// this is relative easy to do because all fxml files are stored in the same package
-			String path = String.format("../../resources/views/%s.fxml", sceneName);
+			String path = String.format("/application/resources/views/%s.fxml", sceneName);
 			
 			Parent root = FXMLLoader.load(getClass().getResource(path));
 			stage = (Stage)((Node)e.getSource()).getScene().getWindow();

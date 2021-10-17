@@ -94,7 +94,7 @@ public class ScoreboardController implements Initializable {
 	private void switchScene(String filename, ActionEvent e) {
 		Parent root = null;
 		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("../../resources/views/%s.fxml", filename)));
+			root = FXMLLoader.load(getClass().getResource(String.format("/application/resources/views/%s.fxml", filename)));
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
