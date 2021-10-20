@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.java.models.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,9 +25,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 public class HelpController implements Initializable{
-
-	private Stage stage;
-	private Scene scene;
 	@FXML ImageView imageInFocus;
 	@FXML AnchorPane carouselPane;
 	@FXML Label caption;
@@ -40,7 +38,8 @@ public class HelpController implements Initializable{
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<String> captions = new ArrayList<String>();
 
-	
+	private SceneManager sceneManager = new SceneManager();
+
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		initialiseImageData();
@@ -149,12 +148,8 @@ public class HelpController implements Initializable{
 	/**
 	 * This method switches back to the main menu when the return home button is pressed
 	 */
-	public void returnHome(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+	public void returnHome(ActionEvent event) {
+		sceneManager.switchScene(event, "Main");
 	}
 }
 

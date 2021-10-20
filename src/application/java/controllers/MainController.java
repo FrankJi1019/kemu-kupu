@@ -6,6 +6,8 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
+import application.java.models.SceneManager;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -26,9 +28,8 @@ import javafx.util.Duration;
 
 public class MainController implements Initializable{
 	
-	private Stage stage;
-	private Scene scene;
-	
+	private SceneManager sceneManager = new SceneManager();
+
 	@FXML SVGPath koruSvg;
 	
 	/**
@@ -58,11 +59,8 @@ public class MainController implements Initializable{
 	 */
 	public void practice(ActionEvent e) throws IOException {
 		TopicsScreenController.isPractice = true;
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/TopicsScreen.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "TopicsScreen");
+
 	}
 	
 	/** 
@@ -70,58 +68,28 @@ public class MainController implements Initializable{
 	 */
 	public void newGame(ActionEvent e) throws IOException {
 		TopicsScreenController.isPractice = false;
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/TopicsScreen.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "TopicsScreen");
+
 	}
 	
 	/*
 	 * This method is the action for score board button, used to switch the scene to the score board
 	 */
 	public void scoreBoard(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Scoreboard.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Scoreboard");
+
 	}
 
 	
 	public void helpScreen(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Help.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Help");
+
 	}
 	
-	/**
-	 * This methods runs on start up. It is used to add an animation to the start screen.
-	 * The animation is loosely based on:
-	 * https://stackoverflow.com/questions/36727777/how-to-animate-dashed-line-javafx
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		double strokeArraySize = 1000.0;
-		// use a koru svg defined in the FXML to create an animation
-		koruSvg.getStrokeDashArray().add(strokeArraySize);
-		koruSvg.setStrokeDashOffset(strokeArraySize);
-
-		koruSvg.setStrokeWidth(3);
-		
-		
-
-		// Create a SVG based animation and play
-		Timeline timeline = new Timeline(
-				new KeyFrame(Duration.seconds(10),new KeyValue(koruSvg.strokeDashOffsetProperty(), 0, Interpolator.LINEAR)),
-				new KeyFrame(Duration.ZERO,new KeyValue(koruSvg.strokeDashOffsetProperty(),strokeArraySize,Interpolator.LINEAR))
-				);
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.setAutoReverse(true);
-        timeline.play();
-		
+		AnimationManager animationManager = new AnimationManager();
+		animationManager.playStrokeAnimation(koruSvg, 1000, 10, 3);
 	}
 
 }

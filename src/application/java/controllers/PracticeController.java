@@ -10,6 +10,9 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import application.java.models.FileIO;
+import application.java.models.MacronKeypad;
+import application.java.models.SceneManager;
+import application.java.models.SpeedToggle;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -40,36 +43,34 @@ public class PracticeController implements Initializable {
 	public static String currentWord = "";
 	public static String userAnswer = "";
 	public static boolean isCorrect;
-	private double speedOfSpeech = 1;
 	private int attempts = 1;
-	private int lastRecordedCaretPosition = 0;
-
 	
-	
-	private Stage stage;
-	private Scene scene;
+	private SceneManager sceneManager = new SceneManager();
 	
 	@FXML private Label hintLabel;
-	@FXML private Label speedLabel;
 	@FXML private TextField textField;
-	@FXML private Slider speedSlider;
-	@FXML private AnchorPane macronInfo;
-	@FXML private Button infoButton;
     @FXML private Button submitButton;
     @FXML private Rectangle feedbackRect;
     @FXML private Label resultLabel;
 	@FXML private Button hearAgainButton;
 	@FXML private Button idkButton;
+	@FXML private AnchorPane screenPane;
     
     private Button[] disableButtons = null;
+
+    private SpeedToggle speedToggle;
+    private MacronKeypad macronKeypad;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
-
+		// intialise our speed toggle
+		speedToggle = new SpeedToggle(screenPane, 25, 20);
+		// intiialise our macron keypad
+		macronKeypad = new MacronKeypad(textField,screenPane, 580, 308);
+		
 		// automatically set focus to the text field.
 		// Attribution: https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429
-		
 		 Platform.runLater(new Runnable() {
 		        @Override
 		        public void run() {
@@ -81,7 +82,6 @@ public class PracticeController implements Initializable {
 
 		this.disableButtons = new Button[] {
 			submitButton,
-			infoButton,
 			hearAgainButton,
 			idkButton
 		};
@@ -92,51 +92,10 @@ public class PracticeController implements Initializable {
 			words = FileIO.getAllWordsFromWordsDirectory();
 		}
 		
-		
 		// choose a random word and remove from the word list
 		nextWord();
 		readCurrentWord();
 		updateLetterCount();
-		
-		// set the slider action - change the speed of speech
-		this.speedSlider.valueProperty().addListener(c ->{
-			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
-			String roundedSpeed= String.format("Speed: x%.1f", 1/speedOfSpeech);
-			if(roundedSpeed.equals("1.0")) {
-				this.speedLabel.setText(roundedSpeed+ " (default)");
-			} else {
-				this.speedLabel.setText(roundedSpeed);
-			}
-		});
-		
-		// get the caret position 
-		textField.caretPositionProperty().addListener(c -> {
-			if (textField.isFocused()) {
-				this.lastRecordedCaretPosition = textField.getCaretPosition();
-			}
-		});
-		
-		// sets one character to the left of caret position to macronised Vowel, if it is
-		// a vowel already, by pressing the left ALT key on keyboard.
-
-		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				// convert text field String into char array.
-				char[] textFieldToChars = textField.getText().toCharArray();
-
-				if (event.getCode() == KeyCode.ALT) {
-					if (lastRecordedCaretPosition > 0) {
-						// set the one char left to the caret the selected char position.
-						int charPosition = lastRecordedCaretPosition-1;
-						char vowelChar = textFieldToChars[charPosition];
-						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
-					}
-				}
-			}
-		});
-
-		// hide help pane to start off with
-		macronInfo.setVisible(false);
 	}
 	
 	/*
@@ -151,7 +110,7 @@ public class PracticeController implements Initializable {
 			this.attempts = 1;
 			FileIO.openGeneralWavFile("correct");
 			PracticeController.isCorrect = true;
-			this.switchScene("PracticeComplete", e);
+			sceneManager.switchScene(e, "PracticeComplete");
 			
 		// if the user gets the word wrong for the first time
 		} else if (this.attempts == 1) {
@@ -168,7 +127,7 @@ public class PracticeController implements Initializable {
 		} else {
 			FileIO.openGeneralWavFile("wrong");
 			PracticeController.isCorrect = false;
-			this.switchScene("PracticeComplete", e);
+			sceneManager.switchScene(e, "PracticeComplete");
 		}
 	}
 	
@@ -211,35 +170,20 @@ public class PracticeController implements Initializable {
 		this.readCurrentWord();
 		this.updateLetterCount();
 	}
-	
-	/*
-	 * This method allows user to add macron in the answer
-	 */
-	public void addMacronisedVowel(ActionEvent event) {
-		textField.requestFocus();
-		textField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
-		textField.positionCaret(lastRecordedCaretPosition);
-	}
-	
-	/*
-	 * This method resets the speed of speech
-	 */
-	public void resetSpeed() {
-		this.speedSlider.setValue(-1.0);
-	}
+
 	
 	/*
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) {
-		switchScene("Main", e);
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	/*
 	 * Read the current word in a new thread
 	 */
 	private void readCurrentWord() {
-		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true, this.disableButtons)).start();
+		new Thread(new WordPlayer(PracticeController.currentWord, speedToggle.getSpeed(), true, this.disableButtons)).start();
 		// developer feature
 		//System.out.println(PracticeController.currentWord);
 	}
@@ -350,89 +294,6 @@ public class PracticeController implements Initializable {
 		// display the newly generated underscores to the user
 		this.hintLabel.setText(new String(hint));
 	}
-	
-	/*
-	 * This method is used to switch between different scenes
-	 */
-	private void switchScene(String filename, ActionEvent e) {
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/resources/views/%s.fxml", filename)));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-	
-
-	/*
-	 * Tells the user how to user macron button
-	 */
-	public void showInfo() {
-		if(macronInfo.isVisible()) {
-			macronInfo.setVisible(false);
-			infoButton.setText("?");
-		} else {
-			macronInfo.setVisible(true);
-			infoButton.setText("X");
-		}
-	}
-	
-	/**
-	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
-	 * and update in the text field.
-	 * @param index
-	 * @param textFieldToChars
-	 * @param macronisedLetter
-	 */
-	
-	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
-		
-		// replace vowel to macronised vowel.
-		textFieldToChars[index] = macronisedLetter;
-		// convert char array to String.
-		String textFieldCharsToString = String.valueOf(textFieldToChars);
-		textField.setText(textFieldCharsToString);
-		// set caret position to current position.
-		textField.positionCaret(index+1);
-	}
-	
-	
-	/**
-	 * this is helper method that sets the Macronised vowel with keyboard.
-	 * @param vowelChar
-	 * @param charPosition
-	 * @param textFieldToChars
-	 */
-	
-	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
-		switch(vowelChar) {
-		case 'a':
-		case 'A':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
-			break;
-		case 'e':
-		case 'E':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
-			break;
-		case 'i':
-		case 'I':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
-			break;
-		case 'o':
-		case 'O':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
-			break;
-		case 'u':
-		case 'U':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
-			break;
-		}
-	}
-	
 	
 	/**
 	 * setter method to set the words.

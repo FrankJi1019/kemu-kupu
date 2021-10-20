@@ -8,7 +8,11 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
 import application.java.models.FileIO;
+import application.java.models.MacronKeypad;
+import application.java.models.SceneManager;
+import application.java.models.SpeedToggle;
 import application.java.models.Word;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
@@ -47,31 +51,24 @@ import application.java.models.WordTimer;
 
 public class QuizController implements Initializable {
 	
-	// these are used to switch scene
-	private Stage stage;
-	private Scene scene;
-	
 	@FXML private Label scoreLabel;
 	@FXML private Label wordCountLabel;
 	@FXML private Label letterCountLabel;
 	@FXML private Label letterNumberLabel;
 	@FXML private Label resultLabel;
-	@FXML private Label speedLabel;
-	@FXML private Slider speedSlider;
 	@FXML private TextField userAnswerTextField;
 	@FXML private Button submitButton;
 	@FXML private Button hearAgainButton;
 	@FXML private Button idkButton;
 	@FXML private Button nextButton;
-	@FXML private AnchorPane macronInfo;
 	@FXML private Rectangle feedbackRect;
-	@FXML private AnchorPane macronButtons;
-	@FXML private Button infoButton;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
 	@FXML private Label timerLabel;
 	@FXML private ProgressBar scoreBar;
-	
+	@FXML private AnchorPane screenPane;
+
+
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
 
@@ -104,16 +101,16 @@ public class QuizController implements Initializable {
 	// records how many times that the user has attempted, recall that the user have max 2 attemps
 	public static int attemptTimes = 1;
 	
-	// the speed of word being read out
-	private double speedOfSpeech = 1;
-	
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
 	
 	private WordTimer wordTimer = null;
 
-	private int lastRecordedCaretPosition = 0;
-	
+    private SpeedToggle speedToggle;
+    private MacronKeypad macronKeypad;
+    
+	private SceneManager sceneManager = new SceneManager();
+	private AnimationManager animationManager = new AnimationManager();
 	/*
 	 * This is method is call when a controller instance has been created
 	 */
@@ -122,58 +119,26 @@ public class QuizController implements Initializable {
 		
 		this.scoreBar.setProgress(1);
 		
+		// intialise our speed toggle
+		speedToggle = new SpeedToggle(screenPane, 25, 20);
+		// initialise our macron keypad
+		macronKeypad = new MacronKeypad(userAnswerTextField,screenPane, 580, 308);
+
 		// define which button to disable when TTS system reads out word
 		this.disableButtons = new Button[]{
 			submitButton,
 			hearAgainButton,
 			idkButton,
-			infoButton
 		};
 		
 		// create a new timer instance
 		this.wordTimer = new WordTimer(this.timerLabel, this.scoreBar);
 		
-		// display the speed of speech, clearly indicating whether the current speed is the default
-		this.speedSlider.valueProperty().addListener(c ->{
-			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
-			String roundedSpeed= String.format("%.2f", 1/speedOfSpeech);
-			if(roundedSpeed.equals("1.00")) {
-				this.speedLabel.setText(roundedSpeed+ "x "+ " (default)");
-			} else {
-				this.speedLabel.setText(roundedSpeed + "x ");
-			}
-		});
 		
-		// get the caret position 
-		userAnswerTextField.caretPositionProperty().addListener(c -> {
-			if (userAnswerTextField.isFocused()) {
-				this.lastRecordedCaretPosition = userAnswerTextField.getCaretPosition();
-		    }
-		});
-		
-		// sets one character to the left of caret position to macronised Vowel, if it is
-		// a vowel already, by pressing the left ALT key on keyboard.
-		
-		userAnswerTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				// convert text field String into char array.
-				char[] textFieldToChars = userAnswerTextField.getText().toCharArray();
-
-				if (event.getCode() == KeyCode.ALT) {
-					if (lastRecordedCaretPosition > 0) {
-						// set the one char left to the caret the selected char position.
-						int charPosition = lastRecordedCaretPosition-1;
-						char vowelChar = textFieldToChars[charPosition];
-						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
-					}
-				}
-			}
-		});
 		
 		// get the five words that will be tested, but if there are less than 5 words in the file
 		// then put all the word in the list
-		nextButton.setVisible(false);
-		macronInfo.setVisible(false);
+		nextButton.setVisible(false); // make sure it's invisib;e
 		
 		// check if word list size < 5 then add all words to current round
 		Random random = new Random();
@@ -201,7 +166,7 @@ public class QuizController implements Initializable {
 		// speak the word in another thread so it won't freezes the window
 		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, wordTimer)).start();
 		
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
@@ -227,7 +192,7 @@ public class QuizController implements Initializable {
 	 * this is executed in another thread so that the main thread will not freeze
 	 */
 	public void hearAgain() {
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false, this.disableButtons)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), false, this.disableButtons)).start();
 	}
 	
 	/*
@@ -286,7 +251,7 @@ public class QuizController implements Initializable {
 			clearFieldsAfterSubmit();
 	
 			// update the score
-			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
+			animationManager.playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score), this.addition, this.scoreLabel);
 			//scoreLabel.setText(Double.toString(score));
 			
 			WordTimer.finalScore = 100;
@@ -337,7 +302,7 @@ public class QuizController implements Initializable {
 
 			FileIO.openGeneralWavFile("wrong");
 			this.wordTimer.stop();
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, this.wordTimer)).start();
 			this.timerLabel.setText("  50");
 			this.scoreBar.setProgress(0.5);
 			
@@ -431,8 +396,8 @@ public class QuizController implements Initializable {
 		//developer feature for testing
 		//System.out.println(this.wordStats.toString());
 		
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
+		Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -530,16 +495,6 @@ public class QuizController implements Initializable {
 		return false;
 	}
 	
-	/**
-	 * This method uses a button to add the macronised vowel due to the textField being
-	 * unable to read 'Alt + -'
-	 */
-	public void addMacronisedVowel(ActionEvent event) {
-		userAnswerTextField.requestFocus();
-		userAnswerTextField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
-		userAnswerTextField.positionCaret(lastRecordedCaretPosition);
-
-	}
 	
 	
 	/**
@@ -550,8 +505,7 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(false);
 		idkButton.setVisible(false);
 		nextButton.setVisible(true);
-		macronButtons.setVisible(false);
-		infoButton.setVisible(false);
+		macronKeypad.setVisible(false);
 		this.timerLabel.setVisible(false);
 		this.scoreBar.setVisible(false);
 
@@ -566,20 +520,13 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(true);
 		idkButton.setVisible(true);
 		nextButton.setVisible(false);
-		macronButtons.setVisible(true);
-		infoButton.setVisible(true);
+		macronKeypad.setVisible(true);
 		this.timerLabel.setVisible(true);
 		this.scoreBar.setVisible(true);
 
 	}
 	
 	
-	/**
-	 * this method resets the speed slider to default
-	 */
-	public void resetSpeedToDefault() {
-		speedSlider.setValue(-1.00);
-	}
 	
 	/**
 	 * this method switch to the Next word when called.
@@ -597,7 +544,7 @@ public class QuizController implements Initializable {
 		// play the next word
 		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, wordTimer)).start();
 					
 		// update the score and letter count
 		this.setWordAndLetterCount();
@@ -625,68 +572,14 @@ public class QuizController implements Initializable {
 		userAnswerTextField.setVisible(false);
 	}
 	
-
-	/**
-	 * this method tells the user how to use the macron button when the ? button is pressed.
-	 */
-	public void showInfo() {
-		if(macronInfo.isVisible()) {
-			macronInfo.setVisible(false);
-			infoButton.setText("?");
-		} else {
-			macronInfo.setVisible(true);
-			infoButton.setText("X");
-		}
-	}
 	
-	/**
-	 * this method plays the Score Increase animation after each round of game.
-	 * @param roundScoreString
-	 * @param newScore
-	 */
-	public void playScoreIncreaseAnimation(String roundScoreString,String newScore) {
-		this.addition.setText("+ " + roundScoreString);
-		
-		// Animation that shows what we're incrementing by
-		FadeTransition fadeAddition = new FadeTransition(Duration.millis(1000), this.addition);
-		fadeAddition.setFromValue(1.0);
-		fadeAddition.setToValue(0);
-		fadeAddition.setOnFinished(event -> {
-			this.addition.setText("");
-			this.addition.setOpacity(1);
-		});
-		
-		// Animation that gives 'scaling' effect
-		ScaleTransition scoreLabelScale= new ScaleTransition(Duration.millis(500), this.scoreLabel);
-		
-		scoreLabelScale.setByX(0.5);
-		scoreLabelScale.setByY(0.5);	
-		scoreLabelScale.setCycleCount(2);
-		scoreLabelScale.setAutoReverse(true);
-		
-		// Animation gives an incrementing effect
-		ParallelTransition incrementEffect = new ParallelTransition();
-		incrementEffect.getChildren().addAll(fadeAddition,scoreLabelScale);
-		
-		// Play the whole score increment
-		SequentialTransition scoreIncreaseAnimation = new SequentialTransition();
-		PauseTransition pause = new PauseTransition(Duration.millis(1000));
-		pause.setOnFinished(event -> {
-			this.scoreLabel.setText(newScore);
-		});
-		scoreIncreaseAnimation.getChildren().addAll(pause, incrementEffect);
-		scoreIncreaseAnimation.play();
-	}
+	
 
 	/*
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	/*
@@ -697,59 +590,6 @@ public class QuizController implements Initializable {
 		Random rand = new Random();
 		// select a random encouraging message from the message list.
 		resultLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
-	}
-	
-	
-	/**
-	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
-	 * and update in the text field.
-	 * @param index
-	 * @param textFieldToChars
-	 * @param macronisedLetter
-	 */
-	
-	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
-		
-		// replace vowel to macronised vowel.
-		textFieldToChars[index] = macronisedLetter;
-		// convert char array to String.
-		String textFieldCharsToString = String.valueOf(textFieldToChars);
-		userAnswerTextField.setText(textFieldCharsToString);
-		// set caret position to current position.
-		userAnswerTextField.positionCaret(index+1);
-	}
-	
-	
-	/**
-	 * this is helper method that sets the Macronised vowel with keyboard.
-	 * @param vowelChar
-	 * @param charPosition
-	 * @param textFieldToChars
-	 */
-	
-	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
-		switch(vowelChar) {
-		case 'a':
-		case 'A':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
-			break;
-		case 'e':
-		case 'E':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
-			break;
-		case 'i':
-		case 'I':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
-			break;
-		case 'o':
-		case 'O':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
-			break;
-		case 'u':
-		case 'U':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
-			break;
-		}
 	}
 	
 }

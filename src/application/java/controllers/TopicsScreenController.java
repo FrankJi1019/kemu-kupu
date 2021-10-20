@@ -23,6 +23,7 @@ import javafx.stage.Stage;
 
 import application.java.models.FileIO;
 import application.java.models.LinuxCommand;
+import application.java.models.SceneManager;
 import application.java.models.Topic;
 
 public class TopicsScreenController implements Initializable{
@@ -33,8 +34,7 @@ public class TopicsScreenController implements Initializable{
 	@FXML Button startButton;
 	@FXML Button allTopicsButton;
 
-	private Stage stage;
-	private Scene scene;
+	private SceneManager sceneManager = new SceneManager();
 
 	private static int GRID_WIDTH = 4;
 
@@ -133,11 +133,7 @@ public class TopicsScreenController implements Initializable{
 	 * This method switches back to the main menu when the return home button is pressed
 	 */
 	public void returnHome(ActionEvent event) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(event, "Main");
 	}
 
 	/**
@@ -163,11 +159,8 @@ public class TopicsScreenController implements Initializable{
 			QuizController.setWords(words);
 
 			// switch scene to Game module to start game.
-			Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Quiz.fxml"));
-			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
+			sceneManager.switchScene(event, "Quiz");
+
 
 			// if Practice module is selected
 		} else if (isPractice == true) {
@@ -184,11 +177,8 @@ public class TopicsScreenController implements Initializable{
 			PracticeController.wordsSetter(words);
 
 			// switch scene to Practice module to start practice.
-			Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Practice.fxml"));
-			stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
+			sceneManager.switchScene(event, "Practice");
+
 
 		}
 	}
@@ -205,11 +195,8 @@ public class TopicsScreenController implements Initializable{
 		PracticeController.wordsSetter(words);
 
 		// switch scene to Practice module to start practice.
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Practice.fxml"));
-		stage = (Stage)((Node)event.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(event, "Practice");
+
 	}
 
 	/**

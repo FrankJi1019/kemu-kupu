@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Random;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
+import application.java.models.SceneManager;
 import javafx.animation.FillTransition;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -25,11 +27,11 @@ import javafx.util.Duration;
 
 public class PracticeCompleteController implements Initializable {
 	
-	private Stage stage;
-	private Scene scene;
-	
 	private String correctAnswer = "";
 	private String userAnswer = "";
+	
+	private SceneManager sceneManager = new SceneManager();
+
 	
 	private static List<String> SECOND_INCORRECT_MESSAGE = new ArrayList<>(Arrays.asList(
 			"Incorrect, don't worry, learning is a process...",
@@ -49,27 +51,26 @@ public class PracticeCompleteController implements Initializable {
 		this.correctAnswer = PracticeController.currentWord.toLowerCase();
 		this.userAnswer = PracticeController.userAnswer.toLowerCase();
 		this.answerLabel.setText(String.format("The answer is: %s \n You typed: %s", this.correctAnswer, this.userAnswer.trim()));
-		
+		AnimationManager animationManager = new AnimationManager();
+
 		// display different color (and transition) based on the result of user's answer
 		if(isCorrect) {
-			feedbackRect.setFill(Color.web("#00b24c"));
-			FillTransition fillTransition = new FillTransition(Duration.millis(1500),feedbackRect,Color.web("#00b24c"), Color.web("#91b2eb"));
+			animationManager.playColourFadeAnimation(1500, feedbackRect, "#00b24c", "#91b2eb");
+
 			feedbackLabel.setText("Great job! Good practice session!");
-			fillTransition.play();
 		} else {
-			FillTransition fillTransition = new FillTransition(Duration.millis(1500),feedbackRect,Color.web("#f87676"), Color.web("#91b2eb"));
+			animationManager.playColourFadeAnimation(1500, feedbackRect, "#f87676", "#91b2eb");
 			setEncouragingMessage();
-			fillTransition.play();
 		}
 		
 	}
 	
 	public void playAgain(ActionEvent e) {
-		this.switchScene("Practice", e);
+		sceneManager.switchScene(e, "Practice");
 	}
 	
 	public void returnHome(ActionEvent e) {
-		this.switchScene("Main", e);
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	/*
@@ -81,25 +82,6 @@ public class PracticeCompleteController implements Initializable {
 		// select a random encouraging message from the message list.
 		feedbackLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
 	}
-	
-	/**
-	 * This method is used to switch between different scenes
-	 * @param filename: the filename of the scene, this string does not include the .fxml extension
-	 * @param e
-	 */
-	private void switchScene(String filename, ActionEvent e) {
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/resources/views/%s.fxml", filename)));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
-	}
-
 
 
 }
