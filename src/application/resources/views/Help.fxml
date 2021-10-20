@@ -48,7 +48,7 @@
                   <Font name="Raleway Bold" size="24.0" />
                </font>
             </Button>
-            <Label fx:id="caption" alignment="TOP_CENTER" layoutX="44.0" layoutY="314.0" prefHeight="64.0" prefWidth="610.0" text="caption" wrapText="true">
+            <Label fx:id="caption" alignment="TOP_CENTER" layoutX="44.0" layoutY="314.0" prefHeight="64.0" prefWidth="610.0" text="caption" textAlignment="CENTER" wrapText="true">
                <font>
                   <Font name="Raleway SemiBold" size="13.0" />
                </font>
