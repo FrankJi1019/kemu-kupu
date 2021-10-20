@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 
 import application.java.models.FileIO;
 import application.java.models.MacronKeypad;
+import application.java.models.SceneManager;
 import application.java.models.SpeedToggle;
 import application.java.models.Word;
 import application.java.models.WordPlayer;
@@ -49,10 +50,6 @@ import application.java.models.WordTimer;
 
 public class QuizController implements Initializable {
 	
-	// these are used to switch scene
-	private Stage stage;
-	private Scene scene;
-	
 	@FXML private Label scoreLabel;
 	@FXML private Label wordCountLabel;
 	@FXML private Label letterCountLabel;
@@ -69,7 +66,7 @@ public class QuizController implements Initializable {
 	@FXML private Label timerLabel;
 	@FXML private ProgressBar scoreBar;
 	@FXML private AnchorPane screenPane;
-    private MacronKeypad macronKeypad;
+
 
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
@@ -109,6 +106,9 @@ public class QuizController implements Initializable {
 	private WordTimer wordTimer = null;
 
     private SpeedToggle speedToggle;
+    private MacronKeypad macronKeypad;
+    
+	private SceneManager sceneManager = new SceneManager();
 
 	/*
 	 * This is method is call when a controller instance has been created
@@ -395,8 +395,8 @@ public class QuizController implements Initializable {
 		//developer feature for testing
 		//System.out.println(this.wordStats.toString());
 		
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
+		Stage stage = (Stage)((Node)e.getSource()).getScene().getWindow();
+		Scene scene = new Scene(root);
 		stage.setScene(scene);
 		stage.show();
 	}
@@ -615,11 +615,7 @@ public class QuizController implements Initializable {
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Main.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	/*

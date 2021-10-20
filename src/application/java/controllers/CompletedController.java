@@ -7,6 +7,7 @@ import java.util.List;
 import java.util.ResourceBundle;
 
 import application.java.models.FileIO;
+import application.java.models.SceneManager;
 import application.java.models.Word;
 import javafx.animation.FillTransition;
 import javafx.animation.PauseTransition;
@@ -35,10 +36,6 @@ import javafx.util.Duration;
 
 public class CompletedController {
 	
-	// these two variables are used to change scene
-	private Stage stage;
-	private Scene scene;
-	
 	@FXML private TableView<Word> summaryTable;
 	@FXML private TableColumn<Word, String> wordColumn;
 	@FXML private TableColumn<Word, Integer> scoreColumn;
@@ -55,6 +52,7 @@ public class CompletedController {
 	// this boolean checks that is user has saved socre or not.
 	private boolean isSaved = false;
 
+	private SceneManager sceneManager = new SceneManager();
 	/*
 	 * This method will be invoked when other scene is switching to complete scene, this is to pass
 	 * useful data to this controller, for example, the statistics for user answers
@@ -107,11 +105,11 @@ public class CompletedController {
 	}
 	
 	public void returnHome(ActionEvent e) {
-		this.switchScene(e, "Main");
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	public void playAgain(ActionEvent e) {
-		this.switchScene(e, "Quiz");
+		sceneManager.switchScene(e, "Quiz");
 	}
 	
 	/**
@@ -170,33 +168,6 @@ public class CompletedController {
 		}
 
 	}
-	
-	
-	/*
-	 * This method is to switch scenes 
-	 * The first parameter e is the ActionEvent that is received when user clicked a button
-	 * The second parameter sceneName is the name of the fxml file, this string should not include 
-	 * file extension and should be case-sensitive
-	 */
-	private void switchScene(ActionEvent e, String sceneName) {
-		
-		try {
-			// establish the full relative path using the name of the scene
-			// this is relative easy to do because all fxml files are stored in the same package
-			String path = String.format("/application/resources/views/%s.fxml", sceneName);
-			
-			Parent root = FXMLLoader.load(getClass().getResource(path));
-			stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-			scene = new Scene(root);
-			stage.setScene(scene);
-			stage.show();
-			
-		} catch (IOException exception) {
-			exception.printStackTrace();
-		}
-
-	}
-	
 	/**
 	 * this method plays the star animation with specific number of 
 	 * stars passed in as parameter

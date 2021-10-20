@@ -11,6 +11,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import application.java.models.FileIO;
+import application.java.models.SceneManager;
 import application.java.models.User;
 import application.java.models.Word;
 import javafx.collections.FXCollections;
@@ -34,13 +35,13 @@ import javafx.stage.Stage;
 
 public class ScoreboardController implements Initializable {
 	
-	private Stage stage;
-	private Scene scene;
-	
 	@FXML private TableView<User> tableView;
 	@FXML private TableColumn<User, String> userColumn;
 	@FXML private TableColumn<User, Integer> scoreColumn;
 
+	private SceneManager sceneManager = new SceneManager();
+
+	
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
@@ -68,7 +69,7 @@ public class ScoreboardController implements Initializable {
 	}
 	
 	public void returnHome(ActionEvent e) {
-		this.switchScene("Main", e);
+		sceneManager.switchScene(e, "Main");
 	}
 
 	public void reset() {
@@ -89,19 +90,6 @@ public class ScoreboardController implements Initializable {
 			alert.close();
 		}
 		
-	}
-	
-	private void switchScene(String filename, ActionEvent e) {
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/resources/views/%s.fxml", filename)));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
 	}
 
 }

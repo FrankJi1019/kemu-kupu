@@ -21,10 +21,6 @@ public class TopicController {
 
 	@FXML Button btn;
 	@FXML ImageView img;
-
-
-	private Stage stage;
-	private Scene scene;
 	
 	private Button startButton = null;
 

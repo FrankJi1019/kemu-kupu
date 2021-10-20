@@ -11,6 +11,7 @@ import java.util.Set;
 
 import application.java.models.FileIO;
 import application.java.models.MacronKeypad;
+import application.java.models.SceneManager;
 import application.java.models.SpeedToggle;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
@@ -44,9 +45,7 @@ public class PracticeController implements Initializable {
 	public static boolean isCorrect;
 	private int attempts = 1;
 	
-	
-	private Stage stage;
-	private Scene scene;
+	private SceneManager sceneManager = new SceneManager();
 	
 	@FXML private Label hintLabel;
 	@FXML private TextField textField;
@@ -111,7 +110,7 @@ public class PracticeController implements Initializable {
 			this.attempts = 1;
 			FileIO.openGeneralWavFile("correct");
 			PracticeController.isCorrect = true;
-			this.switchScene("PracticeComplete", e);
+			sceneManager.switchScene(e, "PracticeComplete");
 			
 		// if the user gets the word wrong for the first time
 		} else if (this.attempts == 1) {
@@ -128,7 +127,7 @@ public class PracticeController implements Initializable {
 		} else {
 			FileIO.openGeneralWavFile("wrong");
 			PracticeController.isCorrect = false;
-			this.switchScene("PracticeComplete", e);
+			sceneManager.switchScene(e, "PracticeComplete");
 		}
 	}
 	
@@ -177,7 +176,7 @@ public class PracticeController implements Initializable {
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) {
-		switchScene("Main", e);
+		sceneManager.switchScene(e, "Main");
 	}
 	
 	/*
@@ -294,22 +293,6 @@ public class PracticeController implements Initializable {
 		
 		// display the newly generated underscores to the user
 		this.hintLabel.setText(new String(hint));
-	}
-	
-	/*
-	 * This method is used to switch between different scenes
-	 */
-	private void switchScene(String filename, ActionEvent e) {
-		Parent root = null;
-		try {
-			root = FXMLLoader.load(getClass().getResource(String.format("/application/resources/views/%s.fxml", filename)));
-		} catch (IOException e1) {
-			e1.printStackTrace();
-		}
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
 	}
 	
 	/**

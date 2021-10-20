@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.java.models.SceneManager;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
@@ -26,9 +27,8 @@ import javafx.util.Duration;
 
 public class MainController implements Initializable{
 	
-	private Stage stage;
-	private Scene scene;
-	
+	private SceneManager sceneManager = new SceneManager();
+
 	@FXML SVGPath koruSvg;
 	
 	/**
@@ -58,11 +58,8 @@ public class MainController implements Initializable{
 	 */
 	public void practice(ActionEvent e) throws IOException {
 		TopicsScreenController.isPractice = true;
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/TopicsScreen.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "TopicsScreen");
+
 	}
 	
 	/** 
@@ -70,31 +67,22 @@ public class MainController implements Initializable{
 	 */
 	public void newGame(ActionEvent e) throws IOException {
 		TopicsScreenController.isPractice = false;
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/TopicsScreen.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "TopicsScreen");
+
 	}
 	
 	/*
 	 * This method is the action for score board button, used to switch the scene to the score board
 	 */
 	public void scoreBoard(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Scoreboard.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Scoreboard");
+
 	}
 
 	
 	public void helpScreen(ActionEvent e) throws IOException {
-		Parent root = FXMLLoader.load(getClass().getResource("/application/resources/views/Help.fxml"));
-		stage = (Stage)((Node)e.getSource()).getScene().getWindow();
-		scene = new Scene(root);
-		stage.setScene(scene);
-		stage.show();
+		sceneManager.switchScene(e, "Help");
+
 	}
 	
 	/**
