@@ -6,6 +6,7 @@ import java.net.URL;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
 import application.java.models.SceneManager;
 import javafx.animation.Interpolator;
 import javafx.animation.KeyFrame;
@@ -85,31 +86,10 @@ public class MainController implements Initializable{
 
 	}
 	
-	/**
-	 * This methods runs on start up. It is used to add an animation to the start screen.
-	 * The animation is loosely based on:
-	 * https://stackoverflow.com/questions/36727777/how-to-animate-dashed-line-javafx
-	 */
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
-		double strokeArraySize = 1000.0;
-		// use a koru svg defined in the FXML to create an animation
-		koruSvg.getStrokeDashArray().add(strokeArraySize);
-		koruSvg.setStrokeDashOffset(strokeArraySize);
-
-		koruSvg.setStrokeWidth(3);
-		
-		
-
-		// Create a SVG based animation and play
-		Timeline timeline = new Timeline(
-				new KeyFrame(Duration.seconds(10),new KeyValue(koruSvg.strokeDashOffsetProperty(), 0, Interpolator.LINEAR)),
-				new KeyFrame(Duration.ZERO,new KeyValue(koruSvg.strokeDashOffsetProperty(),strokeArraySize,Interpolator.LINEAR))
-				);
-		timeline.setCycleCount(Timeline.INDEFINITE);
-		timeline.setAutoReverse(true);
-        timeline.play();
-		
+		AnimationManager animationManager = new AnimationManager();
+		animationManager.playStrokeAnimation(koruSvg, 1000, 10, 3);
 	}
 
 }

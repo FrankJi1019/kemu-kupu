@@ -6,6 +6,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
 import application.java.models.FileIO;
 import application.java.models.SceneManager;
 import application.java.models.Word;
@@ -35,6 +36,7 @@ import javafx.stage.Stage;
 import javafx.util.Duration;
 
 public class CompletedController {
+	
 	
 	@FXML private TableView<Word> summaryTable;
 	@FXML private TableColumn<Word, String> wordColumn;
@@ -89,18 +91,18 @@ public class CompletedController {
 	public void setAnimation() {
 		int scoreBoundaryOne = 170;
 		int scoreBoundaryTwo = 350;
-		
+		AnimationManager animationManager = new AnimationManager();
 		if(totalScore == 0) {
-			playStarsAnimation(0);
+			animationManager.playStarsAnimation(0, stars, STAR_COLOUR_HEX);
 		}
 		else if(totalScore <= scoreBoundaryOne) {
-			playStarsAnimation(1);
+			animationManager.playStarsAnimation(1, stars, STAR_COLOUR_HEX);
 		}
 		else if(totalScore > scoreBoundaryOne && totalScore <= scoreBoundaryTwo ) {
-			playStarsAnimation(2);	
+			animationManager.playStarsAnimation(2, stars, STAR_COLOUR_HEX);
 		}
 		else if(totalScore > scoreBoundaryTwo) {
-			playStarsAnimation(3);
+			animationManager.playStarsAnimation(3, stars, STAR_COLOUR_HEX);
 		}
 	}
 	
@@ -167,56 +169,6 @@ public class CompletedController {
 			
 		}
 
-	}
-	/**
-	 * this method plays the star animation with specific number of 
-	 * stars passed in as parameter
-	 * @param numOfStars
-	 */
-	public void playStarsAnimation(int numOfStars) {
-		ObservableList<Node> starsObjects = stars.getChildren();
-		
-		String starColorHex = STAR_COLOUR_HEX;
-        
-		SequentialTransition sequentialTransition = new SequentialTransition();
-        
-        // Error handling - max num of stars is 3
-        if(numOfStars > 3) {
-        	numOfStars = 3;
-        }
-		
-        // Create a simple scale for all three stars
-        if(numOfStars == 0) {
-            ScaleTransition animation = createScaleAnimation(stars, 400, 0.1);
-			sequentialTransition.getChildren().add(animation);
-		}
-        
-        // Create a scale animation for each star
-		for (int i = 0; i < numOfStars; i++) {
-        	SVGPath shape = (SVGPath)starsObjects.get(i);
-            ScaleTransition animation = createScaleAnimation(shape, 400, 0.7);
-            FillTransition colorChange = new FillTransition(Duration.millis(200), shape, Color.web("#dddddd"),  Color.web(starColorHex));
-            sequentialTransition.getChildren().addAll(colorChange, animation);
-        }
-        
-        // Pause so that it doesn't play right away on initialise
-        int transitionDelay = 1500;
-        sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
-        
-        
-        sequentialTransition.play();
-	}
-
-	/*
-	 * Creates a scale transition which zooms in and out with specified values. 
-	 */
-	private ScaleTransition createScaleAnimation(Node shape, int durationInMillis, double scale) {
-		ScaleTransition animation = new ScaleTransition(Duration.millis(durationInMillis), shape);
-		animation.setByX(scale);
-		animation.setByY(scale);	
-		animation.setCycleCount(2);
-		animation.setAutoReverse(true);
-		return animation;
 	}
 
 }

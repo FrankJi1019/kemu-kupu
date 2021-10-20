@@ -8,6 +8,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.ResourceBundle;
 
+import application.java.models.AnimationManager;
 import application.java.models.FileIO;
 import application.java.models.MacronKeypad;
 import application.java.models.SceneManager;
@@ -109,7 +110,7 @@ public class QuizController implements Initializable {
     private MacronKeypad macronKeypad;
     
 	private SceneManager sceneManager = new SceneManager();
-
+	private AnimationManager animationManager = new AnimationManager();
 	/*
 	 * This is method is call when a controller instance has been created
 	 */
@@ -250,7 +251,7 @@ public class QuizController implements Initializable {
 			clearFieldsAfterSubmit();
 	
 			// update the score
-			playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score));
+			animationManager.playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score), this.addition, this.scoreLabel);
 			//scoreLabel.setText(Double.toString(score));
 			
 			WordTimer.finalScore = 100;
@@ -572,44 +573,7 @@ public class QuizController implements Initializable {
 	}
 	
 	
-	/**
-	 * this method plays the Score Increase animation after each round of game.
-	 * @param roundScoreString
-	 * @param newScore
-	 */
-	public void playScoreIncreaseAnimation(String roundScoreString,String newScore) {
-		this.addition.setText("+ " + roundScoreString);
-		
-		// Animation that shows what we're incrementing by
-		FadeTransition fadeAddition = new FadeTransition(Duration.millis(1000), this.addition);
-		fadeAddition.setFromValue(1.0);
-		fadeAddition.setToValue(0);
-		fadeAddition.setOnFinished(event -> {
-			this.addition.setText("");
-			this.addition.setOpacity(1);
-		});
-		
-		// Animation that gives 'scaling' effect
-		ScaleTransition scoreLabelScale= new ScaleTransition(Duration.millis(500), this.scoreLabel);
-		
-		scoreLabelScale.setByX(0.5);
-		scoreLabelScale.setByY(0.5);	
-		scoreLabelScale.setCycleCount(2);
-		scoreLabelScale.setAutoReverse(true);
-		
-		// Animation gives an incrementing effect
-		ParallelTransition incrementEffect = new ParallelTransition();
-		incrementEffect.getChildren().addAll(fadeAddition,scoreLabelScale);
-		
-		// Play the whole score increment
-		SequentialTransition scoreIncreaseAnimation = new SequentialTransition();
-		PauseTransition pause = new PauseTransition(Duration.millis(1000));
-		pause.setOnFinished(event -> {
-			this.scoreLabel.setText(newScore);
-		});
-		scoreIncreaseAnimation.getChildren().addAll(pause, incrementEffect);
-		scoreIncreaseAnimation.play();
-	}
+	
 
 	/*
 	 * This method leads the user back to the home screen
