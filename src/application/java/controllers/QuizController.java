@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.java.models.FileIO;
+import application.java.models.MacronKeypad;
 import application.java.models.SpeedToggle;
 import application.java.models.Word;
 import application.java.models.WordPlayer;
@@ -62,15 +63,14 @@ public class QuizController implements Initializable {
 	@FXML private Button hearAgainButton;
 	@FXML private Button idkButton;
 	@FXML private Button nextButton;
-	@FXML private AnchorPane macronInfo;
 	@FXML private Rectangle feedbackRect;
-	@FXML private AnchorPane macronButtons;
-	@FXML private Button infoButton;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
 	@FXML private Label timerLabel;
 	@FXML private ProgressBar scoreBar;
 	@FXML private AnchorPane screenPane;
+    private MacronKeypad macronKeypad;
+
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
 
@@ -108,7 +108,6 @@ public class QuizController implements Initializable {
 	
 	private WordTimer wordTimer = null;
 
-	private int lastRecordedCaretPosition = 0;
     private SpeedToggle speedToggle;
 
 	/*
@@ -121,13 +120,14 @@ public class QuizController implements Initializable {
 		
 		// intialise our speed toggle
 		speedToggle = new SpeedToggle(screenPane, 25, 20);
+		// initialise our macron keypad
+		macronKeypad = new MacronKeypad(userAnswerTextField,screenPane, 580, 308);
 
 		// define which button to disable when TTS system reads out word
 		this.disableButtons = new Button[]{
 			submitButton,
 			hearAgainButton,
 			idkButton,
-			infoButton
 		};
 		
 		// create a new timer instance
@@ -135,36 +135,9 @@ public class QuizController implements Initializable {
 		
 		
 		
-		// get the caret position 
-		userAnswerTextField.caretPositionProperty().addListener(c -> {
-			if (userAnswerTextField.isFocused()) {
-				this.lastRecordedCaretPosition = userAnswerTextField.getCaretPosition();
-		    }
-		});
-		
-		// sets one character to the left of caret position to macronised Vowel, if it is
-		// a vowel already, by pressing the left ALT key on keyboard.
-		
-		userAnswerTextField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				// convert text field String into char array.
-				char[] textFieldToChars = userAnswerTextField.getText().toCharArray();
-
-				if (event.getCode() == KeyCode.ALT) {
-					if (lastRecordedCaretPosition > 0) {
-						// set the one char left to the caret the selected char position.
-						int charPosition = lastRecordedCaretPosition-1;
-						char vowelChar = textFieldToChars[charPosition];
-						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
-					}
-				}
-			}
-		});
-		
 		// get the five words that will be tested, but if there are less than 5 words in the file
 		// then put all the word in the list
-		nextButton.setVisible(false);
-		macronInfo.setVisible(false);
+		nextButton.setVisible(false); // make sure it's invisib;e
 		
 		// check if word list size < 5 then add all words to current round
 		Random random = new Random();
@@ -521,16 +494,6 @@ public class QuizController implements Initializable {
 		return false;
 	}
 	
-	/**
-	 * This method uses a button to add the macronised vowel due to the textField being
-	 * unable to read 'Alt + -'
-	 */
-	public void addMacronisedVowel(ActionEvent event) {
-		userAnswerTextField.requestFocus();
-		userAnswerTextField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
-		userAnswerTextField.positionCaret(lastRecordedCaretPosition);
-
-	}
 	
 	
 	/**
@@ -541,8 +504,7 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(false);
 		idkButton.setVisible(false);
 		nextButton.setVisible(true);
-		macronButtons.setVisible(false);
-		infoButton.setVisible(false);
+		macronKeypad.setVisible(false);
 		this.timerLabel.setVisible(false);
 		this.scoreBar.setVisible(false);
 
@@ -557,8 +519,7 @@ public class QuizController implements Initializable {
 		hearAgainButton.setVisible(true);
 		idkButton.setVisible(true);
 		nextButton.setVisible(false);
-		macronButtons.setVisible(true);
-		infoButton.setVisible(true);
+		macronKeypad.setVisible(true);
 		this.timerLabel.setVisible(true);
 		this.scoreBar.setVisible(true);
 
@@ -610,19 +571,6 @@ public class QuizController implements Initializable {
 		userAnswerTextField.setVisible(false);
 	}
 	
-
-	/**
-	 * this method tells the user how to use the macron button when the ? button is pressed.
-	 */
-	public void showInfo() {
-		if(macronInfo.isVisible()) {
-			macronInfo.setVisible(false);
-			infoButton.setText("?");
-		} else {
-			macronInfo.setVisible(true);
-			infoButton.setText("X");
-		}
-	}
 	
 	/**
 	 * this method plays the Score Increase animation after each round of game.
@@ -682,59 +630,6 @@ public class QuizController implements Initializable {
 		Random rand = new Random();
 		// select a random encouraging message from the message list.
 		resultLabel.setText(SECOND_INCORRECT_MESSAGE.get((rand.nextInt(SECOND_INCORRECT_MESSAGE.size()))));
-	}
-	
-	
-	/**
-	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
-	 * and update in the text field.
-	 * @param index
-	 * @param textFieldToChars
-	 * @param macronisedLetter
-	 */
-	
-	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
-		
-		// replace vowel to macronised vowel.
-		textFieldToChars[index] = macronisedLetter;
-		// convert char array to String.
-		String textFieldCharsToString = String.valueOf(textFieldToChars);
-		userAnswerTextField.setText(textFieldCharsToString);
-		// set caret position to current position.
-		userAnswerTextField.positionCaret(index+1);
-	}
-	
-	
-	/**
-	 * this is helper method that sets the Macronised vowel with keyboard.
-	 * @param vowelChar
-	 * @param charPosition
-	 * @param textFieldToChars
-	 */
-	
-	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
-		switch(vowelChar) {
-		case 'a':
-		case 'A':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
-			break;
-		case 'e':
-		case 'E':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
-			break;
-		case 'i':
-		case 'I':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
-			break;
-		case 'o':
-		case 'O':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
-			break;
-		case 'u':
-		case 'U':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
-			break;
-		}
 	}
 	
 }

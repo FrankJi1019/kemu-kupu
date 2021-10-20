@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import application.java.models.FileIO;
+import application.java.models.MacronKeypad;
 import application.java.models.SpeedToggle;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
@@ -42,7 +43,6 @@ public class PracticeController implements Initializable {
 	public static String userAnswer = "";
 	public static boolean isCorrect;
 	private int attempts = 1;
-	private int lastRecordedCaretPosition = 0;
 	
 	
 	private Stage stage;
@@ -50,8 +50,6 @@ public class PracticeController implements Initializable {
 	
 	@FXML private Label hintLabel;
 	@FXML private TextField textField;
-	@FXML private AnchorPane macronInfo;
-	@FXML private Button infoButton;
     @FXML private Button submitButton;
     @FXML private Rectangle feedbackRect;
     @FXML private Label resultLabel;
@@ -62,13 +60,16 @@ public class PracticeController implements Initializable {
     private Button[] disableButtons = null;
 
     private SpeedToggle speedToggle;
+    private MacronKeypad macronKeypad;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
 		// intialise our speed toggle
 		speedToggle = new SpeedToggle(screenPane, 25, 20);
-
+		// intiialise our macron keypad
+		macronKeypad = new MacronKeypad(textField,screenPane, 580, 308);
+		
 		// automatically set focus to the text field.
 		// Attribution: https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429
 		 Platform.runLater(new Runnable() {
@@ -82,7 +83,6 @@ public class PracticeController implements Initializable {
 
 		this.disableButtons = new Button[] {
 			submitButton,
-			infoButton,
 			hearAgainButton,
 			idkButton
 		};
@@ -97,36 +97,6 @@ public class PracticeController implements Initializable {
 		nextWord();
 		readCurrentWord();
 		updateLetterCount();
-		
-		
-		// get the caret position 
-		textField.caretPositionProperty().addListener(c -> {
-			if (textField.isFocused()) {
-				this.lastRecordedCaretPosition = textField.getCaretPosition();
-			}
-		});
-		
-		// sets one character to the left of caret position to macronised Vowel, if it is
-		// a vowel already, by pressing the left ALT key on keyboard.
-
-		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
-			public void handle(KeyEvent event) {
-				// convert text field String into char array.
-				char[] textFieldToChars = textField.getText().toCharArray();
-
-				if (event.getCode() == KeyCode.ALT) {
-					if (lastRecordedCaretPosition > 0) {
-						// set the one char left to the caret the selected char position.
-						int charPosition = lastRecordedCaretPosition-1;
-						char vowelChar = textFieldToChars[charPosition];
-						setMacronWithKeyboard(vowelChar, charPosition, textFieldToChars);
-					}
-				}
-			}
-		});
-
-		// hide help pane to start off with
-		macronInfo.setVisible(false);
 	}
 	
 	/*
@@ -201,16 +171,7 @@ public class PracticeController implements Initializable {
 		this.readCurrentWord();
 		this.updateLetterCount();
 	}
-	
-	/*
-	 * This method allows user to add macron in the answer
-	 */
-	public void addMacronisedVowel(ActionEvent event) {
-		textField.requestFocus();
-		textField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
-		textField.positionCaret(lastRecordedCaretPosition);
-	}
-	
+
 	
 	/*
 	 * This method leads the user back to the home screen
@@ -350,73 +311,6 @@ public class PracticeController implements Initializable {
 		stage.setScene(scene);
 		stage.show();
 	}
-	
-
-	/*
-	 * Tells the user how to user macron button
-	 */
-	public void showInfo() {
-		if(macronInfo.isVisible()) {
-			macronInfo.setVisible(false);
-			infoButton.setText("?");
-		} else {
-			macronInfo.setVisible(true);
-			infoButton.setText("X");
-		}
-	}
-	
-	/**
-	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
-	 * and update in the text field.
-	 * @param index
-	 * @param textFieldToChars
-	 * @param macronisedLetter
-	 */
-	
-	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
-		
-		// replace vowel to macronised vowel.
-		textFieldToChars[index] = macronisedLetter;
-		// convert char array to String.
-		String textFieldCharsToString = String.valueOf(textFieldToChars);
-		textField.setText(textFieldCharsToString);
-		// set caret position to current position.
-		textField.positionCaret(index+1);
-	}
-	
-	
-	/**
-	 * this is helper method that sets the Macronised vowel with keyboard.
-	 * @param vowelChar
-	 * @param charPosition
-	 * @param textFieldToChars
-	 */
-	
-	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
-		switch(vowelChar) {
-		case 'a':
-		case 'A':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ā');
-			break;
-		case 'e':
-		case 'E':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ē');
-			break;
-		case 'i':
-		case 'I':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ī');
-			break;
-		case 'o':
-		case 'O':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ō');
-			break;
-		case 'u':
-		case 'U':
-			replaceVowelToMacron(charPosition,textFieldToChars,'ū');
-			break;
-		}
-	}
-	
 	
 	/**
 	 * setter method to set the words.
