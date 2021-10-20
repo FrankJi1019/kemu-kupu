@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -13,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="560.0" prefWidth="840.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.QuizController">
+<AnchorPane fx:id="screenPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" onKeyPressed="#keyPressed" prefHeight="560.0" prefWidth="840.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.QuizController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#d0d0d0" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="295.0" layoutY="16.0" text="New Game" textFill="#274029">
@@ -71,17 +70,6 @@
             <Font name="Raleway Medium" size="18.0" />
          </font>
       </Button>
-      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="38.0" layoutY="66.0" majorTickUnit="0.5" max="-0.5" min="-2" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="-1.0" />
-      <Label layoutX="42.0" layoutY="43.0" text="SPEED:">
-         <font>
-            <Font name="Raleway Bold" size="17.0" />
-         </font>
-      </Label>
-      <Label fx:id="speedLabel" layoutX="112.0" layoutY="43.0" text="1.00 (default)">
-         <font>
-            <Font name="Raleway Regular" size="17.0" />
-         </font>
-      </Label>
       <Label fx:id="letterNumberLabel" layoutX="389.0" layoutY="113.0" text="5 letters">
          <font>
             <Font name="Raleway Regular" size="16.0" />
@@ -145,11 +133,6 @@
             </Label>
          </children>
       </AnchorPane>
-      <Button fx:id="defaultSpeed" layoutX="180.0" layoutY="64.0" mnemonicParsing="false" onAction="#resetSpeedToDefault" styleClass="large-button" text="RESET">
-         <font>
-            <Font name="Raleway Regular" size="13.0" />
-         </font>
-        </Button>
       <Group />
       <Button fx:id="infoButton" alignment="CENTER" layoutX="644.0" layoutY="429.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#showInfo" prefHeight="30.0" prefWidth="30.0" styleClass="info-btn" text="?">
          <font>

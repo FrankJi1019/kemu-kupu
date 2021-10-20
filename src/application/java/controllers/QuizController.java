@@ -9,6 +9,7 @@ import java.util.Optional;
 import java.util.ResourceBundle;
 
 import application.java.models.FileIO;
+import application.java.models.SpeedToggle;
 import application.java.models.Word;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
@@ -56,8 +57,6 @@ public class QuizController implements Initializable {
 	@FXML private Label letterCountLabel;
 	@FXML private Label letterNumberLabel;
 	@FXML private Label resultLabel;
-	@FXML private Label speedLabel;
-	@FXML private Slider speedSlider;
 	@FXML private TextField userAnswerTextField;
 	@FXML private Button submitButton;
 	@FXML private Button hearAgainButton;
@@ -71,7 +70,7 @@ public class QuizController implements Initializable {
 	@FXML private Label totalWordCountLabel;
 	@FXML private Label timerLabel;
 	@FXML private ProgressBar scoreBar;
-	
+	@FXML private AnchorPane screenPane;
 	// the list of buttons that will be disabled while a word is being read out
 	private Button[] disableButtons = null;
 
@@ -104,16 +103,14 @@ public class QuizController implements Initializable {
 	// records how many times that the user has attempted, recall that the user have max 2 attemps
 	public static int attemptTimes = 1;
 	
-	// the speed of word being read out
-	private double speedOfSpeech = 1;
-	
 	// the total amount of word assessed in this round
 	private int totalWordsCount = -1;
 	
 	private WordTimer wordTimer = null;
 
 	private int lastRecordedCaretPosition = 0;
-	
+    private SpeedToggle speedToggle;
+
 	/*
 	 * This is method is call when a controller instance has been created
 	 */
@@ -122,6 +119,9 @@ public class QuizController implements Initializable {
 		
 		this.scoreBar.setProgress(1);
 		
+		// intialise our speed toggle
+		speedToggle = new SpeedToggle(screenPane, 25, 20);
+
 		// define which button to disable when TTS system reads out word
 		this.disableButtons = new Button[]{
 			submitButton,
@@ -133,16 +133,7 @@ public class QuizController implements Initializable {
 		// create a new timer instance
 		this.wordTimer = new WordTimer(this.timerLabel, this.scoreBar);
 		
-		// display the speed of speech, clearly indicating whether the current speed is the default
-		this.speedSlider.valueProperty().addListener(c ->{
-			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
-			String roundedSpeed= String.format("%.2f", 1/speedOfSpeech);
-			if(roundedSpeed.equals("1.00")) {
-				this.speedLabel.setText(roundedSpeed+ "x "+ " (default)");
-			} else {
-				this.speedLabel.setText(roundedSpeed + "x ");
-			}
-		});
+		
 		
 		// get the caret position 
 		userAnswerTextField.caretPositionProperty().addListener(c -> {
@@ -201,7 +192,7 @@ public class QuizController implements Initializable {
 		// speak the word in another thread so it won't freezes the window
 		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, wordTimer)).start();
 		
 		//set isInNextButtonScene to false
 		isInNextButtonScene = false;
@@ -227,7 +218,7 @@ public class QuizController implements Initializable {
 	 * this is executed in another thread so that the main thread will not freeze
 	 */
 	public void hearAgain() {
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, false, this.disableButtons)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), false, this.disableButtons)).start();
 	}
 	
 	/*
@@ -337,7 +328,7 @@ public class QuizController implements Initializable {
 
 			FileIO.openGeneralWavFile("wrong");
 			this.wordTimer.stop();
-			new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, this.wordTimer)).start();
+			new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, this.wordTimer)).start();
 			this.timerLabel.setText("  50");
 			this.scoreBar.setProgress(0.5);
 			
@@ -574,12 +565,6 @@ public class QuizController implements Initializable {
 	}
 	
 	
-	/**
-	 * this method resets the speed slider to default
-	 */
-	public void resetSpeedToDefault() {
-		speedSlider.setValue(-1.00);
-	}
 	
 	/**
 	 * this method switch to the Next word when called.
@@ -597,7 +582,7 @@ public class QuizController implements Initializable {
 		// play the next word
 		this.timerLabel.setText("  100");
 		this.scoreBar.setProgress(1);
-		new Thread(new WordPlayer(this.testWords.get(0), speedOfSpeech, true, this.disableButtons, wordTimer)).start();
+		new Thread(new WordPlayer(this.testWords.get(0), speedToggle.getSpeed(), true, this.disableButtons, wordTimer)).start();
 					
 		// update the score and letter count
 		this.setWordAndLetterCount();

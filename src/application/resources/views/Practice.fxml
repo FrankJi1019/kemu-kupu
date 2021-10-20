@@ -2,7 +2,6 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Slider?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.Tooltip?>
 <?import javafx.scene.image.Image?>
@@ -11,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.PracticeController">
+<AnchorPane fx:id="screenPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="560.0" minWidth="840.0" onKeyPressed="#keyPressed" prefHeight="400.0" prefWidth="600.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.PracticeController">
    <children>
       <Rectangle fx:id="feedbackRect" arcWidth="5.0" fill="#d0d0d0" height="226.0" layoutY="289.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="840.0" />
       <Label layoutX="305.0" layoutY="27.0" text="Practice Mode">
@@ -44,10 +43,6 @@
             <Font name="Raleway Medium" size="22.0" />
          </font>
       </TextField>
-      <Button fx:id="resetButton" layoutX="180.0" layoutY="64.0" mnemonicParsing="false" onAction="#resetSpeed" styleClass="large-button" text="RESET">
-         <font>
-            <Font name="Raleway Regular" size="13.0" />
-         </font></Button>
       <Label fx:id="resultLabel" alignment="CENTER" layoutX="119.0" layoutY="296.0" prefHeight="48.0" prefWidth="594.0" textAlignment="CENTER" textFill="WHITE">
          <font>
             <Font name="Raleway Bold" size="27.0" />
@@ -118,17 +113,6 @@
             </Tooltip>
          </tooltip>
       </Button>
-      <Slider fx:id="speedSlider" blockIncrement="0.1" layoutX="38.0" layoutY="66.0" majorTickUnit="0.5" max="-0.5" min="-2" minorTickCount="0" showTickMarks="true" snapToTicks="true" value="-1.0" />
-      <Label layoutX="42.0" layoutY="43.0" text="SPEED:">
-         <font>
-            <Font name="Raleway Bold" size="17.0" />
-         </font>
-      </Label>
-      <Label fx:id="speedLabel" layoutX="112.0" layoutY="43.0" text="1.00 (default)">
-         <font>
-            <Font name="Raleway Regular" size="17.0" />
-         </font>
-      </Label>
       <Button fx:id="exitButton" contentDisplay="CENTER" layoutX="19.0" layoutY="493.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
          <font>
             <Font name="Raleway Bold" size="21.0" />

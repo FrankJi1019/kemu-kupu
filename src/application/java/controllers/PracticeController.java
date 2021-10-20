@@ -10,6 +10,7 @@ import java.util.ResourceBundle;
 import java.util.Set;
 
 import application.java.models.FileIO;
+import application.java.models.SpeedToggle;
 import application.java.models.WordPlayer;
 import javafx.animation.FadeTransition;
 import javafx.application.Platform;
@@ -40,19 +41,15 @@ public class PracticeController implements Initializable {
 	public static String currentWord = "";
 	public static String userAnswer = "";
 	public static boolean isCorrect;
-	private double speedOfSpeech = 1;
 	private int attempts = 1;
 	private int lastRecordedCaretPosition = 0;
-
 	
 	
 	private Stage stage;
 	private Scene scene;
 	
 	@FXML private Label hintLabel;
-	@FXML private Label speedLabel;
 	@FXML private TextField textField;
-	@FXML private Slider speedSlider;
 	@FXML private AnchorPane macronInfo;
 	@FXML private Button infoButton;
     @FXML private Button submitButton;
@@ -60,16 +57,20 @@ public class PracticeController implements Initializable {
     @FXML private Label resultLabel;
 	@FXML private Button hearAgainButton;
 	@FXML private Button idkButton;
+	@FXML private AnchorPane screenPane;
     
     private Button[] disableButtons = null;
+
+    private SpeedToggle speedToggle;
     
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		
+		// intialise our speed toggle
+		speedToggle = new SpeedToggle(screenPane, 25, 20);
 
 		// automatically set focus to the text field.
 		// Attribution: https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429
-		
 		 Platform.runLater(new Runnable() {
 		        @Override
 		        public void run() {
@@ -92,22 +93,11 @@ public class PracticeController implements Initializable {
 			words = FileIO.getAllWordsFromWordsDirectory();
 		}
 		
-		
 		// choose a random word and remove from the word list
 		nextWord();
 		readCurrentWord();
 		updateLetterCount();
 		
-		// set the slider action - change the speed of speech
-		this.speedSlider.valueProperty().addListener(c ->{
-			this.speedOfSpeech = 0 - (this.speedSlider.getValue());
-			String roundedSpeed= String.format("Speed: x%.1f", 1/speedOfSpeech);
-			if(roundedSpeed.equals("1.0")) {
-				this.speedLabel.setText(roundedSpeed+ " (default)");
-			} else {
-				this.speedLabel.setText(roundedSpeed);
-			}
-		});
 		
 		// get the caret position 
 		textField.caretPositionProperty().addListener(c -> {
@@ -221,12 +211,6 @@ public class PracticeController implements Initializable {
 		textField.positionCaret(lastRecordedCaretPosition);
 	}
 	
-	/*
-	 * This method resets the speed of speech
-	 */
-	public void resetSpeed() {
-		this.speedSlider.setValue(-1.0);
-	}
 	
 	/*
 	 * This method leads the user back to the home screen
@@ -239,7 +223,7 @@ public class PracticeController implements Initializable {
 	 * Read the current word in a new thread
 	 */
 	private void readCurrentWord() {
-		new Thread(new WordPlayer(PracticeController.currentWord, speedOfSpeech, true, this.disableButtons)).start();
+		new Thread(new WordPlayer(PracticeController.currentWord, speedToggle.getSpeed(), true, this.disableButtons)).start();
 		// developer feature
 		//System.out.println(PracticeController.currentWord);
 	}
