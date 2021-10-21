@@ -9,6 +9,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+/**
+ * This class is used to switch scenes when required.
+ */
 public class SceneManager {
 	
 	private Stage stage;
@@ -21,7 +24,6 @@ public class SceneManager {
 	 * file extension and should be case-sensitive
 	 */
 	public void switchScene(ActionEvent e, String sceneName) {
-		
 		try {
 			// establish the full relative path using the name of the scene
 			// this is relative easy to do because all fxml files are stored in the same package
@@ -36,7 +38,5 @@ public class SceneManager {
 		} catch (IOException exception) {
 			exception.printStackTrace();
 		}
-
 	}
-
 }

@@ -7,6 +7,10 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
+/**
+ * This class is a custom region that creates a SpeedToggle instance for usage
+ * in a required view.
+ */
 public class SpeedToggle extends Region {
 	private SpeedToggleController  speedToggleController;
 	public SpeedToggle() {
@@ -48,9 +52,6 @@ public class SpeedToggle extends Region {
 		}
 	}
 
-	/*
-	 * Unsure
-	 */
 	public double getSpeed() {
 		return this.speedToggleController.getSpeed();
 	}

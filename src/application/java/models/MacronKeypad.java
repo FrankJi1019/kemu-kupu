@@ -1,15 +1,16 @@
 package application.java.models;
 
 import java.io.IOException;
-
 import application.java.controllers.MacronKeypadController;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Region;
 
+/**
+ * This class is a custom region that creates a MacronKeypad instance for usage with a TextField
+ * in a required view.
+ */
 public class MacronKeypad extends Region {
 	
 	private MacronKeypadController macronKeypadController;

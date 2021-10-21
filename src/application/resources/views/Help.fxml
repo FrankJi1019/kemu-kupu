@@ -8,14 +8,14 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.HelpController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="560.0" prefWidth="840.0" styleClass="background" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.HelpController">
    <children>
       <Label layoutX="379.0" layoutY="47.0" text="Help">
          <font>
             <Font name="Raleway Bold" size="36.0" />
          </font>
       </Label>
-      <Button fx:id="returnButton" layoutX="72.0" layoutY="47.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="44.0" prefWidth="72.0" styleClass="large-button">
+      <Button layoutX="72.0" layoutY="47.0" mnemonicParsing="false" onAction="#returnHome" prefHeight="44.0" prefWidth="72.0" styleClass="large-button">
          <font>
             <Font name="Noto Sans CJK JP" size="14.0" />
          </font>

@@ -7,9 +7,9 @@
 <?import javafx.scene.text.Font?>
 
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="162.0" prefWidth="162.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.MacronKeypadController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="162.0" prefWidth="162.0" stylesheets="@../css/application.css" xmlns="http://javafx.com/javafx/11.0.2" xmlns:fx="http://javafx.com/fxml/1" fx:controller="application.java.controllers.MacronKeypadController">
    <children>
-      <AnchorPane fx:id="macronButtons" layoutX="22.0" layoutY="8.0" prefHeight="138.0" prefWidth="76.0">
+      <AnchorPane layoutX="22.0" layoutY="8.0" prefHeight="138.0" prefWidth="76.0">
          <children>
             <Button layoutY="109.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#addMacronisedVowel" prefHeight="35.0" prefWidth="35.0" styleClass="macron-button" text="ū">
                <font>
