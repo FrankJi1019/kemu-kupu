@@ -284,6 +284,11 @@ public class QuizController implements Initializable {
 
 		// clear the result label that shows correct, incorrect or skipped
 		this.userAnswerTextField.clear();
+		
+		if (this.testWords.size() == 0) {
+			WordTimer.finalScore = 100;
+			this.wordTimer.stop();
+		}
 	}
 
 	/**
