@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * This is the class for running commands in different linux commands;
  */
-public class LinuxCommand {
+public class BashCommand {
 
 	
 	/** 
@@ -96,7 +96,7 @@ public class LinuxCommand {
 		List<String> temp = new ArrayList<>();
 		
 		// checking if directory exists.
-		if ((LinuxCommand.getErrorCode("test -d"+dir)) == 1) {
+		if ((BashCommand.getErrorCode("test -d"+dir)) == 1) {
 			// can rework error message to display on GUI.
 			System.out.println("Directory doesn't exist");
 			

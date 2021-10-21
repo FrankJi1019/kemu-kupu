@@ -16,7 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import application.java.models.FileIO;
-import application.java.models.LinuxCommand;
+import application.java.models.BashCommand;
 import application.java.models.SceneManager;
 import application.java.models.Topic;
 
@@ -103,9 +103,9 @@ public class TopicsScreenController implements Initializable{
 	 * list of Topic objects with the filenames, using a provided image if it exists.
 	 */
 	private List<Topic> generateListOfTopics() {
-		List<String> list = LinuxCommand.getFileNameFromDirectory("./words");
+		List<String> list = BashCommand.getFileNameFromDirectory("./words");
 		List<Topic> listOfTopics = new ArrayList<>();
-		List<String> imageList = LinuxCommand.getFileNameFromDirectory("./data/images");
+		List<String> imageList = BashCommand.getFileNameFromDirectory("./data/images");
 		Topic topic;
 		for(String fileName : list) {
 			String formattedfileName = fileName.replace("-", " ");

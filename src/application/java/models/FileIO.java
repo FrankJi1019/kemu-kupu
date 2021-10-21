@@ -32,8 +32,8 @@ public class FileIO {
 
 		// testing if file exists, if yes play the wav, if not return String that "no 
 		// such file exists"
-		if ((LinuxCommand.getErrorCode("test -f "+WAVE_DIRECTORY+filename+".wav")) == 0) {
-			LinuxCommand.executeCommand("aplay "+WAVE_DIRECTORY+filename+".wav");
+		if ((BashCommand.getErrorCode("test -f "+WAVE_DIRECTORY+filename+".wav")) == 0) {
+			BashCommand.executeCommand("aplay "+WAVE_DIRECTORY+filename+".wav");
 			return null;
 		} else {
 			temp = "no such file exists";
@@ -48,17 +48,17 @@ public class FileIO {
 	public static void speakMaori(String word, double speed) {
 
 		// create scm file for festival
-		LinuxCommand.executeCommand("touch ./data/Maori.scm");
+		BashCommand.executeCommand("touch ./data/Maori.scm");
 
 		// passing speaking parameter into scm file
-		LinuxCommand.executeCommand("echo \"(voice_akl_mi_pk06_cg)\" >> ./data/Maori.scm");
-		LinuxCommand.executeCommand("echo \"(Parameter.set 'Duration_Stretch " + speed + ")\" >> ./data/Maori.scm");
-		LinuxCommand.executeCommand("echo \"(utt.wave (SayText " + "\\" + "\"" + word + "\\" + "\") " + "\\" + "\"" + 
+		BashCommand.executeCommand("echo \"(voice_akl_mi_pk06_cg)\" >> ./data/Maori.scm");
+		BashCommand.executeCommand("echo \"(Parameter.set 'Duration_Stretch " + speed + ")\" >> ./data/Maori.scm");
+		BashCommand.executeCommand("echo \"(utt.wave (SayText " + "\\" + "\"" + word + "\\" + "\") " + "\\" + "\"" + 
 				"./data/Maori.wav" + "\\" + "\"" + " 'riff)" + "\"" + " >> ./data/Maori.scm");
 		//speak word from scm file
-		LinuxCommand.executeCommand("festival -b ./data/Maori.scm");
+		BashCommand.executeCommand("festival -b ./data/Maori.scm");
 		//remove scm file
-		LinuxCommand.executeCommand("rm -f ./data/Maori.scm");
+		BashCommand.executeCommand("rm -f ./data/Maori.scm");
 
 	}
 
@@ -67,14 +67,14 @@ public class FileIO {
 	 * @param word
 	 */
 	public static void speakEnglish(String word) {
-		LinuxCommand.executeCommand("touch ./data/English.scm");
+		BashCommand.executeCommand("touch ./data/English.scm");
 		// passing parameter into scm file
-		LinuxCommand.executeCommand("echo \"(voice_cmu_us_slt_cg)\" >> ./data/English.scm");
-		LinuxCommand.executeCommand("echo \"(SayText " + "\\" + "\"" + word + "\\" + "\")" + "\"" + " >> ./data/English.scm");
+		BashCommand.executeCommand("echo \"(voice_cmu_us_slt_cg)\" >> ./data/English.scm");
+		BashCommand.executeCommand("echo \"(SayText " + "\\" + "\"" + word + "\\" + "\")" + "\"" + " >> ./data/English.scm");
 		//speak word from scm file
-		LinuxCommand.executeCommand("festival -b ./data/English.scm");
+		BashCommand.executeCommand("festival -b ./data/English.scm");
 		//remove scm file
-		LinuxCommand.executeCommand("rm -f ./data/English.scm");
+		BashCommand.executeCommand("rm -f ./data/English.scm");
 	}
 
 
@@ -87,8 +87,8 @@ public class FileIO {
 
 		// testing if file exists, if yes then cat words to list, if not return String that "no 
 		// such file exists"
-		if ((LinuxCommand.getErrorCode("test -f ./words/"+fileName+".txt")) == 0) {
-			temp = LinuxCommand.executeCommand("cat ./words/"+fileName+".txt");
+		if ((BashCommand.getErrorCode("test -f ./words/"+fileName+".txt")) == 0) {
+			temp = BashCommand.executeCommand("cat ./words/"+fileName+".txt");
 			return temp;
 
 		} else {
@@ -108,7 +108,7 @@ public class FileIO {
 		// obtain all the words from all the word list
 		List<String> wordFiles = new ArrayList<>();
 		List<String> words = new ArrayList<>();
-		wordFiles = LinuxCommand.executeCommand("ls ./words");
+		wordFiles = BashCommand.executeCommand("ls ./words");
 
 		for (String file: wordFiles) {
 			words.addAll(FileIO.getContentFromFile(file.replace(".txt", "")));
@@ -123,15 +123,15 @@ public class FileIO {
 	 */
 	public static void saveGame(HashMap<String,Integer> scoreBoard) {
 		// delete the previous version of txt file and create new empty file
-		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
-		LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
+		BashCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+		BashCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
 
 		// append the user info in the scoreboard to the txt file
 		for (String playerName: scoreBoard.keySet()) {
 			int playerScore = scoreBoard.get(playerName);
 
 			String writeOut = (playerName + "," + playerScore);
-			LinuxCommand.executeCommand("echo "+ writeOut + " >> "+GAMELOG_DIRECTORY+ ".gameLog.txt");
+			BashCommand.executeCommand("echo "+ writeOut + " >> "+GAMELOG_DIRECTORY+ ".gameLog.txt");
 		}
 	}
 
@@ -147,10 +147,10 @@ public class FileIO {
 		String command;
 
 		// check if the scoreBOard txt file exist or not, if not create new and return empty HashMap
-		if ((LinuxCommand.getErrorCode("cat "+GAMELOG_DIRECTORY+".gameLog.txt")) == 0){
+		if ((BashCommand.getErrorCode("cat "+GAMELOG_DIRECTORY+".gameLog.txt")) == 0){
 			command = "cat "+GAMELOG_DIRECTORY+".gameLog.txt";
 		} else {
-			LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
+			BashCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
 			return scoreBoard;
 		}
 
@@ -207,7 +207,7 @@ public class FileIO {
 	}
 
 	public static void deleteGame() {
-		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+		BashCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
 	}
 
 }
