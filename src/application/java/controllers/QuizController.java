@@ -220,7 +220,7 @@ public class QuizController implements Initializable {
 
 			// clear dashes
 			clearFieldsAfterSubmit();
-
+			
 			// update the score
 			animationManager.playScoreIncreaseAnimation(String.valueOf(finalThisRoundScore),String.valueOf(score), this.addition, this.scoreLabel);
 
@@ -507,6 +507,8 @@ public class QuizController implements Initializable {
 	 * This method leads the user back to the home screen
 	 */
 	public void returnHome(ActionEvent e) throws IOException {
+		WordTimer.finalScore = 100;
+		this.wordTimer.stop();
 		sceneManager.switchScene(e, "Main");
 	}
 
