@@ -130,6 +130,9 @@ public class MacronKeypadController {
 	 */
 	public void addMacronisedVowel(ActionEvent event) {
 		textField.requestFocus();
+		if (textField.getText().length( ) == 0 && lastRecordedCaretPosition > 0) {
+			lastRecordedCaretPosition = 0;
+		}
 		textField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
 		textField.positionCaret(lastRecordedCaretPosition);
 	}
