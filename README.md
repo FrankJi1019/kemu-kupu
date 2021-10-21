@@ -36,7 +36,7 @@ Alternatively, you can run the jar file KemuKupu.jar directly from command line 
 
 Sound effects obtained from https://www.zapsplat.com
 
-Some code snippets from 
+Some code snippets from:
 - https://stackoverflow.com/questions/36727777/how-to-animate-dashed-line-javafx (Main menu)
 - https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429 (Practice)
 - https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/ (FileIO)
