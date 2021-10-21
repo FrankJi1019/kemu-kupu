@@ -19,8 +19,11 @@ import javafx.scene.shape.SVGPath;
 import javafx.scene.shape.Shape;
 import javafx.util.Duration;
 
+/**
+ * This class gives the ability to create and manage animations.
+ */
 public class AnimationManager {
-	
+
 	/**
 	 * This method plays a 'painting-effect' like animation, loosely based on:
 	 * https://stackoverflow.com/questions/36727777/how-to-animate-dashed-line-javafx
@@ -35,7 +38,7 @@ public class AnimationManager {
 		strokePath.setStrokeDashOffset(strokeArraySize);
 
 		strokePath.setStrokeWidth(strokeWidth);
-		
+
 		// Create a SVG based animation and play
 		Timeline timeline = new Timeline(
 				new KeyFrame(Duration.seconds(durationSeconds),new KeyValue(strokePath.strokeDashOffsetProperty(), 0, Interpolator.LINEAR)),
@@ -43,10 +46,10 @@ public class AnimationManager {
 				);
 		timeline.setCycleCount(Timeline.INDEFINITE);
 		timeline.setAutoReverse(true);
-        timeline.play();
+		timeline.play();
 	}
-	
-	
+
+
 	/**
 	 * This method plays a fade from one colour to another for the specified shape.
 	 * @param durationInMillis - the duration of the effect
@@ -58,7 +61,7 @@ public class AnimationManager {
 		FillTransition fillTransition = new FillTransition(Duration.millis(durationInMillis),shape,Color.web(startColourHex), Color.web(endColorHex));
 		fillTransition.play();
 	}
-	
+
 	/**
 	 * this method plays the star animation with specific number of 
 	 * stars passed in as parameter
@@ -68,36 +71,36 @@ public class AnimationManager {
 	 */
 	public void playStarsAnimation(int numOfStars, AnchorPane stars, String starEndColourHex) {
 		ObservableList<Node> starsObjects = stars.getChildren();
-		        
+
 		SequentialTransition sequentialTransition = new SequentialTransition();
-        
-        // Error handling - max num of stars is 3
-        if(numOfStars > 3) {
-        	numOfStars = 3;
-        }
-		
-        // Create a simple scale for all three stars if our score isn't big enough
-        if(numOfStars == 0) {
-            ScaleTransition animation = createScaleAnimation(stars, 400, 0.1);
+
+		// Error handling - max num of stars is 3
+		if(numOfStars > 3) {
+			numOfStars = 3;
+		}
+
+		// Create a simple scale for all three stars if our score isn't big enough
+		if(numOfStars == 0) {
+			ScaleTransition animation = createScaleAnimation(stars, 400, 0.1);
 			sequentialTransition.getChildren().add(animation);
 		}
-        
-        // Create a scale animation for each star
+
+		// Create a scale animation for each star
 		for (int i = 0; i < numOfStars; i++) {
-        	SVGPath shape = (SVGPath)starsObjects.get(i);
-            ScaleTransition animation = createScaleAnimation(shape, 400, 0.7);
-            FillTransition colorChange = new FillTransition(Duration.millis(200), shape, Color.web("#dddddd"),  Color.web(starEndColourHex));
-            sequentialTransition.getChildren().addAll(colorChange, animation);
-        }
-        
-        // Pause so that it doesn't play right away on initialise
-        int transitionDelay = 1500;
-        sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
-        
-        
-        sequentialTransition.play();
+			SVGPath shape = (SVGPath)starsObjects.get(i);
+			ScaleTransition animation = createScaleAnimation(shape, 400, 0.7);
+			FillTransition colorChange = new FillTransition(Duration.millis(200), shape, Color.web("#dddddd"),  Color.web(starEndColourHex));
+			sequentialTransition.getChildren().addAll(colorChange, animation);
+		}
+
+		// Pause so that it doesn't play right away on initialise
+		int transitionDelay = 1500;
+		sequentialTransition.getChildren().add(0, new PauseTransition(Duration.millis(transitionDelay)));
+
+
+		sequentialTransition.play();
 	}
-	
+
 	/*
 	 * Creates a scale transition which zooms in and out with specified values. 
 	 */
@@ -109,7 +112,7 @@ public class AnimationManager {
 		animation.setAutoReverse(true);
 		return animation;
 	}
-	
+
 	/**
 	 * this method plays the Score Increase animation after each round of game.
 	 * @param roundScoreString
@@ -117,7 +120,7 @@ public class AnimationManager {
 	 */
 	public void playScoreIncreaseAnimation(String roundScoreString,String newScore, Label additionLabel, Label totalScoreLabel) {
 		additionLabel.setText("+ " + roundScoreString);
-		
+
 		// Animation that shows what we're incrementing by
 		FadeTransition fadeAddition = new FadeTransition(Duration.millis(1000), additionLabel);
 		fadeAddition.setFromValue(1.0);
@@ -126,19 +129,19 @@ public class AnimationManager {
 			additionLabel.setText("");
 			additionLabel.setOpacity(1);
 		});
-		
+
 		// Animation that gives 'scaling' effect
 		ScaleTransition scoreLabelScale= new ScaleTransition(Duration.millis(500), totalScoreLabel);
-		
+
 		scoreLabelScale.setByX(0.5);
 		scoreLabelScale.setByY(0.5);	
 		scoreLabelScale.setCycleCount(2);
 		scoreLabelScale.setAutoReverse(true);
-		
+
 		// Animation gives an incrementing effect
 		ParallelTransition incrementEffect = new ParallelTransition();
 		incrementEffect.getChildren().addAll(fadeAddition,scoreLabelScale);
-		
+
 		// Play the whole score increment
 		SequentialTransition scoreIncreaseAnimation = new SequentialTransition();
 		PauseTransition pause = new PauseTransition(Duration.millis(1000));
@@ -147,5 +150,18 @@ public class AnimationManager {
 		});
 		scoreIncreaseAnimation.getChildren().addAll(pause, incrementEffect);
 		scoreIncreaseAnimation.play();
+	}
+	/**
+	 * This method displays then fades the specified label when called.
+	 */
+	public void playDisplayToFadeAnimation(Label label) {
+		FadeTransition fadeTransition = new FadeTransition(Duration.millis(3000), label);
+		fadeTransition.setFromValue(1.0);
+		fadeTransition.setToValue(0);	
+		fadeTransition.setOnFinished(event -> {
+			label.setText("");
+			label.setOpacity(1.0);
+		});
+		fadeTransition.play();
 	}
 }

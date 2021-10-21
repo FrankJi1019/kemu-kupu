@@ -1,6 +1,5 @@
 package application.java.controllers;
 
-import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
@@ -9,11 +8,7 @@ import java.util.ResourceBundle;
 import application.java.models.SceneManager;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Toggle;
@@ -22,22 +17,21 @@ import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.stage.Stage;
 
 public class HelpController implements Initializable{
+
+	// FXML Injectable fields
 	@FXML ImageView imageInFocus;
 	@FXML AnchorPane carouselPane;
 	@FXML Label caption;
 	@FXML AnchorPane radioButtons;
 
+	// Other class fields
 	private static int imageSelectedID = 0;
-	
 	private static final String IMAGES_DIRECTORY_PATH = "/application/resources/images/";
-
 	private ToggleGroup imageSelectGroup = new ToggleGroup();
 	private ArrayList<Image> images = new ArrayList<Image>();
 	private ArrayList<String> captions = new ArrayList<String>();
-
 	private SceneManager sceneManager = new SceneManager();
 
 	@Override
@@ -47,7 +41,9 @@ public class HelpController implements Initializable{
 		setToggleActions();
 	}
 
-	
+	/**
+	 * This method initialises specified images with corresponding captions.
+	 */
 	private void initialiseImageData() {
 		addImage("slide1.png", "Kēmu Kupu is a simple and fun way to learn how to spell words in Te Reo Māori! Through great Text-To-Speech Technology, Kēmu Kupu also allows you to begin to make sense of how the Māori language comes together! Clicking the 'Games' module allows you to test what you know and don't know - and can be a great starting point!");
 		addImage("slide2.png", "To start a game, select a topic from the available options, and then click START to begin.");
@@ -56,7 +52,7 @@ public class HelpController implements Initializable{
 		addImage("slide5.png", "In practice mode, you are able to practice your Māori spelling skills. In the topic selection however, you might see a button you didn't see in games mode; this button let's you practice with all the words, randomly picking from each topic - a great tool for building up confidence across lots of topics at once! ");
 		addImage("slide6.png", "In practice mode, rather than being given only one letter as a hint, you'll see more of the word - helping you to go further with your Māori spelling skills. ");
 	}
-	
+
 	/*
 	 * This method builds the amount of toggles needed for the amount of images required.
 	 * Note that leftMostX , the layoutX position of the leftmost radio toggole can be 
@@ -73,7 +69,7 @@ public class HelpController implements Initializable{
 		}
 
 	}
-	
+
 	/*
 	 * This method sets the toggle button actions where each toggle corresponds to a different image 
 	 * and it's caption. 
@@ -88,14 +84,14 @@ public class HelpController implements Initializable{
 				caption.setText(captions.get(toggleID));
 				imageSelectedID = toggleID;
 			});
-		
+
 		}
-		// Fire a button to start off with to make sure the screen starts here
+		// Fire a button to start off with to make sure we are on slide 1.
 		((ToggleButton) imageRadioToggles.get(0)).fire();
 	}
 
 	/*
-	 * nextImage() changes the image when the right arrow is clicked.
+	 * This method changes the image when the right arrow is clicked.
 	 * It does so by firing the RadioToggleButton action, effectively 
 	 * going to the next image.
 	 * 
@@ -108,9 +104,9 @@ public class HelpController implements Initializable{
 			imageSelectedID = 0;
 		}
 		((ToggleButton) imageRadioToggles.get(imageSelectedID)).fire();
-		
+
 	}
-	
+
 	/*
 	 * prevImage() changes the image when the right arrow is clicked.
 	 * It does so by firing the RadioToggleButton action, effectively 
@@ -136,14 +132,13 @@ public class HelpController implements Initializable{
 		images.add(createImageFile(filename));
 		captions.add(description);
 	}
-	
+
 	/*
 	 *  This method is used as a helper function to create an Image file for storage.
 	 */
 	public Image createImageFile(String filename) {
 		return new Image(IMAGES_DIRECTORY_PATH + filename, imageInFocus.getFitWidth(), imageInFocus.getFitHeight(), true, true);
 	}
-	
 
 	/**
 	 * This method switches back to the main menu when the return home button is pressed

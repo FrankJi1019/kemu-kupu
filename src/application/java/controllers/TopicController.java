@@ -1,31 +1,25 @@
 package application.java.controllers;
 
 import java.io.IOException;
-import java.util.List;
-
-import application.java.models.FileIO;
 import application.java.models.Topic;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.stage.Stage;
 
+/**
+ * This class is the controller for individual Topic buttons (dynamically loaded)
+ */
 public class TopicController {
 
+	// FXML Injectable fields
 	@FXML Button btn;
 	@FXML ImageView img;
-	
-	private Button startButton = null;
 
-	// Image dir exists outside src to give future ability to add topics (and images)
-	private static String IMAGE_DIRECTORY = "./data/images/";
+	// Other class fields
+	private Button startButton = null;
+	private static String IMAGE_DIRECTORY = "./data/images/"; // Path is outside src for future add-topic functionality
 
 	/**
 	 * This method sets the selected topic, ready to press p
@@ -52,7 +46,7 @@ public class TopicController {
 		Image image  = new Image("file:" + IMAGE_DIRECTORY + topic.getIconSrc());
 		img.setImage(image);
 	}
-	
+
 	public void setStartButton(Button b) {
 		this.startButton = b;
 	}

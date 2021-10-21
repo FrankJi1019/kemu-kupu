@@ -13,9 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
-
 /** 
- *  this class features any commands that are required file Input/Output.
+ *  This class features any commands that are required file Input/Output.
  */
 public class FileIO {
 
@@ -23,14 +22,11 @@ public class FileIO {
 	private static String WAVE_DIRECTORY = "./data/sounds/";
 	private static String GAMELOG_DIRECTORY = "./data/logs/";
 
-	// Method openWavFile deleted because it is not used.
-
-	/** this method open and play filename.wav file from ./data/sounds folder.
+	/** This method open and play filename.wav file from ./data/sounds folder.
 	 * 	when String filename are passed in.
 	 * 
 	 * @param filename
 	 */
-
 	public static String openGeneralWavFile(String filename) {
 		String temp;
 
@@ -45,18 +41,11 @@ public class FileIO {
 		}
 	}
 
-	//  Method deleteWavFile deleted because it is not used.
-
 
 	/**
 	 * Method for speakingMaori word giving string as word to speak and int as speed for the speech.
 	 */
-
 	public static void speakMaori(String word, double speed) {
-
-		//default speed is 1.0 
-		//slow: 2.0
-		//fast: 0.5
 
 		// create scm file for festival
 		LinuxCommand.executeCommand("touch ./data/Maori.scm");
@@ -66,31 +55,19 @@ public class FileIO {
 		LinuxCommand.executeCommand("echo \"(Parameter.set 'Duration_Stretch " + speed + ")\" >> ./data/Maori.scm");
 		LinuxCommand.executeCommand("echo \"(utt.wave (SayText " + "\\" + "\"" + word + "\\" + "\") " + "\\" + "\"" + 
 				"./data/Maori.wav" + "\\" + "\"" + " 'riff)" + "\"" + " >> ./data/Maori.scm");
-
-		// can be reinstated if need to be saved as a wave file.
-		//LinuxCommand.executeCommand("echo \"(utt.save.wave (SayText " + "\\" + "\"" + word + "\\" + "\") " + "\\" + "\"" + 
-		//		"./data/Maori.wav" + "\\" + "\"" + " 'riff)" + "\"" + " >> ./data/Maori.scm");
-
 		//speak word from scm file
 		LinuxCommand.executeCommand("festival -b ./data/Maori.scm");
 		//remove scm file
 		LinuxCommand.executeCommand("rm -f ./data/Maori.scm");
 
-
-		// Dev feature only
-		//System.out.println(word);
 	}
 
-
-	/**method to speak English given a string as a word.
+	/**Method to speak English given a string as a word.
 	 * 
 	 * @param word
 	 */
 	public static void speakEnglish(String word) {
-
-
 		LinuxCommand.executeCommand("touch ./data/English.scm");
-
 		// passing parameter into scm file
 		LinuxCommand.executeCommand("echo \"(voice_cmu_us_slt_cg)\" >> ./data/English.scm");
 		LinuxCommand.executeCommand("echo \"(SayText " + "\\" + "\"" + word + "\\" + "\")" + "\"" + " >> ./data/English.scm");
@@ -98,7 +75,6 @@ public class FileIO {
 		LinuxCommand.executeCommand("festival -b ./data/English.scm");
 		//remove scm file
 		LinuxCommand.executeCommand("rm -f ./data/English.scm");
-
 	}
 
 
@@ -140,7 +116,7 @@ public class FileIO {
 
 		return words;
 	}
-	
+
 	/**
 	 * this method saves the scoreBoard to a hidden txt file that persists.
 	 * @param scoreBoard
@@ -149,16 +125,16 @@ public class FileIO {
 		// delete the previous version of txt file and create new empty file
 		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
 		LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
-		
+
 		// append the user info in the scoreboard to the txt file
 		for (String playerName: scoreBoard.keySet()) {
 			int playerScore = scoreBoard.get(playerName);
-			
+
 			String writeOut = (playerName + "," + playerScore);
 			LinuxCommand.executeCommand("echo "+ writeOut + " >> "+GAMELOG_DIRECTORY+ ".gameLog.txt");
 		}
 	}
-	
+
 	/**
 	 * this method loads scoreBoard from the hidden txt file and sort it in a decended order and output
 	 * it into HashMap for in game use.
@@ -169,7 +145,7 @@ public class FileIO {
 	public static HashMap<String,Integer> loadGame() throws InterruptedException, IOException{
 		HashMap<String,Integer> scoreBoard = new HashMap<>();
 		String command;
-		
+
 		// check if the scoreBOard txt file exist or not, if not create new and return empty HashMap
 		if ((LinuxCommand.getErrorCode("cat "+GAMELOG_DIRECTORY+".gameLog.txt")) == 0){
 			command = "cat "+GAMELOG_DIRECTORY+".gameLog.txt";
@@ -177,15 +153,15 @@ public class FileIO {
 			LinuxCommand.executeCommand("touch "+GAMELOG_DIRECTORY+".gameLog.txt");
 			return scoreBoard;
 		}
-		
+
 		// start new process in linux bash command to read the scoreBoard txt file line by line
 		ProcessBuilder pb = new ProcessBuilder("bash", "-c", command);
 		Process process = pb.start();
-			
+
 		BufferedReader stdout = new BufferedReader(new InputStreamReader(process.getInputStream()));
-			
+
 		int exitStatus = process.waitFor();
-		
+
 		if (exitStatus == 0) {
 			String line;
 			while ((line = stdout.readLine()) != null) {
@@ -198,44 +174,40 @@ public class FileIO {
 		}
 		// return the sorted HashMap (scoreBoard)
 		return sortByValue(scoreBoard);
-		
+
 	}
-	
+
 	/**
 	 * this method sorts a HashMap by its value in a decending fashion.
+	 * This code is from: https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
 	 * @param hm
 	 * @return
 	 */
-	
-	// Attribution Credit: https://www.geeksforgeeks.org/sorting-a-hashmap-according-to-values/
-	 public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)
-	    {
-	        // Create a list from elements of HashMap
-	        List<Map.Entry<String, Integer> > list =
-	               new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
-	 
-	        // Sort the list
-	        Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
-	            public int compare(Map.Entry<String, Integer> o1,
-	                               Map.Entry<String, Integer> o2)
-	            {
-	                return (o2.getValue()).compareTo(o1.getValue());
-	            }
-	        });
-	         
-	        // put data from sorted list to hashmap
-	        HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
-	        for (Map.Entry<String, Integer> aa : list) {
-	            temp.put(aa.getKey(), aa.getValue());
-	        }
-	        return temp;
-	    }
-	 
-	 
-	// Attribution ends
-	 
-	 public static void deleteGame() {
-		 LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
-	 }
+	public static HashMap<String, Integer> sortByValue(HashMap<String, Integer> hm)
+	{
+		// Create a list from elements of HashMap
+		List<Map.Entry<String, Integer> > list =
+				new LinkedList<Map.Entry<String, Integer> >(hm.entrySet());
+
+		// Sort the list
+		Collections.sort(list, new Comparator<Map.Entry<String, Integer> >() {
+			public int compare(Map.Entry<String, Integer> o1,
+					Map.Entry<String, Integer> o2)
+			{
+				return (o2.getValue()).compareTo(o1.getValue());
+			}
+		});
+
+		// put data from sorted list to hashmap
+		HashMap<String, Integer> temp = new LinkedHashMap<String, Integer>();
+		for (Map.Entry<String, Integer> aa : list) {
+			temp.put(aa.getKey(), aa.getValue());
+		}
+		return temp;
+	}
+
+	public static void deleteGame() {
+		LinuxCommand.executeCommand("rm -f "+GAMELOG_DIRECTORY+".gameLog.txt");
+	}
 
 }

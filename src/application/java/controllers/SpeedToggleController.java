@@ -8,21 +8,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.control.Slider;
 
-
 public class SpeedToggleController implements Initializable{
-	
+
+	// FXML Injectable fields
 	@FXML private Label speedLabel;
 	@FXML private Slider speedSlider;
+	
+	// Other class fields
 	private double speedOfSpeech = 1;
 
 	@Override
 	public void initialize(URL arg0, ResourceBundle arg1) {
 		addSliderListener();
 		this.speedOfSpeech = 1;
-
 	}
 
-	/*
+	/**
 	 * This method sets the slider action; it uses a listener for
 	 * change in the speed of speech to display the speech speed, and
 	 * clearly indicate whether the current speed is the default.
@@ -38,8 +39,8 @@ public class SpeedToggleController implements Initializable{
 			}
 		});
 	}
-	
-	/*
+
+	/**
 	 * This method resets the speed of speech slider
 	 * It doesn't need to manually reset speedOfSpeech since we read from the 
 	 * change listener.
@@ -47,9 +48,8 @@ public class SpeedToggleController implements Initializable{
 	public void resetSpeedToDefault() {
 		this.speedSlider.setValue(-1.0);
 	}
-	
+
 	public double getSpeed() {
 		return this.speedOfSpeech;
 	}
-	
 }

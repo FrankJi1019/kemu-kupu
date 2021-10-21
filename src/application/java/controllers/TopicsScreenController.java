@@ -5,41 +5,37 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
-
 import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.geometry.Insets;
-import javafx.scene.Node;
-import javafx.scene.Parent;
-import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
-
 import application.java.models.FileIO;
 import application.java.models.LinuxCommand;
 import application.java.models.SceneManager;
 import application.java.models.Topic;
 
+/**
+ * This class is the controller for the Topic selection screen (view titled 'Topics')
+ */
 public class TopicsScreenController implements Initializable{
 
+	// FXML Injectable fields
 	@FXML GridPane grid;
 	@FXML Button returnButton;
 	@FXML AnchorPane anchorPane;
 	@FXML Button startButton;
 	@FXML Button allTopicsButton;
 
+	// Other class fields
 	private SceneManager sceneManager = new SceneManager();
-
 	private static int GRID_WIDTH = 4;
-
 	public static String topicName = "";
-
 	public static boolean isPractice;
 
 	/**
@@ -91,15 +87,14 @@ public class TopicsScreenController implements Initializable{
 
 		// automatically set focus away from button
 		// Attribution: https://stackoverflow.com/questions/12744542/requestfocus-in-textfield-doesnt-work/38900429
-
 		Platform.runLater(new Runnable() {
 			@Override
 			public void run() {
 				grid.requestFocus();
 			}
 		});
-
 		// Attribution End
+		
 		this.startButton.setStyle("-fx-background-color: #e4e4e4;");
 	}
 
@@ -184,7 +179,7 @@ public class TopicsScreenController implements Initializable{
 	}
 
 	/**
-	 * this method is called when all topics button been clicked in the Practice selection scene.
+	 * This method is called when all topics button been clicked in the Practice selection scene.
 	 * @param event
 	 * @throws IOException
 	 */
@@ -209,5 +204,4 @@ public class TopicsScreenController implements Initializable{
 		errorMessage.setLayoutY(120);
 		anchorPane.getChildren().add(errorMessage);
 	}
-
 }

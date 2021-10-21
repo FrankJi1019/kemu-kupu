@@ -1,47 +1,51 @@
 package application.java.controllers;
 
-import java.net.URL;
-import java.util.ResourceBundle;
-
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Region;
 
 public class MacronKeypadController {
 
-	private TextField textField;
-	private int lastRecordedCaretPosition = 0;
+	// FXML Injectable fields
 	@FXML private AnchorPane macronInfo;
 	@FXML private Button infoButton;
 
-	
+	// Other class fields
+	private TextField textField;
+	private int lastRecordedCaretPosition = 0;
+
 	public void initialise(TextField textField) {
 		this.setTextField(textField);
 		addCaretListener();
 		addShortcutKeyListener();
 		// hide help pane to start off with
 		macronInfo.setVisible(false);
-		
+
 	}
+
+	/**
+	 * This method initialises a listener for the last recorded caret position
+	 * from the text field.
+	 */
 	private void addCaretListener() {
-		// get the caret position 
 		textField.caretPositionProperty().addListener(c -> {
 			if (textField.isFocused()) {
 				this.lastRecordedCaretPosition = textField.getCaretPosition();
 			}
 		});
-		
 	}
 
-	// sets one character to the left of caret position to macronised Vowel, if it is
-			// a vowel already, by pressing the left ALT key on keyboard.
+	/**
+	 * This method intialises a listener for a macron-adding shortcut key (left-alt)
+	 * If one character to the left of the caret of caret position 
+	 * is a vowel, and if it is a vowel already, then pressing the left ALT 
+	 * key on the keyboard will add a macron.
+	 */
 	private void addShortcutKeyListener() {
 		textField.setOnKeyPressed(new EventHandler<KeyEvent>() {
 			public void handle(KeyEvent event) {
@@ -59,7 +63,7 @@ public class MacronKeypadController {
 			}
 		});
 	}
-	
+
 	public void setTextField(TextField textField) {
 		this.textField = textField;
 	}
@@ -71,16 +75,13 @@ public class MacronKeypadController {
 		}
 		return false;
 	}
-	
-	
-	
+
 	/**
-	 * this is helper method that sets the Macronised vowel with keyboard.
+	 * This is helper method that sets the Macronised vowel with keyboard.
 	 * @param vowelChar
 	 * @param charPosition
 	 * @param textFieldToChars
 	 */
-	
 	public void setMacronWithKeyboard(char vowelChar, int charPosition,char[] textFieldToChars) {
 		switch(vowelChar) {
 		case 'a':
@@ -105,7 +106,7 @@ public class MacronKeypadController {
 			break;
 		}
 	}
-	
+
 	/**
 	 * this method extract vowel at indicated index in the char array, replace it with macronised vowel
 	 * and update in the text field.
@@ -113,9 +114,8 @@ public class MacronKeypadController {
 	 * @param textFieldToChars
 	 * @param macronisedLetter
 	 */
-	
 	public void replaceVowelToMacron(int index,char[] textFieldToChars,char macronisedLetter) {
-		
+
 		// replace vowel to macronised vowel.
 		textFieldToChars[index] = macronisedLetter;
 		// convert char array to String.
@@ -124,8 +124,8 @@ public class MacronKeypadController {
 		// set caret position to current position.
 		textField.positionCaret(index+1);
 	}
-	
-	/*
+
+	/**
 	 * This method allows user to add macron in the answer
 	 */
 	public void addMacronisedVowel(ActionEvent event) {
@@ -133,9 +133,9 @@ public class MacronKeypadController {
 		textField.insertText( lastRecordedCaretPosition, ((Button)event.getSource()).getText());
 		textField.positionCaret(lastRecordedCaretPosition);
 	}
-	
-	/*
-	 * Tells the user how to user macron button
+
+	/**
+	 * This method shows/hides the information for the macron button functionality.
 	 */
 	public void showInfo() {
 		if(macronInfo.isVisible()) {
@@ -146,7 +146,7 @@ public class MacronKeypadController {
 			infoButton.setText("X");
 		}
 	}
-	
-	
+
+
 
 }

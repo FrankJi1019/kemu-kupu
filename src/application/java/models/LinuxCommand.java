@@ -6,13 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 
-/** this is the class for running commands in different linux commands;
- *
+/**
+ * This is the class for running commands in different linux commands;
  */
 public class LinuxCommand {
 
 	
-	/** this method can call a certain bash cammands by passing in String as 
+	/** 
+	 *  This method can call a certain bash cammands by passing in String as 
 	 *  commands and return outputs as a list.
 	 */
 	
