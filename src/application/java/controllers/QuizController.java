@@ -62,6 +62,7 @@ public class QuizController implements Initializable {
 	@FXML private Button hearAgainButton;
 	@FXML private Button idkButton;
 	@FXML private Button nextButton;
+	@FXML private Button homeButton;
 	@FXML private Rectangle feedbackRect;
 	@FXML private Label addition;
 	@FXML private Label totalWordCountLabel;
@@ -109,6 +110,7 @@ public class QuizController implements Initializable {
 				submitButton,
 				hearAgainButton,
 				idkButton,
+				homeButton,
 		};
 
 		// create a new timer instance

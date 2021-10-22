@@ -84,7 +84,7 @@
             <Font name="Raleway Medium" size="24.0" />
          </font>
       </Label>
-      <Button contentDisplay="CENTER" layoutX="19.0" layoutY="493.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
+      <Button fx:id="homeButton" contentDisplay="CENTER" layoutX="19.0" layoutY="493.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#returnHome" prefHeight="45.0" prefWidth="46.0" styleClass="large-button">
          <font>
             <Font name="Raleway Bold" size="21.0" />
          </font>
