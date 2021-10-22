@@ -151,6 +151,7 @@ public class PracticeController implements Initializable {
 		this.setNextWord();
 		this.readCurrentWord();
 		this.updateLetterCount();
+		this.attempts = 1;
 	}
 
 	/**
